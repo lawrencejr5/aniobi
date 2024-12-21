@@ -13,7 +13,7 @@ const ChatBox = () => {
       <div className="chat">{input && <p>{input}</p>}</div>
       <div className="footer">
         <div className={`inp-holder ${focused ? "wide" : ""}`}>
-          <img src="/imgs/user/download.png" alt="" />
+          <img src="/imgs/aniobi_icon1.jpg" alt="" />
           <div className="input">
             <input
               type="text"

@@ -5,7 +5,7 @@ const Nav = () => {
   return (
     <nav>
       <Logo />
-      <span>Login/Register</span>
+      {/* <span>Login/Register</span> */}
     </nav>
   );
 };
