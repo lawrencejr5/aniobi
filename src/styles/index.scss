@@ -76,6 +76,11 @@ nav {
           align-items: center;
           padding: 1rem;
           text-align: left;
+
+          a {
+            color: $light;
+            text-decoration: none;
+          }
         }
       }
     }
@@ -228,6 +233,65 @@ nav {
           border: 2px solid $primaryColor;
           padding: 0.3rem;
         }
+      }
+    }
+  }
+}
+
+.signin-container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100%;
+
+  .container {
+    height: 400px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    form {
+      width: 100%;
+      display: grid;
+      place-items: center;
+
+      .inp-holder {
+        background-color: $light;
+        width: 90%;
+        max-width: 400px;
+        padding: 1rem;
+        margin: 0 auto;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+          background-color: transparent;
+          border: 0;
+          outline: 0;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        button {
+          background-color: $primaryColor;
+          // padding: 1rem;
+          font-size: 20px;
+          font-weight: 600;
+          padding: 0.3rem 0.6rem;
+          color: $light;
+          border-radius: 4px;
+        }
+      }
+      span {
+        color: $light;
+        margin-top: 1rem;
       }
     }
   }

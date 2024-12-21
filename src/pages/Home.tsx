@@ -14,7 +14,8 @@ const Home = () => {
           <div className="follow">
             <span>
               <FaInstagram />
-              &nbsp; Follow us on instagram
+              &nbsp;&nbsp;
+              <a href="https://instagram.com/_aniobi">Follow us on instagram</a>
             </span>
           </div>
         </div>
