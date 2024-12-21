@@ -5,6 +5,7 @@ const Nav = () => {
   return (
     <nav>
       <Logo />
+      <span>Login/Register</span>
     </nav>
   );
 };
