@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav from "../components/Nav.tsx";
 import InBox from "../components/Inbox.tsx";
 import { FaChevronRight } from "react-icons/fa";
 
+import { useGlobalContext } from "../Global.tsx";
+
+interface Message {
+  _id: string;
+  message: string;
+  createdAt: string;
+}
+
 const Inbox = () => {
+  const { messages, getMessages }: any = useGlobalContext();
+  useEffect(() => {
+    getMessages();
+  }, [messages]);
   return (
     <main className="inbox-main">
       <Nav />
@@ -13,17 +25,15 @@ const Inbox = () => {
         &nbsp; Messages
       </h2>
       <div className="inbox-container">
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
-        <InBox />
+        {messages.map((msg: Message) => {
+          return (
+            <InBox
+              id={msg._id}
+              message={msg.message}
+              createdAt={msg.createdAt}
+            />
+          );
+        })}
       </div>
     </main>
   );

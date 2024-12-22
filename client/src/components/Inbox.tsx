@@ -1,15 +1,18 @@
-import React from "react";
+import React, { FC } from "react";
 
-const Inbox = () => {
+interface InboxProps {
+  id: string;
+  message: string;
+  createdAt: string;
+}
+
+const Inbox: FC<InboxProps> = ({ message, id, createdAt }) => {
   return (
     <div className="inbox">
-      <small>~user93293h3u3ye6 . just now</small>
-      <p>
-        Lorem ipsum dolor sit amet I once fucked my boyfriend and he had cancer
-        and so on and so fault that I had to kill the mf. Thank God he died fast
-        cause if not, I was going to desemble his whole body. Yes I know I'm
-        monster and if this message gets out, I'll murder u.
-      </p>
+      <small>
+        {`~user${id.slice(0, 12)}`} . {createdAt.split("T")[0]}
+      </small>
+      <p>{message}</p>
       <div className="btn-holder">
         <button>copy to clipboard</button>
       </div>
