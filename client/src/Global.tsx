@@ -18,6 +18,7 @@ interface ContextAppType {
   messages: Message[] | null;
   getMessages: () => Promise<void>;
   writeMessage: (input: string) => Promise<void>;
+  signIn: (input: string) => Promise<void>;
 }
 
 enum EndPoints {
@@ -28,6 +29,7 @@ enum EndPoints {
 const ContextApp = createContext<ContextAppType | null>(null);
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
+  
   const [messages, setMessages] = useState<Message[]>([]);
 
   const getMessages = async () => {
@@ -48,12 +50,25 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signIn = async (input: string) => {
+    try {
+      const { data } = await axios.post(`${EndPoints.passkey}/check`, {
+        key: input,
+      });
+      localStorage.setItem("token", data.token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getMessages();
   }, []);
 
   return (
-    <ContextApp.Provider value={{ messages, getMessages, writeMessage }}>
+    <ContextApp.Provider
+      value={{ messages, getMessages, writeMessage, signIn }}
+    >
       {children}
     </ContextApp.Provider>
   );
