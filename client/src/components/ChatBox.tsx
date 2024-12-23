@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
+import { useGlobalContext } from "../Global.tsx";
+
 const ChatBox = () => {
-  const [focused, setFocused] = useState(false);
-  const [input, setInput] = useState("");
+  const { writeMessage }: any = useGlobalContext();
+
+  const [focused, setFocused] = useState<Boolean>(false);
+  const [input, setInput] = useState<string>("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    await writeMessage(input);
+    setInput("");
+  };
 
   return (
     <div className={`chat-box ${!input ? "fixed-height" : ""}`}>
@@ -14,7 +25,7 @@ const ChatBox = () => {
       <div className="footer">
         <div className={`inp-holder ${focused ? "wide" : ""}`}>
           <img src="/imgs/aniobi_icon1.jpg" alt="" />
-          <div className="input">
+          <form className="input" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="type here..."
@@ -26,7 +37,7 @@ const ChatBox = () => {
             <button>
               <FaPaperPlane />
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

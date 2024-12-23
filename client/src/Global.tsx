@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
 } from "react";
+
 import axios from "axios";
 
 interface Message {
@@ -16,17 +17,32 @@ interface Message {
 interface ContextAppType {
   messages: Message[] | null;
   getMessages: () => Promise<void>;
+  writeMessage: (input: string) => Promise<void>;
+}
+
+enum EndPoints {
+  messages = "http://localhost:5000/api/v1/messages",
+  passkey = "http://localhost:5000/api/v1/passkey",
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const getMessages = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/v1/messages");
+      const { data } = await axios.get(EndPoints.messages);
       setMessages(data.messages);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const writeMessage = async (input: string) => {
+    try {
+      const { data } = await axios.post(EndPoints.messages, { msg: input });
+      console.log(data.message);
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +53,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <ContextApp.Provider value={{ messages, getMessages }}>
+    <ContextApp.Provider value={{ messages, getMessages, writeMessage }}>
       {children}
     </ContextApp.Provider>
   );

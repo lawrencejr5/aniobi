@@ -4,7 +4,7 @@ import Message from "../models/messages";
 
 const getMessages = async (req: Request, res: Response) => {
   try {
-    const messages = await Message.find();
+    const messages = await Message.find().sort("-createdAt");
     res.status(200).json({ msg: "success", messages });
   } catch (err) {
     res.status(500).json({ msg: "an error occured", err });

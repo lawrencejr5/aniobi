@@ -25,9 +25,10 @@ const Inbox = () => {
         &nbsp; Messages
       </h2>
       <div className="inbox-container">
-        {messages.map((msg: Message) => {
+        {messages.map((msg: Message, i: number) => {
           return (
             <InBox
+              key={i}
               id={msg._id}
               message={msg.message}
               createdAt={msg.createdAt}
