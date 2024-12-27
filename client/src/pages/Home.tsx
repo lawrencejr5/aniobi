@@ -18,7 +18,10 @@ const Home = () => {
             <span>
               <FaInstagram />
               &nbsp;&nbsp;
-              <a href="https://www.instagram.com/_aniobi_/profilecard/">
+              <a
+                href="https://www.instagram.com/_aniobi_/profilecard/"
+                target="_blank"
+              >
                 Follow us on instagram
               </a>
             </span>

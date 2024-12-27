@@ -11,7 +11,7 @@ import React, {
 import axios from "axios";
 
 import { MessageType, NotificationType } from "./types.tsx";
-import { EndPoints } from "./enums.tsx";
+import { EndPoints, LocalStorage } from "./enums.tsx";
 
 interface ContextAppType {
   messages: MessageType[] | null;
@@ -42,7 +42,9 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   const getMessages = async () => {
     try {
-      const { data } = await axios.get(EndPoints.messages);
+      const { data } = await axios.get(EndPoints.messages, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
       setMessages(data.messages);
     } catch (err) {
       console.log(err);

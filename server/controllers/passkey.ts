@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -42,7 +44,9 @@ const checkPasskey = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  const token = jwt.sign({ id: passkeyDb?._id }, "bankai", { expiresIn: "1d" });
+  const token = jwt.sign({ id: passkeyDb?._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_LIFETIME,
+  });
 
   res.status(200).json({ id: passkeyDb?._id, token });
 };

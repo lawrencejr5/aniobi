@@ -27,8 +27,7 @@ const Signin = () => {
         status: true,
         theme: "success",
       });
-      console.log(data);
-
+      setInput("");
       setTimeout(() => {
         navigate("/admin/inbox");
       }, 2000);
