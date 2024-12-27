@@ -4,33 +4,41 @@ import React, {
   ReactNode,
   useState,
   useEffect,
+  Dispatch,
+  SetStateAction,
 } from "react";
 
 import axios from "axios";
 
-interface Message {
-  _id: string;
-  message: string;
-  createdAt: string;
-}
+import { MessageType, NotificationType } from "./types.tsx";
+import { EndPoints } from "./enums.tsx";
 
 interface ContextAppType {
-  messages: Message[] | null;
+  messages: MessageType[] | null;
   getMessages: () => Promise<void>;
   writeMessage: (input: string) => Promise<void>;
   signIn: (input: string) => Promise<void>;
-}
-
-enum EndPoints {
-  messages = "http://localhost:5000/api/v1/messages",
-  passkey = "http://localhost:5000/api/v1/passkey",
+  notification: NotificationType | null;
+  setNotification: Dispatch<SetStateAction<NotificationType>>;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  
-  const [messages, setMessages] = useState<Message[]>([]);
+  //Notification
+  const [notification, setNotification] = useState<NotificationType>({
+    text: "",
+    status: false,
+    theme: "",
+  });
+  useEffect(() => {
+    const notiTimeout = setTimeout(() => {
+      setNotification({ ...notification, status: false });
+    }, 2000);
+    return () => clearTimeout(notiTimeout);
+  }, [notification]);
+
+  const [messages, setMessages] = useState<MessageType[]>([]);
 
   const getMessages = async () => {
     try {
@@ -43,8 +51,12 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   const writeMessage = async (input: string) => {
     try {
-      const { data } = await axios.post(EndPoints.messages, { msg: input });
-      console.log(data.message);
+      await axios.post(EndPoints.messages, { msg: input });
+      setNotification({
+        text: "Message sent",
+        status: true,
+        theme: "success",
+      });
     } catch (err) {
       console.log(err);
     }
@@ -67,7 +79,14 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ContextApp.Provider
-      value={{ messages, getMessages, writeMessage, signIn }}
+      value={{
+        messages,
+        getMessages,
+        writeMessage,
+        signIn,
+        setNotification,
+        notification,
+      }}
     >
       {children}
     </ContextApp.Provider>

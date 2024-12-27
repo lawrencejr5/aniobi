@@ -1,26 +1,37 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import axios from "axios"
+import axios from "axios";
 
 import { useGlobalContext } from "../Global.tsx";
 
+import { EndPoints } from "../enums.tsx";
+
+import Notification from "../components/Notification.tsx";
+
 const Signin = () => {
-  const [input, setInput] = useState<string>("");
+  const { setNotification, notification }: any = useGlobalContext();
 
   const navigate = useNavigate();
 
+  const [input, setInput] = useState<string>("");
 
-  const { signIn }: any = useGlobalContext();
-
-  const handleSubmit = async (e: any): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-       const { data } = await axios.post(`http://localhost:5000/api/v1/passkey/check`, {
+      const { data } = await axios.post(`${EndPoints.passkey}/check`, {
         key: input,
       });
       localStorage.setItem("token", data.token);
-      navigate("/admin/inbox");
+      setNotification({
+        text: "Signing in...",
+        status: true,
+        theme: "success",
+      });
+      console.log(data);
+
+      setTimeout(() => {
+        navigate("/admin/inbox");
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
@@ -43,6 +54,7 @@ const Signin = () => {
           <span>Forgot passkey?</span>
         </form>
       </div>
+      <Notification notification={notification} />
     </div>
   );
 };

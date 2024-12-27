@@ -1,10 +1,13 @@
 import React from "react";
-
-import Nav from "../components/Nav.tsx";
-import ChatBox from "../components/ChatBox.tsx";
 import { FaInstagram } from "react-icons/fa";
 
+import Nav from "../components/Nav.tsx";
+import Notification from "../components/Notification.tsx";
+import ChatBox from "../components/ChatBox.tsx";
+import { useGlobalContext } from "../Global.tsx";
+
 const Home = () => {
+  const { notification }: any = useGlobalContext();
   return (
     <div className="home-container">
       <Nav />
@@ -15,12 +18,15 @@ const Home = () => {
             <span>
               <FaInstagram />
               &nbsp;&nbsp;
-              <a href="https://instagram.com/_aniobi">Follow us on instagram</a>
+              <a href="https://www.instagram.com/_aniobi_/profilecard/">
+                Follow us on instagram
+              </a>
             </span>
           </div>
         </div>
         <ChatBox />
       </section>
+      <Notification notification={notification} />
     </div>
   );
 };
