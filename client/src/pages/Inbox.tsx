@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
+import { FaChevronRight } from "react-icons/fa";
+
 import Nav from "../components/Nav.tsx";
 import InBox from "../components/Inbox.tsx";
-import { FaChevronRight } from "react-icons/fa";
+import Notification from "../components/Notification.tsx";
 
 import { useGlobalContext } from "../Global.tsx";
 
-interface Message {
-  _id: string;
-  message: string;
-  createdAt: string;
-}
+import { MessageType } from "../types.tsx";
 
 const Inbox = () => {
-  const { messages, getMessages }: any = useGlobalContext();
+  const { messages, getMessages, notification }: any = useGlobalContext();
   useEffect(() => {
     getMessages();
   }, [messages]);
@@ -25,7 +23,7 @@ const Inbox = () => {
         &nbsp; Messages
       </h2>
       <div className="inbox-container">
-        {messages.map((msg: Message, i: number) => {
+        {messages.map((msg: MessageType, i: number) => {
           return (
             <InBox
               key={i}
@@ -36,6 +34,7 @@ const Inbox = () => {
           );
         })}
       </div>
+      <Notification notification={notification} />
     </main>
   );
 };

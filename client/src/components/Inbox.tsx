@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 
+import { useGlobalContext } from "../Global";
+
 interface InboxProps {
   id: string;
   message: string;
@@ -7,6 +9,21 @@ interface InboxProps {
 }
 
 const Inbox: FC<InboxProps> = ({ message, id, createdAt }) => {
+  const { setNotification }: any = useGlobalContext();
+
+  const copyToClipboard = async (text: string): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setNotification({
+        text: "copied",
+        status: true,
+        theme: "success",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="inbox">
       <small>
@@ -14,7 +31,9 @@ const Inbox: FC<InboxProps> = ({ message, id, createdAt }) => {
       </small>
       <p>{message}</p>
       <div className="btn-holder">
-        <button>copy to clipboard</button>
+        <button onClick={() => copyToClipboard(message)}>
+          copy to clipboard
+        </button>
       </div>
     </div>
   );

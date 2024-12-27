@@ -3,11 +3,11 @@ import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 import { NotificationType } from "../types";
 
-interface Noti {
+interface NotificationProps {
   notification: NotificationType;
 }
 
-const Notification: React.FC<Noti> = ({ notification }) => {
+const Notification: React.FC<NotificationProps> = ({ notification }) => {
   const { text, theme, status } = notification;
   return (
     <div className="notification-container">
