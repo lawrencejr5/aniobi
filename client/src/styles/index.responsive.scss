@@ -144,6 +144,11 @@
       }
     }
   }
+  .notification-container {
+    .notification {
+      width: 96%;
+    }
+  }
 }
 
 @media screen and (max-width: 390px) {

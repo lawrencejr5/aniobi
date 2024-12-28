@@ -9,11 +9,11 @@ const ChatBox = () => {
   const [focused, setFocused] = useState<Boolean>(false);
   const [input, setInput] = useState<string>("");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await writeMessage(input);
     setInput("");
+    await writeMessage(input);
   };
 
   return (
