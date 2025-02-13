@@ -17,22 +17,33 @@ const Signin = () => {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setNotification({
+      text: "Signing in...",
+      status: true,
+      theme: "success",
+    });
     try {
+      setInput("");
       const { data } = await axios.post(`${EndPoints.passkey}/check`, {
         key: input,
       });
-      localStorage.setItem("token", data.token);
       setNotification({
-        text: "Signing in...",
+        text: "Successful",
         status: true,
         theme: "success",
       });
-      setInput("");
+      localStorage.setItem("token", data.token);
       setTimeout(() => {
         navigate("/admin/inbox");
       }, 2000);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+
+      setNotification({
+        text: `${err?.response?.data?.msg}`,
+        status: true,
+        theme: "danger",
+      });
     }
   };
 

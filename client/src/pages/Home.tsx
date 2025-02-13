@@ -10,7 +10,7 @@ const Home = () => {
   const { notification }: any = useGlobalContext();
   return (
     <div className="home-container">
-      <Nav />
+      <Nav page={"home"} />
       <section className="container">
         <div className="banner">
           <p>Message aniobi anonymously</p>

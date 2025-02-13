@@ -4,14 +4,18 @@ import { FaPaperPlane } from "react-icons/fa";
 import { useGlobalContext } from "../Global.tsx";
 
 const ChatBox = () => {
-  const { writeMessage }: any = useGlobalContext();
+  const { writeMessage, setNotification }: any = useGlobalContext();
 
   const [focused, setFocused] = useState<Boolean>(false);
   const [input, setInput] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setNotification({
+      text: "Sending...",
+      status: true,
+      theme: "success",
+    });
     setInput("");
     await writeMessage(input);
   };

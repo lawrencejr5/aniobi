@@ -1,17 +1,32 @@
 import React from "react";
 import Logo from "./Logo.tsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Nav = () => {
+import { FaChevronRight, FaPen, FaPencilAlt } from "react-icons/fa";
+
+interface NavProps {
+  page: String;
+}
+
+const Nav: React.FC<NavProps> = ({ page }) => {
+  const navigate = useNavigate();
   return (
     <nav>
       <Link to={"/"}>
         <Logo />
       </Link>
-      {/* <div>
-        <span>Messages</span>
-        <span>Reset passkey</span>
-      </div> */}
+      <div>
+        {page === "home" && (
+          <span onClick={() => navigate("/secret")}>
+            Secret room &nbsp; <FaChevronRight />
+          </span>
+        )}
+        {page === "secret" && (
+          <span onClick={() => navigate("/")}>
+            Write &nbsp; <FaPencilAlt />
+          </span>
+        )}
+      </div>
     </nav>
   );
 };

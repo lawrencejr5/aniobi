@@ -16,7 +16,7 @@ const Inbox = () => {
   }, [messages]);
   return (
     <main className="inbox-main">
-      <Nav />
+      <Nav page={"inbox"} />
       <h2>
         Admin &nbsp;
         <FaChevronRight />
