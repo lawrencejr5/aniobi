@@ -7,6 +7,16 @@ import { useGlobalContext } from "../Global";
 import { FaPaperPlane, FaTimes } from "react-icons/fa";
 
 const SecretRoom = () => {
+  const [commentOpen, setCommentOpen] = React.useState<boolean>(false);
+  const [focused, setFocused] = React.useState<Boolean>(false);
+  const [input, setInput] = React.useState<string>("");
+
+  const openComments = () => {
+    setCommentOpen((prev) => {
+      return !prev;
+    });
+  };
+
   const { messages }: any = useGlobalContext();
 
   return (
@@ -16,7 +26,12 @@ const SecretRoom = () => {
         {messages.map(
           (message: { message: string; _id: string }, i: number) => {
             return (
-              <div className="item-box" key={i}>
+              <div
+                className={`${
+                  commentOpen ? "item-box" : "item-box close-comment"
+                }`}
+                key={i}
+              >
                 <div className="item">
                   <div className="header">
                     <img
@@ -25,10 +40,12 @@ const SecretRoom = () => {
                       width={"20px"}
                       alt=""
                     />
-                    <span>user{message._id}</span>
+                    <span>msg-{message._id}</span>
                   </div>
                   <div className="msg">{message.message}</div>
-                  <span className="comments">49 comment(s)</span>
+                  <span className="comments" onClick={openComments}>
+                    49 comment(s)
+                  </span>
                 </div>
                 <div className="comments-container">
                   <div className="header">
@@ -50,14 +67,16 @@ const SecretRoom = () => {
                     </span>
                   </div>
                   <div className="comment-form-container">
-                    <div className="comment-form">
+                    <div className={`comment-form ${focused ? "wide" : ""}`}>
                       <img src="/imgs/aniobi_icon1.jpg" alt="" />
                       <form action="">
                         <input
                           type="text"
-                          placeholder="drop a comment"
-                          name=""
-                          id=""
+                          placeholder="comment..."
+                          onFocus={() => setFocused(true)}
+                          onBlur={() => setFocused(false)}
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
                         />
                         <button>
                           <FaPaperPlane />
