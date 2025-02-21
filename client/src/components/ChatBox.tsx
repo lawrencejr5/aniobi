@@ -30,7 +30,7 @@ const ChatBox = () => {
   return (
     <div className={`chat-box ${!input ? "fixed-height" : ""}`}>
       <div className="header">
-        <img src="/imgs/aniobi_transparent_amber.png" alt="" />
+        <img src="/imgs/aniobi_transparent_oxblood.png" alt="" />
       </div>
       <div className="chat">{input && <p>{input}</p>}</div>
       <div className="footer">
