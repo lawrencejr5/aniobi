@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "./Logo.tsx";
 import { Link, useNavigate } from "react-router-dom";
 
-import { FaChevronRight, FaPen, FaPencilAlt } from "react-icons/fa";
+import { FaChevronRight, FaPencilAlt } from "react-icons/fa";
 
 interface NavProps {
   page: String;

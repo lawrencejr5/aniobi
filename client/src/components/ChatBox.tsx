@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { FaPaperPlane } from "react-icons/fa";
+import {
+  FaPaperPlane,
+  FaArrowAltCircleUp,
+  FaArrowCircleUp,
+  FaArrowRight,
+  FaArrowCircleRight,
+  FaLongArrowAltRight,
+} from "react-icons/fa";
 
 import { useGlobalContext } from "../Global.tsx";
 
@@ -39,8 +46,9 @@ const ChatBox = () => {
               onChange={(e) => setInput(e.target.value)}
             />
             <button>
-              <FaPaperPlane />
+              <FaLongArrowAltRight />
             </button>
+            {/* <button>&rarr;</button> */}
           </form>
         </div>
       </div>

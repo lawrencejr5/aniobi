@@ -9,7 +9,7 @@
 }
 
 body {
-  background: linear-gradient(120deg, $primaryColor 55%, $secondaryColor);
+  background-color: $primaryColor2;
   background-attachment: fixed;
 }
 
@@ -25,12 +25,14 @@ nav {
   align-items: center;
   padding: 0.5rem;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
 
   .logo {
     display: table;
     img {
-      width: 150px;
-      height: 50px;
+      width: 120px;
+      height: 40px;
       scale: 1.5;
       object-fit: cover;
     }
@@ -80,15 +82,16 @@ nav {
 .home-container {
   height: 100vh;
   width: 100%;
+  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
 
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 400px;
-    margin-top: 5rem;
+    // margin-top: 8rem;
 
     .banner {
-      padding: 2rem;
+      padding: 10rem 2rem;
       height: 500px;
       width: 100%;
       display: grid;
@@ -98,7 +101,9 @@ nav {
         color: $light;
         font-size: 80px;
         font-weight: 700;
+        line-height: 1.1;
         font-family: $primaryFont;
+        margin-bottom: 5rem;
       }
       .follow {
         width: 100%;
@@ -125,12 +130,14 @@ nav {
       height: 150px;
     }
     .chat-box {
-      position: relative;
-      width: 95%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50%;
       height: auto;
       background-color: $light;
       margin: 1rem;
-      margin-top: 20rem;
+      // margin-top: 26rem;
       border-radius: 20px;
       padding: 1rem;
       display: block;
@@ -156,7 +163,6 @@ nav {
           background-color: $primaryColor;
           color: $light;
           font-size: large;
-          // font-weight: 600;
           display: table;
           width: 100%;
           max-width: 500px;
@@ -183,11 +189,10 @@ nav {
           transition: 0.5s;
 
           img {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             object-fit: cover;
             border-radius: 50%;
-            // background-color: $primaryColor;
           }
           .input {
             display: flex;
@@ -208,7 +213,9 @@ nav {
             button {
               background-color: transparent;
               color: $primaryColor;
-              font-size: 25px;
+              font-size: 30px;
+              font-weight: 500;
+              margin-top: 0.7rem;
               border: 0;
               outline: 0;
             }
@@ -334,155 +341,29 @@ nav {
 }
 
 .secret-room-container {
-  background-color: $primaryColor;
-  height: 100vh;
+  background-color: $primaryColor2;
+  background-attachment: fixed;
+  height: 92vh;
   width: 100%;
 
-  .item-box-container {
-    display: grid;
-    place-items: center;
-    height: 90vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
+  .float {
+    position: absolute;
+    bottom: 0rem;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
-    .item-box {
-      height: 80vh;
-      width: 70%;
-      background-color: #ffa200;
-      border-radius: 25px;
-      margin: 1rem 0 1rem;
-      padding: 1rem;
-      scroll-snap-align: center;
+    .btn {
+      text-align: center;
+      background-color: $secondaryColor3;
+      color: $primaryColor;
+      border-radius: 50%;
+      font-size: 25px;
+      width: 50px;
+      height: 50px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      .item {
-        position: relative;
-        border-right: 1px solid black;
-
-        .header {
-          margin-bottom: 1rem;
-          display: flex;
-          align-items: center;
-
-          img {
-            border-radius: 50%;
-            margin-right: 0.5rem;
-          }
-        }
-
-        .msg {
-          height: 68vh;
-          margin: 0 2rem;
-          font-size: 20px;
-          display: grid;
-          place-items: center;
-        }
-
-        span.comments {
-          position: absolute;
-          bottom: 1rem;
-          right: 1rem;
-        }
-        span.comments:hover {
-          text-decoration: underline;
-        }
-      }
-
-      .comments-container {
-        padding-left: 1rem;
-        position: relative;
-
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .comments {
-          height: 57vh;
-          margin: 2rem 0;
-          overflow-y: scroll;
-
-          .comment {
-            background-color: $primaryColor;
-            color: $light;
-            display: table;
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 10px;
-          }
-        }
-
-        .comment-form-container {
-          display: grid;
-          place-items: center;
-
-          .comment-form {
-            position: absolute;
-            bottom: 1rem;
-            display: flex;
-            align-items: center;
-            background-color: $light;
-            background-color: transparent;
-            border: 2px solid $primaryColor;
-            width: 50%;
-            padding: 0.5rem;
-            border-radius: 25px;
-
-            img {
-              height: 30px;
-              width: 30px;
-              border-radius: 50%;
-              margin-right: 0.5rem;
-            }
-
-            form {
-              display: flex;
-              width: 100%;
-              justify-content: space-between;
-
-              input {
-                width: 90%;
-                padding: 0.5rem;
-                border: 0;
-                padding: 0.5rem;
-                outline: 0;
-                background-color: transparent;
-                font-weight: 600;
-                color: $primaryColor;
-              }
-              input::placeholder {
-                color: $primaryColor;
-              }
-
-              button {
-                padding: 0.5rem;
-                border: none;
-                outline: none;
-                background-color: transparent;
-              }
-            }
-          }
-          .comment-form.wide {
-            width: 90%;
-          }
-        }
-      }
-    }
-
-    .item-box.close-comment {
-      width: 40%;
-      display: block;
-
-      .item {
-        border: 0;
-      }
-
-      .comments-container {
-        display: none;
-      }
+      place-items: center;
     }
   }
 }
