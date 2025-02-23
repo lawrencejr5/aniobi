@@ -284,65 +284,6 @@ nav {
   }
 }
 
-.signin-container {
-  display: grid;
-  place-items: center;
-  height: 100vh;
-  width: 100%;
-
-  .container {
-    height: 400px;
-    width: 100%;
-    display: grid;
-    place-items: center;
-
-    img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    form {
-      width: 100%;
-      display: grid;
-      place-items: center;
-
-      .inp-holder {
-        background-color: $light;
-        width: 90%;
-        max-width: 400px;
-        padding: 1rem;
-        margin: 0 auto;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-
-        input {
-          background-color: transparent;
-          border: 0;
-          outline: 0;
-          font-size: 20px;
-          font-weight: 600;
-          width: 90%;
-        }
-        button {
-          background-color: $primaryColor;
-          font-size: 20px;
-          font-weight: 600;
-          padding: 0.3rem 0.6rem;
-          color: $light;
-          border-radius: 4px;
-        }
-      }
-      span {
-        color: $light;
-        margin-top: 1rem;
-      }
-    }
-  }
-}
-
 .secret-room-container {
   background-color: $primaryColor2;
   background-attachment: fixed;
@@ -437,6 +378,67 @@ nav {
           place-items: center;
           padding: 1rem;
           text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.signin-container {
+  height: 100vh;
+  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
+  .container {
+    height: 90vh;
+    width: 100%;
+    display: grid;
+    place-items: center;
+
+    form {
+      width: 50%;
+      h1 {
+        text-align: center;
+        color: $light;
+        margin-bottom: 2rem;
+        font-weight: 900;
+        font-size: 40px;
+      }
+      .inp-container {
+        width: 100%;
+        display: grid;
+        place-items: center;
+
+        .inp-holder {
+          width: 400px;
+          background-color: $light;
+          margin: 0.8rem 0;
+          padding: 0.8rem;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+
+          .icon {
+            font-size: 20px;
+            color: $primaryColor;
+          }
+
+          input {
+            width: 90%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            margin-left: 0.5rem;
+            font-size: 16px;
+          }
+        }
+        button {
+          @extend .inp-holder;
+          justify-content: center;
+          font-size: 18px;
+          font-weight: 600;
+          background-color: $primaryColor;
+          color: $light;
+          border: none;
+          outline: none;
         }
       }
     }

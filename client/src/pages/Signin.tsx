@@ -7,6 +7,8 @@ import { useGlobalContext } from "../Global.tsx";
 import { EndPoints } from "../enums.tsx";
 
 import Notification from "../components/Notification.tsx";
+import Nav from "../components/Nav.tsx";
+import { FaEye, FaLock, FaUser, FaUserCircle } from "react-icons/fa";
 
 const Signin = () => {
   const { setNotification, notification }: any = useGlobalContext();
@@ -49,19 +51,22 @@ const Signin = () => {
 
   return (
     <div className="signin-container">
+      <Nav page={"secret"} />
       <div className="container">
-        <img src="/imgs/aniobi_icon2.jpg" alt="" />
-        <form action="" onSubmit={handleSubmit}>
-          <div className="inp-holder">
-            <input
-              type="password"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="input passkey"
-            />
-            <button>&rarr;</button>
+        <form onSubmit={handleSubmit}>
+          <h1>Admin signin</h1>
+          <div className="inp-container">
+            <div className="inp-holder">
+              <FaUserCircle className="icon" />
+              <input type="text" placeholder="Admin username..." />
+            </div>
+            <div className="inp-holder">
+              <FaLock className="icon" />
+              <input type="password" placeholder="Admin password..." />
+              <FaEye className="icon" />
+            </div>
+            <button>Sign in</button>
           </div>
-          <span>Forgot passkey?</span>
         </form>
       </div>
       <Notification notification={notification} />
