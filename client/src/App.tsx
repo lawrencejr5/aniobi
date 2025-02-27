@@ -7,6 +7,7 @@ import Signin from "./pages/Signin.tsx";
 import SecretRoom from "./pages/SecretRoom.tsx";
 
 import Protected from "./components/Protected.tsx";
+import Users from "./pages/Users.tsx";
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,14 @@ const App: React.FC = () => {
           element={
             // <Protected>
             <Inbox />
+            // </Protected>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            // <Protected>
+            <Users />
             // </Protected>
           }
         />

@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  FaChevronRight,
-  FaRegTrashAlt,
-  FaPencilAlt,
-  FaArrowUp,
-} from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 
@@ -13,15 +8,21 @@ import Nav from "../components/Nav.tsx";
 import InBox from "../components/Inbox.tsx";
 import Notification from "../components/Notification.tsx";
 
+import ModalCrt from "../components/Modals/ModalCrt.tsx";
+import ModalDel from "../components/Modals/ModalDel.tsx";
+import ModalEdit from "../components/Modals/ModalEdit.tsx";
+
 import { useGlobalContext } from "../Global.tsx";
 
 import { MessageType } from "../types.tsx";
 
 const Inbox = () => {
   const { messages, getMessages, notification }: any = useGlobalContext();
+
   useEffect(() => {
     getMessages();
   }, [messages]);
+
   return (
     <main className="admin-main">
       <Nav page={"inbox"} />
@@ -48,7 +49,7 @@ const Inbox = () => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      // alignItems: "center",
+                      alignItems: "center",
                     }}
                   >
                     <FaRegTrashAlt />
@@ -61,6 +62,9 @@ const Inbox = () => {
           </tbody>
         </table>
       </div>
+      {/* <ModalCrt page="inbox" /> */}
+      {/* <ModalDel page="inbox" /> */}
+      {/* <ModalEdit page="inbox" /> */}
       <Notification notification={notification} />
     </main>
   );
