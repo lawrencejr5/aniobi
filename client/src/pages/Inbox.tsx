@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { FaChevronRight, FaTrash, FaPencilAlt, FaArrowUp } from "react-icons/fa";
+
+import {
+  FaChevronRight,
+  FaRegTrashAlt,
+  FaPencilAlt,
+  FaArrowUp,
+} from "react-icons/fa";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 
 import Nav from "../components/Nav.tsx";
 import InBox from "../components/Inbox.tsx";
@@ -23,6 +31,7 @@ const Inbox = () => {
         <table>
           <thead>
             <tr>
+              <th>S/N</th>
               <th>Msg-id</th>
               <th>Message</th>
               <th>Actions</th>
@@ -32,9 +41,20 @@ const Inbox = () => {
             {messages.map((msg: any, i: number) => {
               return (
                 <tr key={i}>
-                  <td style={{"fontSize": "12px"}}>msg-{(msg?._id).slice(0, 16)}</td>
+                  <td>{i + 1}</td>
+                  <td>msg{(msg?._id).slice(0, 16)}</td>
                   <td>{msg?.message}</td>
-                  <td style={{"display": "flex", "justifyContent": "space-between"}}><FaTrash/><FaPencilAlt/><FaArrowUp/></td>
+                  <td
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      // alignItems: "center",
+                    }}
+                  >
+                    <FaRegTrashAlt />
+                    <MdOutlineFileUpload />
+                    <FiEdit />
+                  </td>
                 </tr>
               );
             })}

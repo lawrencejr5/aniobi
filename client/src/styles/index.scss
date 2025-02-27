@@ -303,11 +303,11 @@ nav {
 
       .item.even-active {
         scale: 1;
-        transform: rotate(7deg);
+        transform: rotate(5deg);
       }
       .item.odd-active {
         scale: 1;
-        transform: rotate(-7deg);
+        transform: rotate(-5deg);
       }
 
       .item {
@@ -432,17 +432,27 @@ nav {
     table {
       width: 90%;
 
-      th {
-        background-color: $light;
-        color: $primaryColor;
-        padding: 0.7rem;
-        font-size: 20px;
+      tr {
+        transition: 0;
+        cursor: pointer;
+        th {
+          background-color: $light;
+          color: $primaryColor;
+          padding: 0.7rem;
+          font-size: 20px;
+        }
+        td {
+          color: $light;
+          font-size: 18px;
+          font-weight: 500;
+          padding: 1rem;
+        }
       }
-      td {
-        color: $light;
-        font-size: 18px;
-        font-weight: 600;
-        padding: 1rem;
+      tr:hover {
+        background-color: whitesmoke;
+        td {
+          color: $dark;
+        }
       }
     }
   }
