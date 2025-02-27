@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FaChevronRight } from "react-icons/fa";
+import { FaChevronRight, FaTrash, FaPencilAlt, FaArrowUp } from "react-icons/fa";
 
 import Nav from "../components/Nav.tsx";
 import InBox from "../components/Inbox.tsx";
@@ -15,24 +15,31 @@ const Inbox = () => {
     getMessages();
   }, [messages]);
   return (
-    <main className="inbox-main">
+    <main className="admin-main">
       <Nav page={"inbox"} />
-      <h2>
-        Admin &nbsp;
-        <FaChevronRight />
-        &nbsp; Messages
-      </h2>
-      <div className="inbox-container">
-        {messages.map((msg: MessageType, i: number) => {
-          return (
-            <InBox
-              key={i}
-              id={msg._id}
-              message={msg.message}
-              createdAt={msg.createdAt}
-            />
-          );
-        })}
+      <h2>Welcome Admin Cynthia😎</h2>
+      <h1>Messages</h1>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Msg-id</th>
+              <th>Message</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {messages.map((msg: any, i: number) => {
+              return (
+                <tr key={i}>
+                  <td style={{"fontSize": "12px"}}>msg-{(msg?._id).slice(0, 16)}</td>
+                  <td>{msg?.message}</td>
+                  <td style={{"display": "flex", "justifyContent": "space-between"}}><FaTrash/><FaPencilAlt/><FaArrowUp/></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
       <Notification notification={notification} />
     </main>

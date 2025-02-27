@@ -4,8 +4,8 @@ import Nav from "../components/Nav";
 
 import { useGlobalContext } from "../Global";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { FaRotate } from "react-icons/fa6";
+import { FaRotate, FaCaretRight, FaCaretLeft } from "react-icons/fa6";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 const SecretRoom = () => {
   const { messages, getMessages }: any = useGlobalContext();
@@ -42,25 +42,39 @@ const SecretRoom = () => {
         <FaRotate />
       </div>
       <div className="body">
-        <h1>Shhh!...🤫, u've just found secret room🧐</h1>
+        <h1>Shhh!...🤫, U've just found secret room🧐</h1>
         <div className="item-container">
           <div className="move left" onClick={() => move("backward")}>
-            <FaChevronLeft />
+            <FaCaretLeft />
           </div>
           <div className="items">
-            {messages.map(({ message }: { message: string }, i: number) => {
-              return (
-                <div className={`item ${curr == i && "active"}`} key={i}>
-                  <img src="/imgs/aniobi_transparent_oxblood.png" alt="" />
-                  <div className="msg">{message}</div>
-                </div>
-              );
-            })}
+            {messages.map(
+              (
+                { message, _id }: { message: string; _id: string },
+                i: number
+              ) => {
+                return (
+                  <div
+                    className={`item ${
+                      curr == i && i % 2 == 0
+                        ? "even-active"
+                        : curr == i && i % 2 == 1
+                        ? "odd-active"
+                        : ""
+                    }`}
+                    key={i}
+                  >
+                    <img src="/imgs/aniobi_transparent_oxblood.png" alt="" />
+                    <div className="msg">{message}</div>
+                    <BsHeart className="heart" />
+                  </div>
+                );
+              }
+            )}
           </div>
 
           <div className="move left" onClick={() => move("forward")}>
-            &nbsp;
-            <FaChevronRight />
+            <FaCaretRight />
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ nav {
   align-items: center;
   padding: 0.5rem;
   justify-content: space-between;
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 10;
 
@@ -89,11 +89,9 @@ nav {
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 400px;
 
     .banner {
-      padding: 10rem 2rem;
-      height: 500px;
+      padding: 7rem 2rem;
       width: 100%;
       display: grid;
       place-items: center;
@@ -104,7 +102,7 @@ nav {
         font-weight: 700;
         line-height: 1.1;
         font-family: $primaryFont;
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
       }
       .follow {
         width: 100%;
@@ -232,58 +230,6 @@ nav {
   }
 }
 
-.inbox-main {
-  display: grid;
-  place-items: center;
-  h2 {
-    color: $light;
-    margin: 0;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    color: #ffa200;
-  }
-  .inbox-container {
-    // height: 80vh;
-    background-color: $primaryColor;
-    width: 60%;
-    padding: 1rem;
-    border-radius: 10px;
-    // overflow-y: scroll;
-
-    .inbox {
-      background-color: #ffa200;
-      // box-shadow: 0px 8px 24px rgb(218, 217, 217);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-
-      small {
-        color: $primaryColor;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        display: table;
-      }
-
-      .btn-holder {
-        width: 100%;
-        display: flex;
-        justify-content: end;
-        margin-top: 0.5rem;
-
-        button {
-          color: $primaryColor;
-          background-color: transparent;
-          font-size: 10px;
-          font-weight: 600;
-          border: 2px solid $primaryColor;
-          padding: 0.3rem;
-        }
-      }
-    }
-  }
-}
-
 .secret-room-container {
   background-color: $primaryColor2;
   background-attachment: fixed;
@@ -311,24 +257,27 @@ nav {
   }
 
   .body {
-    display: grid;
-    place-items: center;
-    height: 80vh;
+    display: flex;
+    justify-content: space-around;
+    height: 70vh;
     scroll-behavior: smooth;
+    padding-top: 5rem;
   }
   h1 {
-    font-size: 25px;
+    font-size: 55px;
     color: $secondaryColor;
-    text-align: center;
-    margin-top: 3rem;
+    margin-top: 1rem;
+    margin-left: 3rem;
+    width: 65%;
+    font-weight: 900;
   }
 
   .item-container {
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    height: 75vh;
+    margin-top: 2rem;
+    display: grid;
+    place-items: center;
     position: relative;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -341,7 +290,7 @@ nav {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
+      font-size: 40px;
       font-weight: 800;
       cursor: pointer;
     }
@@ -352,22 +301,34 @@ nav {
       place-items: center;
       scroll-behavior: smooth;
 
-      .item.active {
+      .item.even-active {
         scale: 1;
+        transform: rotate(7deg);
       }
+      .item.odd-active {
+        scale: 1;
+        transform: rotate(-7deg);
+      }
+
       .item {
         background-color: $secondaryColor2;
         height: 300px;
         width: 500px;
         border-radius: 20px;
-        // box-shadow: 8px 8px 24px $dark;
         position: absolute;
         scale: 0;
 
         img {
-          width: 120px;
+          width: 140px;
           height: 50px;
           object-fit: cover;
+        }
+
+        .heart {
+          position: absolute;
+          bottom: 1.5rem;
+          right: 1.5rem;
+          font-size: 30px;
         }
 
         .msg {
@@ -388,7 +349,7 @@ nav {
   height: 100vh;
   background: linear-gradient(180deg, $primaryColor, $secondaryColor);
   .container {
-    height: 90vh;
+    height: 70vh;
     width: 100%;
     display: grid;
     place-items: center;
@@ -440,6 +401,48 @@ nav {
           border: none;
           outline: none;
         }
+      }
+    }
+  }
+}
+
+.admin-main {
+  height: 100vh;
+  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
+
+  h2 {
+    margin: 1rem 1rem 0;
+    color: $light;
+    font-size: 28px;
+  }
+  h1 {
+    margin: 1rem 0;
+    color: $light;
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .table-container {
+    width: 100%;
+    height: 60vh;
+    display: grid;
+    place-items: center;
+    overflow-y: scroll;
+
+    table {
+      width: 90%;
+
+      th {
+        background-color: $light;
+        color: $primaryColor;
+        padding: 0.7rem;
+        font-size: 20px;
+      }
+      td {
+        color: $light;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 1rem;
       }
     }
   }
