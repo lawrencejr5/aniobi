@@ -293,6 +293,24 @@
       width: 96%;
     }
   }
+
+  .modal-container {
+    form {
+      width: 90%;
+      margin: 0, 0.5rem;
+      .head {
+        h3 {
+          font-size: 17px;
+        }
+      }
+    }
+
+    &.delete {
+      p {
+        font-size: 16px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 390px) {

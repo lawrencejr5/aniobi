@@ -16,7 +16,15 @@ import { useGlobalContext } from "../Global.tsx";
 import { MessageType } from "../types.tsx";
 
 const Inbox = () => {
-  const { messages, getMessages, notification }: any = useGlobalContext();
+  const {
+    messages,
+    getMessages,
+    notification,
+    setModalDelOpen,
+    modalDelOpen,
+    setModalEditOpen,
+    modalEditOpen,
+  }: any = useGlobalContext();
 
   useEffect(() => {
     getMessages();
@@ -52,9 +60,15 @@ const Inbox = () => {
                       alignItems: "center",
                     }}
                   >
-                    <FaRegTrashAlt />
-                    <MdOutlineFileUpload />
-                    <FiEdit />
+                    <button onClick={() => setModalEditOpen(true)}>
+                      <FiEdit />
+                    </button>
+                    <button>
+                      <MdOutlineFileUpload />
+                    </button>
+                    <button onClick={() => setModalDelOpen(true)}>
+                      <FaRegTrashAlt />
+                    </button>
                   </td>
                 </tr>
               );
@@ -63,8 +77,8 @@ const Inbox = () => {
         </table>
       </div>
       {/* <ModalCrt page="inbox" /> */}
-      {/* <ModalDel page="inbox" /> */}
-      {/* <ModalEdit page="inbox" /> */}
+      <ModalDel page="inbox" open={modalDelOpen} />
+      <ModalEdit page="inbox" open={modalEditOpen} />
       <Notification notification={notification} />
     </main>
   );

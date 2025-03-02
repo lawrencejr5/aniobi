@@ -457,15 +457,27 @@ nav {
           font-weight: 500;
           padding: 1rem;
           vertical-align: top;
+
+          button {
+            background-color: transparent;
+            border: 0;
+            outline: 0;
+            color: $light;
+            transition: 0s;
+          }
         }
         td#actns {
           min-width: 120px;
+          transition: 0s;
         }
       }
       tr:hover {
         background-color: whitesmoke;
         td {
           color: $dark;
+          button {
+            color: $dark;
+          }
         }
       }
     }
@@ -542,31 +554,36 @@ nav {
       outline: none;
     }
   }
-}
-.modal-container.delete {
-  p {
-    font-size: 20px;
-    font-weight: 600;
-    color: $light;
+
+  &.hide {
+    display: none;
   }
-  .btn-holder {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: 1rem;
 
-    button {
-      padding: 0.3rem;
-      border-radius: 5px;
-      font-size: 16px;
-      width: auto;
-      margin: 0.5rem;
+  &.delete {
+    p {
+      font-size: 20px;
+      font-weight: 600;
+      color: $light;
+    }
+    .btn-holder {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 1rem;
 
-      &#true {
-        background-color: red;
-      }
-      &#false {
-        background-color: grey;
+      button {
+        padding: 0.3rem;
+        border-radius: 5px;
+        font-size: 16px;
+        width: auto;
+        margin: 0.5rem;
+
+        &#true {
+          background-color: red;
+        }
+        &#false {
+          background-color: grey;
+        }
       }
     }
   }

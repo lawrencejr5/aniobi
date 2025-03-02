@@ -20,6 +20,13 @@ interface ContextAppType {
   signIn: (input: string) => Promise<void>;
   notification: NotificationType | null;
   setNotification: Dispatch<SetStateAction<NotificationType>>;
+  // Modals
+  modalDelOpen: boolean;
+  modalCrtOpen: boolean;
+  modalEditOpen: boolean;
+  setModalCrtOpen: any;
+  setModalDelOpen: any;
+  setModalEditOpen: any;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
@@ -79,6 +86,11 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Modals
+  const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
+  const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
+  const [modalEditOpen, setModalEditOpen] = useState<boolean>(false);
+
   useEffect(() => {
     getMessages();
   }, []);
@@ -92,6 +104,13 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         setNotification,
         notification,
+        // Modals
+        modalDelOpen,
+        modalCrtOpen,
+        modalEditOpen,
+        setModalCrtOpen,
+        setModalDelOpen,
+        setModalEditOpen,
       }}
     >
       {children}

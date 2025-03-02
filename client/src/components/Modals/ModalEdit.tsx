@@ -3,18 +3,23 @@ import React from "react";
 import { FaEye, FaLock, FaUser, FaUserCircle, FaTimes } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
+import { useGlobalContext } from "../..//Global";
+
 interface ModalProps {
   page: string;
+  open: boolean;
 }
 
-const ModalEdit: React.FC<ModalProps> = ({ page }) => {
+const ModalEdit: React.FC<ModalProps> = ({ page, open }) => {
+  const { setModalEditOpen }: any = useGlobalContext();
+
   return (
-    <div className="modal-container">
+    <div className={`modal-container ${!open && "hide"}`}>
       {page === "user" ? (
         <form>
           <div className="head">
             <h3>Edit User Details</h3>
-            <FaTimes className="icon" />
+            <FaTimes className="icon" onClick={() => setModalEditOpen(false)} />
           </div>
           <div className="inp-holder">
             <FaUserCircle className="icon" />
@@ -31,7 +36,7 @@ const ModalEdit: React.FC<ModalProps> = ({ page }) => {
         <form>
           <div className="head">
             <h3>Edit Message</h3>
-            <FaTimes className="icon" />
+            <FaTimes className="icon" onClick={() => setModalEditOpen(false)} />
           </div>
           <div className="inp-holder">
             <FaMessage className="icon" />

@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  FaChevronRight,
-  FaRegTrashAlt,
-  FaPencilAlt,
-  FaArrowUp,
-} from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import Nav from "../components/Nav.tsx";
 import Notification from "../components/Notification.tsx";
 
@@ -18,7 +13,13 @@ import { users } from "../data/users.tsx";
 import { FiEdit } from "react-icons/fi";
 
 const Users = () => {
-  const { notification }: any = useGlobalContext();
+  const {
+    notification,
+    setModalDelOpen,
+    modalDelOpen,
+    setModalEditOpen,
+    modalEditOpen,
+  }: any = useGlobalContext();
 
   return (
     <main className="admin-main">
@@ -48,8 +49,12 @@ const Users = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <FiEdit />
-                  <FaRegTrashAlt />
+                  <button onClick={() => setModalEditOpen(true)}>
+                    <FiEdit />
+                  </button>
+                  <button onClick={() => setModalDelOpen(true)}>
+                    <FaRegTrashAlt />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -57,8 +62,8 @@ const Users = () => {
         </table>
       </div>
       {/* <ModalCrt page="user" /> */}
-      {/* <ModalDel page="user" /> */}
-      {/* <ModalEdit page="user" /> */}
+      <ModalDel page="user" open={modalDelOpen} />
+      <ModalEdit page="user" open={modalEditOpen} />
       <Notification notification={notification} />
     </main>
   );

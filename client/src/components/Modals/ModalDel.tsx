@@ -1,17 +1,22 @@
 import React from "react";
-import { FaEye, FaLock, FaUser, FaUserCircle, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+
+import { useGlobalContext } from "../../Global";
 
 interface ModalProps {
   page: string;
+  open: boolean;
 }
 
-const ModalDel: React.FC<ModalProps> = ({ page }) => {
+const ModalDel: React.FC<ModalProps> = ({ page, open }) => {
+  const { setModalDelOpen }: any = useGlobalContext();
+
   return (
-    <div className="modal-container delete">
+    <div className={`modal-container delete ${!open && "hide"}`}>
       <form>
         <div className="head">
           <h3>Delete prompt</h3>
-          <FaTimes className="icon" />
+          <FaTimes className="icon" onClick={() => setModalDelOpen(false)} />
         </div>
         {page === "user" ? (
           <p>Are u sure u wanna delete this user?</p>
@@ -21,7 +26,13 @@ const ModalDel: React.FC<ModalProps> = ({ page }) => {
 
         <div className="btn-holder">
           <button id="true">Delete</button>
-          <button id="false">Cancel</button>
+          <button
+            id="false"
+            type="button"
+            onClick={() => setModalDelOpen(false)}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>
