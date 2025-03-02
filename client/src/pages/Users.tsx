@@ -23,14 +23,14 @@ const Users = () => {
     <main className="admin-main">
       <Nav page={"users"} />
       <h2>Welcome Admin Cynthia😎</h2>
-      <h1>Users</h1>
       <div className="table-container">
+        <h1>Users</h1>
         <table>
           <thead>
             <tr>
               <th>S/N</th>
               <th>Username</th>
-              <th>Date Joined</th>
+              {/* <th>Date Joined</th> */}
               <th>Actions</th>
             </tr>
           </thead>
@@ -39,8 +39,9 @@ const Users = () => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{user.username}</td>
-                <td>{user.dateJoined}</td>
+                {/* <td>{user.dateJoined}</td> */}
                 <td
+                  id="actns"
                   style={{
                     display: "flex",
                     justifyContent: "space-between",

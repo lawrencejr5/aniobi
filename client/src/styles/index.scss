@@ -426,7 +426,7 @@ nav {
 
   .table-container {
     width: 100%;
-    height: 60vh;
+    max-height: 60vh;
     display: grid;
     place-items: center;
     overflow-y: scroll;
@@ -437,17 +437,26 @@ nav {
       tr {
         transition: 0;
         cursor: pointer;
+        // th,
+        td {
+          vertical-align: top;
+        }
         th {
           background-color: $light;
           color: $primaryColor;
           padding: 0.7rem;
           font-size: 20px;
+          position: sticky;
+          top: 0;
         }
         td {
           color: $light;
           font-size: 18px;
           font-weight: 500;
           padding: 1rem;
+        }
+        td#actns {
+          min-width: 120px;
         }
       }
       tr:hover {

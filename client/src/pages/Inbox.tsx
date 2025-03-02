@@ -5,7 +5,6 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 
 import Nav from "../components/Nav.tsx";
-import InBox from "../components/Inbox.tsx";
 import Notification from "../components/Notification.tsx";
 
 import ModalCrt from "../components/Modals/ModalCrt.tsx";
@@ -39,13 +38,14 @@ const Inbox = () => {
             </tr>
           </thead>
           <tbody>
-            {messages.map((msg: any, i: number) => {
+            {messages.map((msg: MessageType, i: number) => {
               return (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <td>msg{(msg?._id).slice(0, 16)}</td>
-                  <td>{msg?.message}</td>
+                  <td id="id">msg{(msg?._id).slice(0, 16)}</td>
+                  <td id="msg">{msg?.message}</td>
                   <td
+                    id="actns"
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
