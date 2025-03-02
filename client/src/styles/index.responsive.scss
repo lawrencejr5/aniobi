@@ -7,16 +7,15 @@
         height: 400px;
 
         p {
-          font-size: 60px;
+          font-size: 80px;
         }
       }
 
       .chat-box {
-        margin-top: 15rem;
-
+        width: 95%;
         .footer {
           .inp-holder {
-            width: 52%;
+            width: 40%;
 
             img {
               width: 40px;
@@ -35,36 +34,82 @@
       }
     }
   }
-}
 
-@media screen and (max-width: 925px) {
-  .home-container {
-    .container {
-      display: block;
-
-      .banner {
-        width: 100%;
-        max-width: 70%;
-
-        p {
-          font-size: 50px;
-        }
-        .follow {
-          span {
-            padding: 0.7rem;
-            font-size: 12px;
-          }
-        }
+  .secret-room-container {
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 5rem;
+      height: 80%;
+      h1 {
+        font-size: 50px;
+        width: 70%;
+        text-align: left;
+        margin-bottom: 1rem;
       }
-
-      .chat-box {
-        margin-top: 3rem;
+      .item-container {
+        width: 70%;
+        height: 100vh;
+        margin-left: 5rem;
+        margin-top: 5rem;
+        align-self: flex-end;
       }
     }
   }
+}
+
+@media screen and (max-width: 925px) {
   .inbox-main {
     .inbox-container {
       width: 80%;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .secret-room-container {
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 3rem;
+      height: auto;
+
+      h1 {
+        font-size: 40px;
+        width: 90%;
+        text-align: left;
+        margin-bottom: 1rem;
+      }
+
+      .item-container {
+        width: 100%;
+        margin: 1rem auto;
+        height: 60vh;
+        align-self: flex-end;
+
+        .item {
+          width: 80%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .secret-room-container {
+    .body {
+      flex-direction: column;
+      h1 {
+        font-size: 35px;
+        width: 100%;
+      }
+      .item-container {
+        width: 80%;
+        margin: 1rem 0 0 auto;
+        height: auto;
+      }
     }
   }
 }
@@ -81,7 +126,7 @@
     span {
       font-size: 17px;
       margin-right: 0.3rem;
-      color: #ffa200;
+      color: $secondaryColor;
     }
   }
   .home-container {
@@ -90,20 +135,26 @@
 
       .banner {
         padding: 1rem;
+        margin-top: 5rem;
         width: 100%;
         max-width: 70%;
         height: 350px;
         p {
           font-size: 50px;
+          margin-bottom: 1rem;
         }
       }
 
+      .chat-box.fixed-height {
+        height: 130px;
+      }
       .chat-box {
         margin: 0 auto;
         margin-top: 3rem;
         position: absolute;
         bottom: 1rem;
         left: 0.5rem;
+        width: 95%;
         .chat {
           p {
             font-size: 12px;
@@ -113,19 +164,63 @@
         .footer {
           .inp-holder {
             width: 62%;
-
+            height: 60px;
             img {
-              width: 40px;
-              height: 40px;
+              width: 30px;
+              height: 30px;
             }
             .input {
               input {
-                font-size: medium;
+                font-size: 14px;
               }
               button {
-                font-size: 18px;
+                font-size: 16px;
               }
             }
+          }
+        }
+      }
+    }
+  }
+
+  .secret-room-container {
+    .body {
+      padding-top: 3rem;
+      height: auto;
+
+      h1 {
+        font-size: 30px;
+        width: 90%;
+        text-align: left;
+        margin: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .item-container {
+        width: 100%;
+        margin: 1rem auto;
+        height: 60vh;
+        align-self: flex-end;
+
+        .move {
+          background-color: $secondaryColor;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 30px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .item {
+          width: 80%;
+          height: 250px;
+          img {
+            width: 120px;
+            height: 45px;
           }
         }
       }
@@ -161,30 +256,6 @@
         height: 300px;
         p {
           font-size: 40px;
-        }
-      }
-
-      .chat-box.fixed-height {
-        height: 130px;
-      }
-      .chat-box {
-        .footer {
-          .inp-holder {
-            width: 62%;
-            height: 60px;
-            img {
-              width: 30px;
-              height: 30px;
-            }
-            .input {
-              input {
-                font-size: 14px;
-              }
-              button {
-                font-size: 16px;
-              }
-            }
-          }
         }
       }
     }
