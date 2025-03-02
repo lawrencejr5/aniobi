@@ -54,15 +54,11 @@
         margin-left: 5rem;
         margin-top: 5rem;
         align-self: flex-end;
-      }
-    }
-  }
-}
 
-@media screen and (max-width: 925px) {
-  .inbox-main {
-    .inbox-container {
-      width: 80%;
+        .item {
+          width: 80%;
+        }
+      }
     }
   }
 }
@@ -88,10 +84,6 @@
         margin: 1rem auto;
         height: 60vh;
         align-self: flex-end;
-
-        .item {
-          width: 80%;
-        }
       }
     }
   }
@@ -203,21 +195,22 @@
         align-self: flex-end;
 
         .move {
-          background-color: $secondaryColor;
           width: 50px;
           height: 50px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           font-size: 30px;
-          font-weight: 800;
-          cursor: pointer;
         }
 
         .item {
           width: 80%;
           height: 250px;
+
+          .msg {
+            font-size: 14px;
+          }
+          .heart {
+            font-size: 24px;
+          }
+
           img {
             width: 120px;
             height: 45px;
@@ -245,6 +238,7 @@
       display: grid;
       place-items: center;
       overflow-y: scroll;
+      padding: 0 0.5rem;
 
       table {
         width: 90%;

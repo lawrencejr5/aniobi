@@ -2,7 +2,13 @@ import React from "react";
 import Logo from "./Logo.tsx";
 import { Link, useNavigate } from "react-router-dom";
 
-import { FaChevronRight, FaPencilAlt, FaPlusCircle } from "react-icons/fa";
+import {
+  FaChevronRight,
+  FaPencilAlt,
+  FaPlusCircle,
+  FaUsers,
+} from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
 
 interface NavProps {
   page: String;
@@ -27,8 +33,13 @@ const Nav: React.FC<NavProps> = ({ page }) => {
           </span>
         )}
         {page === "inbox" && (
-          <span onClick={() => navigate("/")}>
-            Create user &nbsp; <FaPlusCircle />
+          <span onClick={() => navigate("/admin/users")}>
+            Admins &nbsp; <FaUsers />
+          </span>
+        )}
+        {page === "users" && (
+          <span onClick={() => navigate("/admin/inbox")}>
+            Messages &nbsp; <FaMessage />
           </span>
         )}
       </div>

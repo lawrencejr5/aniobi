@@ -145,7 +145,8 @@ nav {
 
       .header {
         display: flex;
-        justify-content: flex-start;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
         img {
           width: 80px;
@@ -153,6 +154,11 @@ nav {
           scale: 1.5;
           object-fit: cover;
           margin: 0;
+        }
+        .char-count {
+          color: $primaryColor;
+          margin-left: 1rem;
+          font-size: 14px; // adjust as needed
         }
       }
 
@@ -437,10 +443,6 @@ nav {
       tr {
         transition: 0;
         cursor: pointer;
-        // th,
-        td {
-          vertical-align: top;
-        }
         th {
           background-color: $light;
           color: $primaryColor;
@@ -454,6 +456,7 @@ nav {
           font-size: 18px;
           font-weight: 500;
           padding: 1rem;
+          vertical-align: top;
         }
         td#actns {
           min-width: 120px;

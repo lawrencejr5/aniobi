@@ -15,6 +15,7 @@ import ModalEdit from "../components/Modals/ModalEdit.tsx";
 import { useGlobalContext } from "../Global.tsx";
 
 import { users } from "../data/users.tsx";
+import { FiEdit } from "react-icons/fi";
 
 const Users = () => {
   const { notification }: any = useGlobalContext();
@@ -45,12 +46,10 @@ const Users = () => {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    // alignItems: "center",
                   }}
                 >
+                  <FiEdit />
                   <FaRegTrashAlt />
-                  <FaPencilAlt />
-                  <FaArrowUp />
                 </td>
               </tr>
             ))}
