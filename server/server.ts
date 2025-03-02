@@ -11,13 +11,13 @@ const cors = require("cors");
 
 // Routes
 import MessageRouter from "./routes/messages";
-import PasskeyRouter from "./routes/passkey";
+import AdminRouter from "./routes/admin";
 
 app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/messages", MessageRouter);
-app.use("/api/v1/passkey", PasskeyRouter);
+app.use("/api/v1/admin", AdminRouter);
 
 app.use(notFound);
 
