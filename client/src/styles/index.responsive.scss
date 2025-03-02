@@ -89,18 +89,14 @@
   }
 }
 
-@media screen and (max-width: 700px) {
-  .secret-room-container {
-    .body {
-      flex-direction: column;
-      h1 {
-        font-size: 35px;
+@media screen and (max-width: 770px) {
+  .signin-container {
+    .container {
+      form {
         width: 100%;
-      }
-      .item-container {
-        width: 80%;
-        margin: 1rem 0 0 auto;
-        height: auto;
+        h1 {
+          font-size: 35px;
+        }
       }
     }
   }
@@ -169,6 +165,30 @@
                 font-size: 16px;
               }
             }
+          }
+        }
+      }
+    }
+  }
+
+  .signin-container {
+    .container {
+      form {
+        display: grid;
+        place-items: center;
+        h1 {
+          font-size: 30px;
+        }
+        .inp-container {
+          width: 90%;
+          display: grid;
+          place-items: center;
+
+          .inp-holder {
+            width: 100%;
+          }
+          button {
+            width: 100%;
           }
         }
       }

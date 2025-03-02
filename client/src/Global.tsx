@@ -59,8 +59,12 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         status: true,
         theme: "success",
       });
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg,
+        status: true,
+        theme: "success",
+      });
     }
   };
 
