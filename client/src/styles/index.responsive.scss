@@ -244,12 +244,11 @@
     height: 100vh;
     background: linear-gradient(180deg, $primaryColor, $secondaryColor);
 
+    .create-btn {
+      bottom: 2rem;
+    }
     h2 {
       font-size: 18px;
-    }
-    h1 {
-      font-size: 30px;
-      margin-top: 2rem;
     }
 
     .table-container {
@@ -259,6 +258,15 @@
       place-items: center;
       overflow-y: scroll;
       padding: 0 0.5rem;
+
+      button {
+        font-size: 10px;
+        padding: 0.3rem;
+      }
+      h1 {
+        font-size: 30px;
+        margin-top: 2rem;
+      }
 
       table {
         width: 90%;
@@ -276,12 +284,6 @@
           }
           td#msg {
             min-width: 300px;
-          }
-        }
-        tr:hover {
-          background-color: whitesmoke;
-          td {
-            color: $dark;
           }
         }
       }

@@ -1,20 +1,24 @@
 import React from "react";
 
-import { FaEye, FaLock, FaUser, FaUserCircle, FaTimes } from "react-icons/fa";
+import { FaEye, FaLock, FaUserCircle, FaTimes } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+
+import { useGlobalContext } from "../../Global";
 
 interface ModalProps {
   page: string;
+  open: boolean;
 }
 
-const ModalCrt: React.FC<ModalProps> = ({ page }) => {
+const ModalCrt: React.FC<ModalProps> = ({ page, open }) => {
+  const { setModalCrtOpen }: any = useGlobalContext();
   return (
-    <div className="modal-container">
+    <div className={`modal-container ${!open && "hide"}`}>
       {page === "user" ? (
         <form>
           <div className="head">
             <h3>Create new user</h3>
-            <FaTimes className="icon" />
+            <FaTimes className="icon" onClick={() => setModalCrtOpen(false)} />
           </div>
           <div className="inp-holder">
             <FaUserCircle className="icon" />
@@ -31,7 +35,7 @@ const ModalCrt: React.FC<ModalProps> = ({ page }) => {
         <form>
           <div className="head">
             <h3>Create new message</h3>
-            <FaTimes className="icon" />
+            <FaTimes className="icon" onClick={() => setModalCrtOpen(false)} />
           </div>
           <div className="inp-holder">
             <FaMessage className="icon" />

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt, FaPlus } from "react-icons/fa";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 
@@ -24,6 +24,8 @@ const Inbox = () => {
     modalDelOpen,
     setModalEditOpen,
     modalEditOpen,
+    modalCrtOpen,
+    setModalCrtOpen,
   }: any = useGlobalContext();
 
   useEffect(() => {
@@ -34,8 +36,9 @@ const Inbox = () => {
     <main className="admin-main">
       <Nav page={"inbox"} />
       <h2>Welcome Admin Cynthia😎</h2>
-      <h1>Messages</h1>
       <div className="table-container">
+        <h1>Messages</h1>
+
         <table>
           <thead>
             <tr>
@@ -76,7 +79,10 @@ const Inbox = () => {
           </tbody>
         </table>
       </div>
-      {/* <ModalCrt page="inbox" /> */}
+      <div className="create-btn" onClick={() => setModalCrtOpen(true)}>
+        <FaPlus />
+      </div>
+      <ModalCrt page="inbox" open={modalCrtOpen} />
       <ModalDel page="inbox" open={modalDelOpen} />
       <ModalEdit page="inbox" open={modalEditOpen} />
       <Notification notification={notification} />

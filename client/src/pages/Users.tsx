@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaPlus, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
 import Nav from "../components/Nav.tsx";
 import Notification from "../components/Notification.tsx";
 
@@ -19,20 +19,24 @@ const Users = () => {
     modalDelOpen,
     setModalEditOpen,
     modalEditOpen,
+    setModalCrtOpen,
+    modalCrtOpen,
   }: any = useGlobalContext();
 
   return (
     <main className="admin-main">
       <Nav page={"users"} />
       <h2>Welcome Admin Cynthia😎</h2>
+
       <div className="table-container">
         <h1>Users</h1>
+
         <table>
           <thead>
             <tr>
               <th>S/N</th>
               <th>Username</th>
-              {/* <th>Date Joined</th> */}
+              <th>Role</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -40,8 +44,8 @@ const Users = () => {
             {users.map((user, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td>{user.username}</td>
-                {/* <td>{user.dateJoined}</td> */}
+                <td>{user?.username}</td>
+                <td>{user?.role}</td>
                 <td
                   id="actns"
                   style={{
@@ -61,7 +65,10 @@ const Users = () => {
           </tbody>
         </table>
       </div>
-      {/* <ModalCrt page="user" /> */}
+      <div className="create-btn" onClick={() => setModalCrtOpen(true)}>
+        <FaPlus />
+      </div>
+      <ModalCrt page="user" open={modalCrtOpen} />
       <ModalDel page="user" open={modalDelOpen} />
       <ModalEdit page="user" open={modalEditOpen} />
       <Notification notification={notification} />
