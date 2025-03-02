@@ -17,33 +17,38 @@ interface ContextAppType {
   messages: MessageType[] | null;
   getMessages: () => Promise<void>;
   writeMessage: (input: string) => Promise<void>;
-  signIn: (input: string) => Promise<void>;
+  signIn: (username: string, password: string) => Promise<void>;
   notification: NotificationType | null;
   setNotification: Dispatch<SetStateAction<NotificationType>>;
-  // Modals
+
+  // Modals with improved type safety
   modalDelOpen: boolean;
   modalCrtOpen: boolean;
   modalEditOpen: boolean;
-  setModalCrtOpen: any;
-  setModalDelOpen: any;
-  setModalEditOpen: any;
+  setModalCrtOpen: Dispatch<SetStateAction<boolean>>;
+  setModalDelOpen: Dispatch<SetStateAction<boolean>>;
+  setModalEditOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  //Notification
+  // Notification state
   const [notification, setNotification] = useState<NotificationType>({
     text: "",
     status: false,
     theme: "",
   });
+
+  // Auto dismiss notification only when it is active, and depend on notification.status
   useEffect(() => {
-    const notiTimeout = setTimeout(() => {
-      setNotification({ ...notification, status: false });
-    }, 2000);
-    return () => clearTimeout(notiTimeout);
-  }, [notification]);
+    if (notification.status) {
+      const notiTimeout = setTimeout(() => {
+        setNotification((prev) => ({ ...prev, status: false }));
+      }, 2000);
+      return () => clearTimeout(notiTimeout);
+    }
+  }, [notification.status]);
 
   const [messages, setMessages] = useState<MessageType[]>([]);
 
@@ -75,10 +80,11 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signIn = async (input: string) => {
+  const signIn = async (username: string, password: string) => {
     try {
-      const { data } = await axios.post(`${EndPoints.passkey}/check`, {
-        key: input,
+      const { data } = await axios.post(`${EndPoints.admin}/signin`, {
+        username,
+        password,
       });
       localStorage.setItem("token", data.token);
     } catch (err) {
@@ -86,7 +92,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Modals
+  // Modals with proper type set-up
   const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
   const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
   const [modalEditOpen, setModalEditOpen] = useState<boolean>(false);
