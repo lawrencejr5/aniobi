@@ -14,11 +14,14 @@ const ModalDel: React.FC<ModalDelProps> = ({ page, open }) => {
     setModalDelOpen,
     setNotification,
     getMessages,
+    deleteAdmin,
+    selectedAdmin,
+    fetchAdminUsers,
   } = useGlobalContext() as ContextAppType;
 
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
-  const handleDelete = async (e: React.FormEvent) => {
+  const handleMsgDelete = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedMessage || !selectedMessage._id) {
       setNotification({
@@ -49,20 +52,53 @@ const ModalDel: React.FC<ModalDelProps> = ({ page, open }) => {
       setIsDeleting(false);
     }
   };
+  const handleAdminDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedAdmin || !selectedAdmin._id) {
+      setNotification({
+        text: "No user selected",
+        status: true,
+        theme: "danger",
+      });
+      return;
+    }
+    try {
+      setIsDeleting(true);
+      await deleteAdmin(selectedAdmin._id);
+      setNotification({
+        text: `Admin User deleted`,
+        status: true,
+        theme: "success",
+      });
+      setModalDelOpen(false);
+      fetchAdminUsers();
+    } catch (err) {
+      console.log(err);
+      setNotification({
+        text: "Error deleting message",
+        status: true,
+        theme: "danger",
+      });
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   if (!open) return null;
 
   return (
     <div className="modal-container delete">
       {page === "user" ? (
-        <form onSubmit={handleDelete}>
+        <form onSubmit={handleAdminDelete}>
           <div className="head">
             <h3>Delete User</h3>
             <FaTimes className="icon" onClick={() => setModalDelOpen(false)} />
           </div>
           <p>Are u sure u wanna delete this user?</p>
           <div className="btn-holder">
-            <button id="true">Delete</button>
+            <button id="true" type="submit" disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
             <button
               id="false"
               type="button"
@@ -71,12 +107,9 @@ const ModalDel: React.FC<ModalDelProps> = ({ page, open }) => {
               Cancel
             </button>
           </div>
-          <button type="submit" disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : "Delete"}
-          </button>
         </form>
       ) : (
-        <form onSubmit={handleDelete}>
+        <form onSubmit={handleMsgDelete}>
           <div className="head">
             <h3>Delete Message</h3>
             <FaTimes className="icon" onClick={() => setModalDelOpen(false)} />

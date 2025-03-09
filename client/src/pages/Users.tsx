@@ -9,7 +9,6 @@ import ModalEdit from "../components/Modals/ModalEdit.tsx";
 
 import { useGlobalContext } from "../Global.tsx";
 
-import { users } from "../data/users.tsx";
 import { FiEdit } from "react-icons/fi";
 
 import { LocalStorage } from "../enums.tsx";
@@ -25,6 +24,8 @@ const Users = () => {
     modalEditOpen,
     setModalCrtOpen,
     modalCrtOpen,
+    adminUsers,
+    setSelectedAdmin,
   }: any = useGlobalContext();
 
   const admin: AdminType = LocalStorage?.admin
@@ -45,16 +46,18 @@ const Users = () => {
             <tr>
               <th>S/N</th>
               <th>Username</th>
-              <th>Role</th>
+              <th>Date Created</th>
+              <th>Last Modified</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user, i) => (
+            {adminUsers.map((user: AdminType, i: number) => (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{user?.username}</td>
-                <td>{user?.role}</td>
+                <td>{user?.createdAt}</td>
+                <td>{user?.updatedAt}</td>
                 <td
                   id="actns"
                   style={{
@@ -62,10 +65,20 @@ const Users = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <button onClick={() => setModalEditOpen(true)}>
+                  <button
+                    onClick={() => {
+                      setModalEditOpen(true);
+                      setSelectedAdmin(user);
+                    }}
+                  >
                     <FiEdit />
                   </button>
-                  <button onClick={() => setModalDelOpen(true)}>
+                  <button
+                    onClick={() => {
+                      setModalDelOpen(true);
+                      setSelectedAdmin(user);
+                    }}
+                  >
                     <FaRegTrashAlt />
                   </button>
                 </td>

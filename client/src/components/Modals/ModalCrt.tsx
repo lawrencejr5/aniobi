@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { FaEye, FaLock, FaUserCircle, FaTimes } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaUserCircle,
+  FaTimes,
+} from "react-icons/fa";
 import { useGlobalContext, ContextAppType } from "../../Global.tsx";
 
 interface ModalCrtProps {
@@ -8,11 +14,14 @@ interface ModalCrtProps {
 }
 
 const ModalCrt: React.FC<ModalCrtProps> = ({ page, open }) => {
-  const { writeMessage, setModalCrtOpen, setNotification } =
+  const { writeMessage, setModalCrtOpen, setNotification, createAdmin } =
     useGlobalContext() as ContextAppType;
   const [message, setMessage] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleMsgSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim().length === 0) {
       setNotification({
@@ -33,7 +42,28 @@ const ModalCrt: React.FC<ModalCrtProps> = ({ page, open }) => {
       setModalCrtOpen(false);
     } catch (err) {
       console.log(err);
-      // Optionally handle errors here
+    }
+  };
+
+  const handleAdminSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createAdmin({ username, password });
+      setNotification({
+        text: "New Admin created successfully",
+        status: true,
+        theme: "success",
+      });
+      setUsername("");
+      setPassword("");
+      setModalCrtOpen(false);
+    } catch (err: any) {
+      console.log(err);
+      setNotification({
+        text: err?.response?.data?.msg || "Error creating new admin",
+        status: true,
+        theme: "success",
+      });
     }
   };
 
@@ -42,24 +72,41 @@ const ModalCrt: React.FC<ModalCrtProps> = ({ page, open }) => {
   return (
     <div className="modal-container">
       {page === "user" ? (
-        <form>
+        <form onSubmit={handleAdminSubmit}>
           <div className="head">
             <h3>Create new user</h3>
             <FaTimes className="icon" onClick={() => setModalCrtOpen(false)} />
           </div>
           <div className="inp-holder">
             <FaUserCircle className="icon" />
-            <input type="text" placeholder="Admin username" />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Admin username"
+            />
           </div>
           <div className="inp-holder">
             <FaLock className="icon" />
-            <input type="password" placeholder="Admin password" />
-            <FaEye className="icon" />
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Admin password"
+            />
+            {showPassword ? (
+              <FaEyeSlash
+                className="icon"
+                onClick={() => setShowPassword(false)}
+              />
+            ) : (
+              <FaEye className="icon" onClick={() => setShowPassword(true)} />
+            )}
           </div>
           <button>Create</button>
         </form>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleMsgSubmit}>
           <div className="head">
             <h3>Create New Message</h3>
             <FaTimes className="icon" onClick={() => setModalCrtOpen(false)} />

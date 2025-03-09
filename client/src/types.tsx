@@ -12,6 +12,9 @@ export interface NotificationType {
 }
 
 export interface AdminType {
-  _id: string;
-  username: string;
+  _id?: string;
+  username?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  password?: string;
 }

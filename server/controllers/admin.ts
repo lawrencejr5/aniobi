@@ -92,35 +92,38 @@ const updateAdminCredentials = async (
   let { username, password }: AdminBody = req.body;
   const { id } = req.params;
 
-  // Check separately for admin id
+  // Check for admin id
   if (!id) {
     res.status(400).json({ msg: "Admin id is required" });
     return;
   }
 
-  // Then check that both username and password are provided
-  if (!username || !password) {
-    res
-      .status(400)
-      .json({ msg: "Please provide a new username and new password" });
+  // Check that at least username is provided; password is optional
+  if (!username) {
+    res.status(400).json({ msg: "Please provide a new username" });
     return;
   }
 
   // Convert username to lowercase
   username = username.toLowerCase();
 
-  const adminDb = await Admin.findById(id);
+  const adminDb: any = await Admin.findById(id);
   if (!adminDb) {
     res.status(404).json({ msg: "Admin not found" });
     return;
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  // Update the admin credentials without checking the old password
+  // Update the username
   adminDb.username = username;
-  adminDb.password = hashedPassword;
+
+  // If a new password is provided and not empty, update the password
+  if (password && password.trim().length > 0) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    adminDb.password = hashedPassword;
+  }
+  // Otherwise, retain the existing password
+
   await adminDb.save();
 
   // Generate token after update and send response without password
@@ -154,8 +157,8 @@ const deleteAdmin = async (req: Request, res: Response): Promise<void> => {
 
 const getAdmins = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Fetch all admins, only returning _id and username.
-    const admins = await Admin.find({}, "_id username");
+    // Fetch all admins
+    const admins = await Admin.find({});
     res.status(200).json({ msg: "Admins fetched successfully", admins });
   } catch (error) {
     res.status(500).json({ msg: "An error occurred", error });

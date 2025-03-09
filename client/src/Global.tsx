@@ -20,7 +20,6 @@ export interface ContextAppType {
   updateMessage: (id: string, msg: string) => Promise<void>;
   updateShowMessage: (id: string, show: string) => Promise<void>;
   deleteMessage: (id: string) => Promise<void>;
-  signIn: (username: string, password: string) => Promise<void>;
   notification: NotificationType | null;
   setNotification: Dispatch<SetStateAction<NotificationType>>;
 
@@ -39,6 +38,18 @@ export interface ContextAppType {
   // Selected message for edit/delete
   selectedMessage: MessageType | null;
   setSelectedMessage: Dispatch<SetStateAction<MessageType | null>>;
+
+  // Selected admin for edit/delete
+  selectedAdmin: AdminType | null;
+  setSelectedAdmin: Dispatch<SetStateAction<AdminType | null>>;
+
+  // Admin data functions and state
+  adminUsers: AdminType[];
+  setAdminUsers: Dispatch<SetStateAction<AdminType[]>>;
+  fetchAdminUsers: () => Promise<void>;
+  createAdmin: (adminData: Partial<AdminType>) => Promise<void>;
+  updateAdmin: (id: string, adminData: Partial<AdminType>) => Promise<void>;
+  deleteAdmin: (id: string) => Promise<void>;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
@@ -56,7 +67,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     username: "",
   });
 
-  // Auto dismiss notification only when it is active, and depend on notification.status
   useEffect(() => {
     if (notification.status) {
       const notiTimeout = setTimeout(() => {
@@ -67,7 +77,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   }, [notification.status]);
 
   const [messages, setMessages] = useState<MessageType[]>([]);
-
   const getMessages = async () => {
     try {
       const { data } = await axios.get(EndPoints.messages, {
@@ -84,9 +93,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       await axios.post(
         EndPoints.messages,
         { msg: input },
-        {
-          headers: { Authorization: `Bearer ${LocalStorage.token}` },
-        }
+        { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
       );
       setNotification({
         text: "Message sent",
@@ -107,9 +114,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       await axios.patch(
         `${EndPoints.messages}/${id}`,
         { msg },
-        {
-          headers: { Authorization: `Bearer ${LocalStorage.token}` },
-        }
+        { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
       );
       setNotification({
         text: "Message updated successfully",
@@ -156,15 +161,86 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signIn = async (username: string, password: string) => {
+  // Create state for admin users
+  const [adminUsers, setAdminUsers] = useState<AdminType[]>([]);
+
+  const fetchAdminUsers = async (): Promise<void> => {
     try {
-      const { data } = await axios.post(`${EndPoints.admin}/signin`, {
-        username,
-        password,
+      const { data } = await axios.get(EndPoints.admin, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
       });
-      localStorage.setItem("token", data.token);
-    } catch (err) {
+
+      setAdminUsers(data.admins);
+    } catch (err: any) {
       console.log(err);
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching admin users",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const createAdmin = async (adminData: Partial<AdminType>): Promise<void> => {
+    try {
+      const { data } = await axios.post(
+        `${EndPoints.admin}/create`,
+        adminData,
+        {
+          headers: { Authorization: `Bearer ${LocalStorage.token}` },
+        }
+      );
+      setNotification({
+        text: "Admin created successfully",
+        status: true,
+        theme: "success",
+      });
+
+      fetchAdminUsers();
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error creating admin",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const updateAdmin = async (id: string, adminData: Partial<AdminType>) => {
+    try {
+      await axios.patch(`${EndPoints.admin}/${id}`, adminData, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setNotification({
+        text: "Admin updated successfully",
+        status: true,
+        theme: "success",
+      });
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error updating admin",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const deleteAdmin = async (id: string) => {
+    try {
+      await axios.delete(`${EndPoints.admin}/${id}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setNotification({
+        text: "Admin deleted successfully",
+        status: true,
+        theme: "success",
+      });
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error deleting admin",
+        status: true,
+        theme: "danger",
+      });
     }
   };
 
@@ -172,14 +248,14 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
   const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
   const [modalEditOpen, setModalEditOpen] = useState<boolean>(false);
-
-  // New: Selected message for delete and edit
   const [selectedMessage, setSelectedMessage] = useState<MessageType | null>(
     null
   );
+  const [selectedAdmin, setSelectedAdmin] = useState<AdminType | null>(null);
 
   useEffect(() => {
     getMessages();
+    fetchAdminUsers();
   }, []);
 
   return (
@@ -191,7 +267,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         updateMessage,
         updateShowMessage,
         deleteMessage,
-        signIn,
         setNotification,
         notification,
         signedIn,
@@ -204,6 +279,15 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setModalEditOpen,
         selectedMessage,
         setSelectedMessage,
+        // Admin data functions and state
+        adminUsers,
+        setAdminUsers,
+        fetchAdminUsers,
+        createAdmin,
+        updateAdmin,
+        deleteAdmin,
+        selectedAdmin,
+        setSelectedAdmin,
       }}
     >
       {children}
