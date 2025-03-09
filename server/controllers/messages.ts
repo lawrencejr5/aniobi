@@ -30,7 +30,7 @@ const updateMessage = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const { msg, show } = req.body;
-    if (!msg) {
+    if (!msg && !show) {
       res.status(400).json({ msg: "Input cannot be empty" });
       return;
     }

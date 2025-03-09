@@ -1,28 +1,18 @@
 import React from "react";
-
 import Nav from "../components/Nav";
-
-import { useGlobalContext } from "../Global";
-
+import { useGlobalContext, ContextAppType } from "../Global";
 import { FaRotate, FaCaretRight, FaCaretLeft } from "react-icons/fa6";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 const SecretRoom = () => {
-  const { messages, getMessages }: any = useGlobalContext();
-
+  const { messages, getMessages } = useGlobalContext() as ContextAppType;
   const [curr, setCurr] = React.useState<number>(0);
 
   const move = (position: string) => {
     if (position === "forward") {
-      setCurr((prev) => {
-        if (prev == messages?.length - 1) return 0;
-        return prev + 1;
-      });
+      setCurr((prev) => (prev === visibleMessages.length - 1 ? 0 : prev + 1));
     } else if (position === "backward") {
-      setCurr((prev) => {
-        if (prev == 0) return messages?.length - 1;
-        return prev - 1;
-      });
+      setCurr((prev) => (prev === 0 ? visibleMessages.length - 1 : prev - 1));
     }
   };
 
@@ -34,6 +24,9 @@ const SecretRoom = () => {
   React.useEffect(() => {
     getMessages();
   }, []);
+
+  // Create the function to filter only visible messages
+  const visibleMessages: any = messages?.filter((msg) => msg.show === true);
 
   return (
     <div className="secret-room-container">
@@ -48,7 +41,7 @@ const SecretRoom = () => {
             <FaCaretLeft />
           </div>
           <div className="items">
-            {messages.map(
+            {visibleMessages.map(
               (
                 { message, _id }: { message: string; _id: string },
                 i: number
@@ -56,9 +49,9 @@ const SecretRoom = () => {
                 return (
                   <div
                     className={`item ${
-                      curr == i && i % 2 == 0
+                      curr === i && i % 2 === 0
                         ? "even-active"
-                        : curr == i && i % 2 == 1
+                        : curr === i && i % 2 === 1
                         ? "odd-active"
                         : ""
                     }`}
@@ -72,7 +65,6 @@ const SecretRoom = () => {
               }
             )}
           </div>
-
           <div className="move left" onClick={() => move("forward")}>
             <FaCaretRight />
           </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { useGlobalContext } from "../Global.tsx";
+import { useGlobalContext, ContextAppType } from "../Global.tsx";
 import { EndPoints } from "../enums.tsx";
 
 import Notification from "../components/Notification.tsx";
@@ -10,7 +10,8 @@ import Nav from "../components/Nav.tsx";
 import { FaEye, FaLock, FaUserCircle, FaEyeSlash } from "react-icons/fa";
 
 const Signin = () => {
-  const { setNotification, notification }: any = useGlobalContext();
+  const { setNotification, notification, setSignedIn } =
+    useGlobalContext() as ContextAppType;
   const navigate = useNavigate();
 
   // New state variables for username, password, and showing password
@@ -38,6 +39,8 @@ const Signin = () => {
         theme: "success",
       });
       localStorage.setItem("token", data.token);
+      localStorage.setItem("admin", JSON.stringify(data.admin));
+      setSignedIn(data?.admin?.username);
       setTimeout(() => {
         setIsLoading(false);
         navigate("/admin/inbox");

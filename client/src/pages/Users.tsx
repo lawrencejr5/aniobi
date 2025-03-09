@@ -12,6 +12,10 @@ import { useGlobalContext } from "../Global.tsx";
 import { users } from "../data/users.tsx";
 import { FiEdit } from "react-icons/fi";
 
+import { LocalStorage } from "../enums.tsx";
+
+import { AdminType } from "../types.tsx";
+
 const Users = () => {
   const {
     notification,
@@ -23,10 +27,15 @@ const Users = () => {
     modalCrtOpen,
   }: any = useGlobalContext();
 
+  const admin: AdminType = LocalStorage?.admin
+    ? JSON.parse(LocalStorage.admin)
+    : {};
+  const user = admin.username;
+
   return (
     <main className="admin-main">
       <Nav page={"users"} />
-      <h2>Welcome Admin Cynthia😎</h2>
+      <h2>Welcome Admin {user}😎</h2>
 
       <div className="table-container">
         <h1>Users</h1>

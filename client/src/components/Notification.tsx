@@ -4,11 +4,12 @@ import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { NotificationType } from "../types";
 
 interface NotificationProps {
-  notification: NotificationType;
+  notification: NotificationType | null;
 }
 
 const Notification: React.FC<NotificationProps> = ({ notification }) => {
-  const { text, theme, status } = notification;
+  if (!notification || !notification.status) return null;
+  const { text, theme, status }: NotificationType = notification;
   return (
     <div className="notification-container">
       <div className={`notification text-${theme} ${status ? "down" : "up"}`}>
