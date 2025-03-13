@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { IoMdSend } from "react-icons/io";
 import { useGlobalContext } from "../Global.tsx";
 
 const ChatBox = () => {
@@ -42,7 +42,7 @@ const ChatBox = () => {
               maxLength={200}
             />
             <button>
-              <FaLongArrowAltRight />
+              <IoMdSend />
             </button>
           </form>
         </div>

@@ -162,7 +162,7 @@
                 font-size: 14px;
               }
               button {
-                font-size: 16px;
+                font-size: 25px;
               }
             }
           }
@@ -205,38 +205,45 @@
         width: 90%;
         text-align: left;
         margin: 1rem;
+        margin-top: 0;
         margin-bottom: 1rem;
       }
 
       .item-container {
         width: 100%;
         margin: 1rem auto;
-        height: 60vh;
-        align-self: flex-end;
+        height: 50vh;
 
         .move {
-          width: 50px;
-          height: 50px;
-          font-size: 30px;
+          width: 40px;
+          height: 40px;
+          font-size: 25px;
         }
 
         .item {
           width: 80%;
-          height: 250px;
+          padding: 0.5rem 0;
+          height: 200px;
 
           .msg {
-            font-size: 14px;
+            font-size: 12px;
+            margin-top: 0;
           }
           .heart {
-            font-size: 24px;
+            font-size: 20px;
           }
 
           img {
-            width: 120px;
-            height: 45px;
+            width: 100px;
+            height: 30px;
           }
         }
       }
+    }
+    .reload {
+      height: 40px;
+      width: 40px;
+      font-size: 25px;
     }
   }
 
