@@ -1,18 +1,23 @@
-import React, {ReactNode} from 'react'
-import {useJwt} from "react-jwt"
-import {Navigate} from "react-router-dom"
+import React, { ReactNode } from "react";
+import { useJwt } from "react-jwt";
+import { Navigate } from "react-router-dom";
+
+import { useGlobalContext, ContextAppType } from "../Global";
 
 interface ProtectedProps {
-    children: ReactNode
+  children: ReactNode;
 }
 
-const Protected:React.FC<ProtectedProps> = ({children}) => {
-    const token:any = localStorage.getItem("token")
+const Protected: React.FC<ProtectedProps> = ({ children }) => {
+  const { signedIn } = useGlobalContext() as ContextAppType;
 
-    const {isExpired}:any = useJwt(token)
+  const token: any = localStorage.getItem("token");
 
-    if(!token || isExpired) return <Navigate to={'/admin/signin'}/>
-  return <>{children}</>
-}
+  const { isExpired }: any = useJwt(token);
 
-export default Protected
+  if (!token || isExpired || !signedIn)
+    return <Navigate to={"/admin/signin"} />;
+  return <>{children}</>;
+};
+
+export default Protected;

@@ -571,6 +571,20 @@ nav {
       // }
     }
   }
+  footer {
+    color: $primaryColor;
+    position: fixed;
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+
+    .logout {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }
 
 .modal-container {

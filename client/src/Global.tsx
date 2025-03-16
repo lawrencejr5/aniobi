@@ -50,6 +50,9 @@ export interface ContextAppType {
   createAdmin: (adminData: Partial<AdminType>) => Promise<void>;
   updateAdmin: (id: string, adminData: Partial<AdminType>) => Promise<void>;
   deleteAdmin: (id: string) => Promise<void>;
+
+  // Logout function
+  logout: () => void;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
@@ -163,13 +166,11 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   // Create state for admin users
   const [adminUsers, setAdminUsers] = useState<AdminType[]>([]);
-
   const fetchAdminUsers = async (): Promise<void> => {
     try {
       const { data } = await axios.get(EndPoints.admin, {
         headers: { Authorization: `Bearer ${LocalStorage.token}` },
       });
-
       setAdminUsers(data.admins);
     } catch (err: any) {
       console.log(err);
@@ -195,7 +196,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         status: true,
         theme: "success",
       });
-
       fetchAdminUsers();
     } catch (err: any) {
       setNotification({
@@ -244,6 +244,20 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Logout function
+  const logout = () => {
+    // Clear token and admin data from LocalStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("admin");
+    // Reset signedIn state
+    setSignedIn({ _id: "", username: "" });
+    setNotification({
+      text: "Logged out successfully",
+      status: true,
+      theme: "success",
+    });
+  };
+
   // Modals with proper type set-up
   const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
   const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
@@ -288,6 +302,8 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         deleteAdmin,
         selectedAdmin,
         setSelectedAdmin,
+        // Logout function
+        logout,
       }}
     >
       {children}

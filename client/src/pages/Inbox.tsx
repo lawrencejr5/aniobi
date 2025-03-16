@@ -31,12 +31,14 @@ const Inbox = () => {
     setModalCrtOpen,
     setSelectedMessage,
     setNotification,
+    signedIn,
+    logout,
   } = useGlobalContext() as ContextAppType;
 
   const admin: AdminType = LocalStorage?.admin
     ? JSON.parse(LocalStorage.admin)
     : {};
-  const user = admin.username;
+  const user = signedIn?.username;
 
   useEffect(() => {
     getMessages();
@@ -154,6 +156,12 @@ const Inbox = () => {
           </tbody>
         </table>
       </div>
+      <footer>
+        <span>© 2025 Lawjun</span>&nbsp;.&nbsp;
+        <span className="logout" onClick={logout}>
+          Logout
+        </span>
+      </footer>
       <div className="create-btn" onClick={() => setModalCrtOpen(true)}>
         <FaPlus />
       </div>

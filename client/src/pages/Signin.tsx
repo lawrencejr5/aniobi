@@ -40,7 +40,7 @@ const Signin = () => {
       });
       localStorage.setItem("token", data.token);
       localStorage.setItem("admin", JSON.stringify(data.admin));
-      setSignedIn(data?.admin?.username);
+      setSignedIn({ _id: data.admin._id, username: data.admin.username });
       setTimeout(() => {
         setIsLoading(false);
         navigate("/admin/inbox");

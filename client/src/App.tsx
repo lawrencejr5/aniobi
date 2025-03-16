@@ -18,17 +18,17 @@ const App: React.FC = () => {
         <Route
           path="/admin/inbox"
           element={
-            // <Protected>
-            <Inbox />
-            // </Protected>
+            <Protected>
+              <Inbox />
+            </Protected>
           }
         />
         <Route
           path="/admin/users"
           element={
-            // <Protected>
-            <Users />
-            // </Protected>
+            <Protected>
+              <Users />
+            </Protected>
           }
         />
         <Route path="/admin/signin" element={<Signin />} />
