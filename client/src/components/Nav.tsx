@@ -10,12 +10,16 @@ import {
 } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
+import { useGlobalContext, ContextAppType } from "../Global.tsx";
+
 interface NavProps {
   page: String;
 }
 
 const Nav: React.FC<NavProps> = ({ page }) => {
   const navigate = useNavigate();
+
+  const { signedIn } = useGlobalContext() as ContextAppType;
   return (
     <nav>
       <Link to={"/"}>
@@ -32,7 +36,7 @@ const Nav: React.FC<NavProps> = ({ page }) => {
             Write &nbsp; <FaPencilAlt />
           </span>
         )}
-        {page === "inbox" && (
+        {page === "inbox" && signedIn?.role === "super" && (
           <span onClick={() => navigate("/admin/users")}>
             Admins &nbsp; <FaUsers />
           </span>

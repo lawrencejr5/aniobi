@@ -691,3 +691,39 @@ nav {
     }
   }
 }
+
+.not-authorized-container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
+  color: $light;
+  text-align: center;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-back {
+    background-color: $primaryColor;
+    color: $light;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $secondaryColor;
+    }
+  }
+}

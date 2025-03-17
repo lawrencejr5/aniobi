@@ -12,6 +12,7 @@ interface AdminBody {
   password?: string;
   oldPassword?: string;
   newPassword?: string;
+  role?: string;
 }
 
 const createAdmin = async (req: Request, res: Response): Promise<void> => {
@@ -80,7 +81,7 @@ const checkAdmin = async (req: Request, res: Response): Promise<void> => {
 
   res.status(200).json({
     msg: "Login successful",
-    admin: { _id: adminDb._id, username: adminDb.username },
+    admin: adminDb,
     token,
   });
 };
@@ -89,7 +90,7 @@ const updateAdminCredentials = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  let { username, password }: AdminBody = req.body;
+  let { username, password, role }: AdminBody = req.body;
   const { id } = req.params;
 
   // Check for admin id
@@ -99,13 +100,13 @@ const updateAdminCredentials = async (
   }
 
   // Check that at least username is provided; password is optional
-  if (!username) {
-    res.status(400).json({ msg: "Please provide a new username" });
+  if (!username && !password && !role) {
+    res.status(400).json({ msg: "All fields cannot be empty" });
     return;
   }
 
   // Convert username to lowercase
-  username = username.toLowerCase();
+  username = username?.toLowerCase();
 
   const adminDb: any = await Admin.findById(id);
   if (!adminDb) {
@@ -114,7 +115,8 @@ const updateAdminCredentials = async (
   }
 
   // Update the username
-  adminDb.username = username;
+  adminDb.username = username || adminDb.username;
+  adminDb.role = role || adminDb.role;
 
   // If a new password is provided and not empty, update the password
   if (password && password.trim().length > 0) {
@@ -126,15 +128,9 @@ const updateAdminCredentials = async (
 
   await adminDb.save();
 
-  // Generate token after update and send response without password
-  const token = jwt.sign({ id: adminDb._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_LIFETIME,
-  });
-
   res.status(200).json({
     msg: "Admin credentials updated successfully",
-    admin: { _id: adminDb._id, username: adminDb.username },
-    token,
+    admin: adminDb as AdminBody,
   });
 };
 

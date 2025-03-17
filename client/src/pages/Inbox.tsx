@@ -5,6 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { FiEdit, FiCopy, FiCheckCircle } from "react-icons/fi";
 
 import Nav from "../components/Nav.tsx";
+import Footer from "../components/Footer.tsx";
 import Notification from "../components/Notification.tsx";
 
 import ModalCrt from "../components/Modals/ModalCrt.tsx";
@@ -156,12 +157,7 @@ const Inbox = () => {
           </tbody>
         </table>
       </div>
-      <footer>
-        <span>© 2025 Lawjun</span>&nbsp;.&nbsp;
-        <span className="logout" onClick={logout}>
-          Logout
-        </span>
-      </footer>
+      <Footer />
       <div className="create-btn" onClick={() => setModalCrtOpen(true)}>
         <FaPlus />
       </div>

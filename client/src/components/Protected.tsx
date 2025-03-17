@@ -8,16 +8,26 @@ interface ProtectedProps {
   children: ReactNode;
 }
 
-const Protected: React.FC<ProtectedProps> = ({ children }) => {
+export const Protected: React.FC<ProtectedProps> = ({ children }) => {
   const { signedIn } = useGlobalContext() as ContextAppType;
 
   const token: any = localStorage.getItem("token");
 
   const { isExpired }: any = useJwt(token);
 
-  if (!token || isExpired || !signedIn)
+  if (!token || isExpired || !signedIn || !signedIn?.username)
     return <Navigate to={"/admin/signin"} />;
   return <>{children}</>;
 };
 
-export default Protected;
+export const SuperProtected: React.FC<ProtectedProps> = ({ children }) => {
+  const { signedIn } = useGlobalContext() as ContextAppType;
+
+  const token: any = localStorage.getItem("token");
+
+  const { isExpired }: any = useJwt(token);
+
+  if (!token || isExpired || !signedIn || signedIn?.role !== "super")
+    return <Navigate to={"/admin/not-authorized"} />;
+  return <>{children}</>;
+};

@@ -6,8 +6,9 @@ import Inbox from "./pages/Inbox.tsx";
 import Signin from "./pages/Signin.tsx";
 import SecretRoom from "./pages/SecretRoom.tsx";
 
-import Protected from "./components/Protected.tsx";
+import { Protected, SuperProtected } from "./components/Protected.tsx";
 import Users from "./pages/Users.tsx";
+import NotAuthorized from "./pages/NotAuthorized.tsx";
 
 const App: React.FC = () => {
   return (
@@ -26,12 +27,13 @@ const App: React.FC = () => {
         <Route
           path="/admin/users"
           element={
-            <Protected>
+            <SuperProtected>
               <Users />
-            </Protected>
+            </SuperProtected>
           }
         />
         <Route path="/admin/signin" element={<Signin />} />
+        <Route path="/admin/not-authorized" element={<NotAuthorized />} />
       </Routes>
     </Router>
   );

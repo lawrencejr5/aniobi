@@ -17,4 +17,5 @@ export interface AdminType {
   createdAt?: string;
   updatedAt?: string;
   password?: string;
+  role?: string;
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import { FaPlus, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
+
 import Nav from "../components/Nav.tsx";
+import Footer from "../components/Footer.tsx";
 import Notification from "../components/Notification.tsx";
 
 import ModalCrt from "../components/Modals/ModalCrt.tsx";
@@ -26,12 +28,10 @@ const Users = () => {
     modalCrtOpen,
     adminUsers,
     setSelectedAdmin,
+    signedIn,
   }: any = useGlobalContext();
 
-  const admin: AdminType = LocalStorage?.admin
-    ? JSON.parse(LocalStorage.admin)
-    : {};
-  const user = admin.username;
+  const user = signedIn?.username;
 
   return (
     <main className="admin-main">
@@ -55,7 +55,10 @@ const Users = () => {
             {adminUsers.map((user: AdminType, i: number) => (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td>{user?.username}</td>
+                <td>
+                  {user?.username}
+                  {user?.role === "super" && "(primary)"}
+                </td>
                 <td>{user?.createdAt}</td>
                 <td>{user?.updatedAt}</td>
                 <td
@@ -73,20 +76,23 @@ const Users = () => {
                   >
                     <FiEdit />
                   </button>
-                  <button
-                    onClick={() => {
-                      setModalDelOpen(true);
-                      setSelectedAdmin(user);
-                    }}
-                  >
-                    <FaRegTrashAlt />
-                  </button>
+                  {user?.role !== "super" && (
+                    <button
+                      onClick={() => {
+                        setModalDelOpen(true);
+                        setSelectedAdmin(user);
+                      }}
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* <Footer /> */}
       <div className="create-btn" onClick={() => setModalCrtOpen(true)}>
         <FaPlus />
       </div>

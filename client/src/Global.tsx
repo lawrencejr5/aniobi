@@ -68,6 +68,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [signedIn, setSignedIn] = useState<AdminType>({
     _id: "",
     username: "",
+    role: "",
   });
 
   useEffect(() => {
@@ -250,7 +251,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("admin");
     // Reset signedIn state
-    setSignedIn({ _id: "", username: "" });
+    setSignedIn({ _id: "", username: "", role: "" });
     setNotification({
       text: "Logged out successfully",
       status: true,
