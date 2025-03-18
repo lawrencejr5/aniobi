@@ -47,7 +47,7 @@ const Signin = () => {
       });
       setTimeout(() => {
         setIsLoading(false);
-        navigate("/admin/inbox");
+        navigate("/dashboard");
       }, 2000);
     } catch (err: any) {
       console.log(err);

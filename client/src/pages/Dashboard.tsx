@@ -6,8 +6,7 @@ const Dashboard: React.FC = () => {
   const { messages, signedIn } = useGlobalContext() as ContextAppType;
   const [copySuccess, setCopySuccess] = useState("");
 
-  // Replace logic as needed.
-  const aniobiLink = `https://aniobi.com/${
+  const aniobiLink = `http://localhost:3000/send/?user=${
     signedIn ? signedIn.username || "your-anon-profile" : "your-anon-profile"
   }`;
 
@@ -25,24 +24,16 @@ const Dashboard: React.FC = () => {
     <div className="dashboard-container">
       <Nav page="dashboard" />
       <section className="share-link-section">
-        <h2>Share Your Aniobi Link</h2>
-        <div className="link-container">
-          <input type="text" readOnly value={aniobiLink} />
-          <button onClick={copyToClipboard}>Copy Link</button>
+        <div className="container">
+          <h2>Share Your Aniobi Link</h2>
+          <img src="/avatars/avatar1.jpg" alt="" />
+          <h3>@{signedIn?.username}</h3>
+          <div className="inp-holder">
+            <input type="text" readOnly value={aniobiLink} />
+            <button onClick={copyToClipboard}>Copy Link</button>
+          </div>
+          {copySuccess && <p>{copySuccess}</p>}
         </div>
-        {copySuccess && <p>{copySuccess}</p>}
-      </section>
-      <section className="messages-section">
-        <h2>Your Anonymous Messages</h2>
-        {messages && messages.length > 0 ? (
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>{"msg.text"}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No messages yet.</p>
-        )}
       </section>
     </div>
   );
