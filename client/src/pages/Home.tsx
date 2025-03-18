@@ -1,5 +1,5 @@
 import React from "react";
-import { FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 import Nav from "../components/Nav.tsx";
 import Notification from "../components/Notification.tsx";
@@ -32,13 +32,30 @@ const Home = () => {
           <p>"{txts[index]}</p>
           <div className="follow">
             <span>
-              <FaInstagram />
-              &nbsp;&nbsp;
               <a
                 href="https://www.instagram.com/_aniobi_/profilecard/"
                 target="_blank"
               >
-                Follow us on instagram
+                {" "}
+                <FaInstagram />
+              </a>
+            </span>
+            <span>
+              <a
+                href="https://www.instagram.com/_aniobi_/profilecard/"
+                target="_blank"
+              >
+                {" "}
+                <FaTwitter />
+              </a>
+            </span>
+            <span>
+              <a
+                href="https://www.instagram.com/_aniobi_/profilecard/"
+                target="_blank"
+              >
+                {" "}
+                <FaFacebook />
               </a>
             </span>
           </div>
