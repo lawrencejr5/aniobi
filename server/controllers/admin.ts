@@ -10,16 +10,22 @@ interface AdminBody {
   id?: string;
   username?: string;
   password?: string;
+  cpassword?: string;
   oldPassword?: string;
   newPassword?: string;
   role?: string;
 }
 
 const createAdmin = async (req: Request, res: Response): Promise<void> => {
-  let { username, password }: AdminBody = req.body;
+  let { username, password, cpassword }: AdminBody = req.body;
 
-  if (!username || !password) {
-    res.status(400).json({ msg: "Please input username and password" });
+  if (!username || !password || !cpassword) {
+    res.status(400).json({ msg: "Please fill in all required fields" });
+    return;
+  }
+
+  if (password !== cpassword) {
+    res.status(400).json({ msg: "Passwords do not match" });
     return;
   }
 
@@ -47,9 +53,7 @@ const createAdmin = async (req: Request, res: Response): Promise<void> => {
 
   // Return response without password
   res.status(201).json({
-    msg: "Admin created successfully",
-    admin: { _id: admin._id, username: admin.username },
-    token,
+    msg: "Admin created successfully", admin, token
   });
 };
 

@@ -15,7 +15,7 @@ export const Protected: React.FC<ProtectedProps> = ({ children }) => {
 
   const { isExpired }: any = useJwt(token);
 
-  if (!token || isExpired || !signedIn || !signedIn?.username)
+  if (!token || isExpired || !signedIn)
     return <Navigate to={"/admin/signin"} />;
   return <>{children}</>;
 };

@@ -18,9 +18,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const admin_1 = __importDefault(require("../models/admin"));
 const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { username, password } = req.body;
-    if (!username || !password) {
-        res.status(400).json({ msg: "Please input username and password" });
+    let { username, password, cpassword } = req.body;
+    if (!username || !password || !cpassword) {
+        res.status(400).json({ msg: "Please fill in all required fields" });
+        return;
+    }
+    if (password !== cpassword) {
+        res.status(400).json({ msg: "Passwords do not match" });
         return;
     }
     // Convert username to lowercase for consistency
@@ -42,9 +46,7 @@ const createAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
     // Return response without password
     res.status(201).json({
-        msg: "Admin created successfully",
-        admin: { _id: admin._id, username: admin.username },
-        token,
+        msg: "Admin created successfully", admin, token
     });
 });
 exports.createAdmin = createAdmin;

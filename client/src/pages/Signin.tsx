@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 import { useGlobalContext, ContextAppType } from "../Global.tsx";
@@ -65,13 +65,13 @@ const Signin = () => {
       <Nav page={"secret"} />
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <h1>Admin signin</h1>
+          <h1>Sign in to Aniobi...</h1>
           <div className="inp-container">
             <div className="inp-holder">
               <FaUserCircle className="icon" />
               <input
                 type="text"
-                placeholder="Admin username..."
+                placeholder="Username..."
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -80,18 +80,18 @@ const Signin = () => {
               <FaLock className="icon" />
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Admin password..."
+                placeholder="Password..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               {showPassword ? (
-                <FaEyeSlash
+                <FaEye
                   className="icon"
                   onClick={() => setShowPassword(false)}
                   style={{ cursor: "pointer" }}
                 />
               ) : (
-                <FaEye
+                <FaEyeSlash
                   className="icon"
                   onClick={() => setShowPassword(true)}
                   style={{ cursor: "pointer" }}
@@ -101,6 +101,13 @@ const Signin = () => {
             <button type="submit" disabled={isLoading}>
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
+
+            <div className="dont-have-account">
+              <span>Don't have an account? </span>
+              <Link className="sign-link" to="/signup">
+                Signup...
+              </Link>
+            </div>
           </div>
         </form>
       </div>

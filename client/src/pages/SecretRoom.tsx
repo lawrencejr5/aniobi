@@ -35,7 +35,7 @@ const SecretRoom = () => {
         <FaRotate />
       </div>
       <div className="body">
-        <h1>Shhh!...🤫, U've just found secret room🧐</h1>
+        <h1>Shhh!...🤫, U've just found the secret room🧐</h1>
         <div className="item-container">
           <div className="move left" onClick={() => move("backward")}>
             <FaCaretLeft />

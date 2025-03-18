@@ -271,6 +271,10 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getMessages();
     fetchAdminUsers();
+    const adminData = LocalStorage?.admin;
+    if (adminData) {
+      setSignedIn(JSON.parse(adminData));
+    }
   }, []);
 
   return (

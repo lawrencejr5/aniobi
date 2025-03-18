@@ -7,6 +7,7 @@ import {
   FaPencilAlt,
   FaPlusCircle,
   FaUsers,
+  FaSignInAlt,
 } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
@@ -27,8 +28,8 @@ const Nav: React.FC<NavProps> = ({ page }) => {
       </Link>
       <div>
         {page === "home" && (
-          <span onClick={() => navigate("/secret")}>
-            Secret room &nbsp; <FaChevronRight />
+          <span className="signin-btn" onClick={() => navigate("/signin")}>
+            Signin &nbsp; <FaSignInAlt />
           </span>
         )}
         {page === "secret" && (

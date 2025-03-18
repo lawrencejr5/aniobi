@@ -59,7 +59,7 @@ const Home = () => {
               </a>
             </span>
           </div>
-          <button
+          {/* <button
             className="chevron-btn"
             onClick={() => {
               const nextSection = document.getElementById("next");
@@ -74,7 +74,7 @@ const Home = () => {
               src={animationData}
               style={{ height: "150px", width: "150px" }}
             />
-          </button>
+          </button> */}
         </div>
         <ChatBox />
       </section>

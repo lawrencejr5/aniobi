@@ -52,6 +52,8 @@ nav {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    margin-right: 2rem;
   }
 }
 
@@ -416,9 +418,9 @@ nav {
 
 .signin-container {
   height: 100vh;
-  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
+  background-color: $primaryColor;
   .container {
-    height: 70vh;
+    height: 80vh;
     width: 100%;
     display: grid;
     place-items: center;
@@ -427,10 +429,10 @@ nav {
       width: 50%;
       h1 {
         text-align: center;
-        color: $light;
+        color: $secondaryColor;
         margin-bottom: 2rem;
         font-weight: 900;
-        font-size: 40px;
+        font-size: 30px;
       }
       .inp-container {
         width: 100%;
@@ -465,10 +467,27 @@ nav {
           justify-content: center;
           font-size: 18px;
           font-weight: 600;
-          background-color: $primaryColor;
-          color: $light;
+          background-color: $secondaryColor;
+          color: $primaryColor;
           border: none;
           outline: none;
+        }
+        .dont-have-account {
+          margin-top: 3rem;
+          span {
+            color: $light;
+            font-size: 16px;
+          }
+          .sign-link {
+            color: $secondaryColor;
+            font-size: 16px;
+            text-decoration: none;
+            margin-left: 0.5rem;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
       }
     }
