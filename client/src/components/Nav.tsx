@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "./Logo.tsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import {
   FaChevronRight,
@@ -20,6 +20,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ page }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { signedIn } = useGlobalContext() as ContextAppType;
   return (
@@ -27,35 +28,26 @@ const Nav: React.FC<NavProps> = ({ page }) => {
       <Link to={"/"}>
         <Logo />
       </Link>
-      <div>
-        {page === "home" && (
-          <span className="signin-btn" onClick={() => navigate("/signin")}>
-            Signin &nbsp; <FaSignInAlt />
+      <div className="nav-links">
+        <span className="" onClick={() => navigate("/")}>
+          Home
+          {pathname === "/" && <div className="dot"></div>}
+        </span>
+        <span className="" onClick={() => navigate("/about")}>
+          About
+          {pathname === "/about" && <div className="dot"></div>}
+        </span>
+        <span className="" onClick={() => navigate("/messages")}>
+          Messages
+          {pathname === "/messages" && <div className="dot"></div>}
+        </span>
+        {signedIn?.username ? (
+          <span className="sign-btn" onClick={() => navigate("/dashboard")}>
+            Dashboard
           </span>
-        )}
-        {page === "dashboard" && (
-          <span onClick={() => navigate("/")}>
-            My Messages &nbsp; <FaMessage />
-          </span>
-        )}
-        {page === "send" && (
-          <span onClick={() => navigate("/dashboard")}>
-            Dashboard &nbsp; <FaBars />
-          </span>
-        )}
-        {page === "secret" && (
-          <span onClick={() => navigate("/")}>
-            Write &nbsp; <FaPencilAlt />
-          </span>
-        )}
-        {page === "inbox" && signedIn?.role === "super" && (
-          <span onClick={() => navigate("/admin/users")}>
-            Admins &nbsp; <FaUsers />
-          </span>
-        )}
-        {page === "users" && (
-          <span onClick={() => navigate("/admin/inbox")}>
-            Messages &nbsp; <FaMessage />
+        ) : (
+          <span className="sign-btn" onClick={() => navigate("/signin")}>
+            Signin
           </span>
         )}
       </div>

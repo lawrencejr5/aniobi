@@ -12,6 +12,8 @@ import NotAuthorized from "./pages/NotAuthorized.tsx";
 import Signup from "./pages/Signup.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Send from "./pages/Send.tsx";
+import Messages from "./pages/Messages.tsx";
+import About from "./pages/About.tsx";
 
 const App: React.FC = () => {
   return (
@@ -37,8 +39,17 @@ const App: React.FC = () => {
         />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Protected>
+              <Dashboard />
+            </Protected>
+          }
+        />
+        <Route path="/messages" element={<Messages />} />
         <Route path="/send" element={<Send />} />
+        <Route path="/about" element={<About />} />
         <Route path="/admin/not-authorized" element={<NotAuthorized />} />
       </Routes>
     </Router>
