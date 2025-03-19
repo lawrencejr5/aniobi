@@ -937,6 +937,23 @@ nav {
   }
 }
 
+.footer-component {
+  position: fixed;
+  bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: $secondaryColor;
+
+  .link {
+    color: $secondaryColor;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
 @keyframes bounce {
   0%,
   20%,

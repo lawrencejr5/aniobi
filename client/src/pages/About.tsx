@@ -1,5 +1,7 @@
 import React from "react";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -33,6 +35,12 @@ const About = () => {
           </div>
         </div>
       </div>
+      <footer className="footer-component">
+        @Lawjun 2025 &nbsp;.&nbsp;
+        <Link to={"/"} className="link">
+          Terms and Conditions
+        </Link>
+      </footer>
     </main>
   );
 };

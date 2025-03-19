@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
@@ -41,6 +42,12 @@ const Messages = () => {
           </div>
         </div>
       </div>
+      <footer className="footer-component">
+        @Lawjun 2025 &nbsp;.&nbsp;
+        <Link to={"/"} className="link">
+          Terms and Conditions
+        </Link>
+      </footer>
     </main>
   );
 };
