@@ -22,7 +22,7 @@ const ChatBox = () => {
   return (
     <div className={`chat-box ${!input ? "fixed-height" : ""}`}>
       <div className="header">
-        <img src="/imgs/aniobi_transparent_oxblood.png" alt="" />
+        <img src="/imgs/aniobi_transparent_amber.png" alt="" />
         {input.length > 0 && (
           <span className="char-count">{input.length}/200</span>
         )}
@@ -30,7 +30,7 @@ const ChatBox = () => {
       <div className="chat">{input && <p>{input}</p>}</div>
       <div className="footer">
         <div className={`inp-holder ${focused ? "wide" : ""}`}>
-          <img src="/imgs/aniobi_icon1.jpg" alt="" />
+          <img src="/imgs/aniobi_icon2.jpg" alt="" />
           <form className="input" onSubmit={handleSubmit}>
             <input
               type="text"

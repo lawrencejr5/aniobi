@@ -6,6 +6,7 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import Nav from "../components/Nav";
 
 import { useGlobalContext, ContextAppType } from "../Global";
+import Footer2 from "../components/Footer2";
 
 const Messages = () => {
   const { messages } = useGlobalContext() as ContextAppType;
@@ -23,6 +24,14 @@ const Messages = () => {
 
         <div className="all-message-container">
           <h1>Messages...</h1>
+          <div className="msg-nav">
+            <Link className="link" to={"/send"}>
+              Recent <div className="line"></div>
+            </Link>
+            <Link className="link" to={"/send"}>
+              Personal
+            </Link>
+          </div>
           <div className="msg-card-container">
             {messages?.map((msg) => {
               return (
@@ -42,12 +51,7 @@ const Messages = () => {
           </div>
         </div>
       </div>
-      <footer className="footer-component">
-        @Lawjun 2025 &nbsp;.&nbsp;
-        <Link to={"/"} className="link">
-          Terms and Conditions
-        </Link>
-      </footer>
+      <Footer2 />
     </main>
   );
 };

@@ -215,12 +215,13 @@ nav {
     }
     .chat-box {
       position: absolute;
-      bottom: 0;
+      bottom: 3rem;
       right: 0;
       width: 50%;
       height: auto;
-      background-color: $secondaryColor2;
+      background-color: transparent;
       margin: 1rem;
+      border: 2px solid $secondaryColor2;
       border-radius: 20px;
       padding: 1rem;
       display: block;
@@ -272,6 +273,7 @@ nav {
           display: flex;
           align-items: center;
           border-radius: 50px;
+          border: 2px solid $secondaryColor2;
           box-shadow: 0px 4px 4px $primaryColor;
           height: 80px;
           padding: 0 1rem;
@@ -300,11 +302,11 @@ nav {
               background-color: transparent;
             }
             input::placeholder {
-              color: $primaryColor;
+              color: $secondaryColor;
             }
             button {
               background-color: transparent;
-              color: $primaryColor;
+              color: $secondaryColor;
               font-size: 30px;
               font-weight: 500;
               margin-top: 0.7rem;
@@ -401,11 +403,34 @@ nav {
       h1 {
         color: $secondaryColor;
       }
+
+      .msg-nav {
+        margin-top: 1rem;
+        padding: 0 1rem;
+
+        .link {
+          margin-right: 0.5rem;
+          color: $secondaryColor;
+          font-weight: 600;
+          position: relative;
+          text-decoration: none;
+
+          .line {
+            height: 2px;
+            width: 30px;
+            background-color: $secondaryColor;
+            position: absolute;
+          }
+        }
+      }
+
       .msg-card-container {
         height: 70vh;
         width: 80%;
         overflow-y: scroll;
         margin-top: 1rem;
+        padding: 0 1rem;
+
         .msg-card {
           width: 100%;
           height: 150px;
@@ -434,10 +459,39 @@ nav {
             }
           }
         }
+        // For Firefox
+        scrollbar-width: thin;
+        scrollbar-color: $secondaryColor $primaryColor;
+
+        // For Chrome, Edge, and Safari
+        &::-webkit-scrollbar {
+          width: 3px;
+        }
+        &::-webkit-scrollbar-track {
+          background: $secondaryColor;
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: $secondaryColor;
+          border-radius: 10px;
+        }
       }
     }
   }
 }
+
+// .msg-card-container {
+//   overflow-y: scroll; /* Ensure content is still scrollable */
+
+//   /* Firefox */
+//   scrollbar-width: none;
+//   -ms-overflow-style: none; /* IE and Edge */
+
+//   /* Chrome, Safari, Opera */
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+// }
 
 .secret-room-container {
   background-color: $primaryColor;

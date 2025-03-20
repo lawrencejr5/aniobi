@@ -8,6 +8,7 @@ import Typewriter from "../components/Typewriter";
 import { useGlobalContext } from "../Global.tsx";
 
 import { txts } from "../data/txt";
+import Footer2 from "../components/Footer2.tsx";
 
 const Home = () => {
   const { notification }: any = useGlobalContext();
@@ -50,6 +51,7 @@ const Home = () => {
         </div>
         <ChatBox />
       </section>
+      <Footer2 />
       <Notification notification={notification} />
     </div>
   );
