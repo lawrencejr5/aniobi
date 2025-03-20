@@ -24,7 +24,7 @@ const Nav: React.FC<NavProps> = ({ page }) => {
 
   const { signedIn } = useGlobalContext() as ContextAppType;
   return (
-    <nav className={`${page === "home" && "fixed"}`}>
+    <nav className={`${page === "home" && "fixed"} main-nav`}>
       <Link to={"/"}>
         <Logo />
       </Link>
