@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { IoMdSend } from "react-icons/io";
-import { useGlobalContext } from "../Global.tsx";
+import { useGlobalContext, ContextAppType } from "../Global.tsx";
 
-const ChatBox = () => {
+interface ChatBoxProps {
+  from: string | undefined | null;
+  to: string | undefined | null;
+}
+
+const ChatBox: React.FC<ChatBoxProps> = ({ from, to }) => {
   const { writeMessage, setNotification }: any = useGlobalContext();
 
   const [focused, setFocused] = useState<boolean>(false);
@@ -16,7 +21,7 @@ const ChatBox = () => {
       theme: "success",
     });
     setInput("");
-    await writeMessage(input);
+    await writeMessage(input, from, to);
   };
 
   return (

@@ -83,7 +83,10 @@ button {
   transition: 0s;
 
   .notification {
-    background-color: $notificationBgColor; // Use variable
+    background-color: transparent;
+    border: 2px solid $secondaryColor;
+    border-top: 0;
+    color: $secondaryColor;
     width: 400px;
     height: auto;
     padding: 1rem;
@@ -93,18 +96,21 @@ button {
     display: flex;
     font-weight: 600;
     align-items: center;
-    box-shadow: 0px 8px 24px rgba(221, 221, 221, 0.177);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    transition: 0.5s;
+    transition: transform 0.5s ease, opacity 0.5s ease;
     z-index: 10;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .down {
     transform: translateY(0);
+    transition: 0.5s;
   }
   .up {
     transform: translateY(-150%);
+    opacity: 0;
   }
 }
 
@@ -151,10 +157,12 @@ button {
             color: $secondaryColor;
           }
           img {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             border-radius: 300px;
             margin: 2rem 0 0.5rem;
+            object-fit: cover;
+            border: 4px solid $secondaryColor;
           }
           h3 {
             margin-bottom: 1rem;
@@ -382,6 +390,7 @@ button {
       align-items: baseline first;
 
       .text {
+        width: 60%;
         h1 {
           color: $secondaryColor;
           font-size: 40px;
@@ -391,8 +400,8 @@ button {
         }
       }
       img {
-        height: 350px;
-        width: 350px;
+        height: 300px;
+        width: 300px;
         object-fit: cover;
       }
     }
@@ -415,17 +424,27 @@ button {
         padding: 0 1rem;
 
         .link {
-          margin-right: 0.5rem;
+          margin-right: 1rem;
           color: $secondaryColor;
           font-weight: 600;
           position: relative;
           text-decoration: none;
+          border: 1px solid $secondaryColor;
+          padding: 0.3rem 0.5rem;
+          border-radius: 5px;
+          font-size: 12px;
+
+          &.active {
+            background-color: $secondaryColor;
+            color: $primaryColor;
+          }
 
           .line {
             height: 2px;
             width: 30px;
             background-color: $secondaryColor;
             position: absolute;
+            left: 0;
           }
         }
       }
@@ -433,7 +452,7 @@ button {
       .msg-card-container {
         height: 70vh;
         width: 80%;
-        overflow-y: scroll;
+        overflow-y: auto;
         margin-top: 1rem;
         padding: 0 1rem;
 
@@ -463,6 +482,26 @@ button {
             .heart-icon {
               font-size: 15px;
             }
+          }
+        }
+
+        .empty {
+          width: 100%;
+          display: grid;
+          place-items: center;
+
+          p {
+            color: $secondaryColor;
+            font-weight: 600;
+
+            .link {
+              font-weight: 600;
+            }
+          }
+          img {
+            width: 70%;
+            height: auto;
+            object-fit: cover;
           }
         }
         // For Firefox
@@ -711,9 +750,12 @@ button {
         color: $secondaryColor;
         font-size: 16px;
         text-decoration: none;
-        // font-weight: 600;
+        font-weight: 600;
         // margin-right: 1rem;
         position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
 
         .line {
           height: 2px;
@@ -735,8 +777,10 @@ button {
       }
 
       img {
-        width: 200px;
-        height: 200px;
+        width: 120px;
+        height: 120px;
+        border: 4px solid $secondaryColor;
+        object-fit: cover;
         border-radius: 300px;
         margin: 2rem 0 0.5rem;
       }

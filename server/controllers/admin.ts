@@ -165,10 +165,29 @@ const getAdmins = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const getAdmin = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  if (!id) {
+    res.status(400).json({ msg: "Admin id is required" });
+    return;
+  }
+  try {
+    const admin = await Admin.findById(id);
+    if (!admin) {
+      res.status(404).json({ msg: "Admin not found" });
+      return;
+    }
+    res.status(200).json({ msg: "Admin fetched successfully", admin });
+  } catch (error) {
+    res.status(500).json({ msg: "An error occurred", error });
+  }
+};
+
 export {
   createAdmin,
   checkAdmin,
   updateAdminCredentials,
   deleteAdmin,
   getAdmins,
+  getAdmin, 
 };

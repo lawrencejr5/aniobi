@@ -9,7 +9,7 @@ import { useGlobalContext, ContextAppType } from "../Global";
 import Footer2 from "../components/Footer2";
 
 const Messages = () => {
-  const { messages } = useGlobalContext() as ContextAppType;
+  const { messages, signedIn } = useGlobalContext() as ContextAppType;
 
   return (
     <main className="messages-container">
@@ -24,14 +24,19 @@ const Messages = () => {
 
         <div className="all-message-container">
           <h1>Messages...</h1>
-          <div className="msg-nav">
-            <Link className="link" to={"/send"}>
-              Recent <div className="line"></div>
-            </Link>
-            <Link className="link" to={"/send"}>
-              Personal
-            </Link>
-          </div>
+          {signedIn?._id ? (
+            <div className="msg-nav">
+              <Link className="link active" to={"/messages"}>
+                For you
+              </Link>
+              <Link className="link" to={`/messages/${signedIn?._id}`}>
+                Personal
+              </Link>
+            </div>
+          ) : (
+            <div className="msg-nav"></div>
+          )}
+
           <div className="msg-card-container">
             {messages?.map((msg) => {
               return (
@@ -39,7 +44,7 @@ const Messages = () => {
                   <small>@anonymous</small>
                   <p>{msg.message}</p>
                   <div className="actions">
-                    <small>45 comment(s)</small>
+                    <small>0 comment(s)</small>
                     &nbsp; &nbsp;
                     <div>
                       <BsHeart className="heart-icon" />

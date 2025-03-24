@@ -11,7 +11,7 @@ import { txts } from "../data/txt";
 import Footer2 from "../components/Footer2.tsx";
 
 const Home = () => {
-  const { notification }: any = useGlobalContext();
+  const { notification, signedIn }: any = useGlobalContext();
 
   const [index, setIndex] = React.useState(0);
   React.useEffect(() => {
@@ -49,7 +49,7 @@ const Home = () => {
             </span>
           </div>
         </div>
-        <ChatBox />
+        <ChatBox from={signedIn?._id ? signedIn?._id : null} to={null} />
       </section>
       <Footer2 />
       <Notification notification={notification} />

@@ -12,30 +12,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMessage = exports.deleteMessage = exports.addMessage = exports.getMessages = void 0;
+exports.deleteMessage = exports.updateMessage = exports.addMessage = exports.getMessages = void 0;
 const messages_1 = __importDefault(require("../models/messages"));
 const getMessages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const messages = yield messages_1.default.find().sort("-createdAt");
+        const { from, to } = req.query;
+        const queryObj = {};
+        if (from && typeof from === "string") {
+            queryObj.from = from === "null" ? null : from;
+        }
+        if (to && typeof to === "string") {
+            queryObj.to = to === "null" ? null : to;
+        }
+        const messages = yield messages_1.default.find(queryObj).sort("-createdAt");
         res.status(200).json({ msg: "success", messages });
     }
     catch (err) {
-        res.status(500).json({ msg: "an error occurred", err });
+        res.status(500).json({ msg: "An error occurred", err });
     }
 });
 exports.getMessages = getMessages;
 const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { msg, show } = req.body;
-        if (!msg && !show) {
+        const { msg, from, to } = req.body;
+        if (!msg) {
             res.status(400).json({ msg: "Input cannot be empty" });
             return;
         }
-        const message = yield messages_1.default.create({ message: msg });
+        const message = yield messages_1.default.create({ message: msg, from, to });
         res.status(200).json({ msg: "success", message });
     }
     catch (err) {
-        res.status(500).json({ msg: "an error occurred", err });
+        res.status(500).json({ msg: "An error occurred", err });
     }
 });
 exports.addMessage = addMessage;
@@ -56,7 +64,7 @@ const updateMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     }
     catch (err) {
-        res.status(500).json({ msg: "an error occurred", err });
+        res.status(500).json({ msg: "An error occurred", err });
     }
 });
 exports.updateMessage = updateMessage;
@@ -72,13 +80,11 @@ const deleteMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.status(404).json({ msg: "Message not found" });
         }
         else {
-            res
-                .status(200)
-                .json({ msg: `Message with id: ${id} has been deleted successfully` });
+            res.status(200).json({ msg: `Message with id: ${id} has been deleted successfully` });
         }
     }
     catch (err) {
-        res.status(500).json({ msg: "an error occurred", err });
+        res.status(500).json({ msg: "An error occurred", err });
     }
 });
 exports.deleteMessage = deleteMessage;

@@ -54,9 +54,17 @@ export interface ContextAppType {
   createAdmin: (adminData: Partial<AdminType>) => Promise<void>;
   updateAdmin: (id: string, adminData: Partial<AdminType>) => Promise<void>;
   deleteAdmin: (id: string) => Promise<void>;
+  getUser: (id: string) => Promise<AdminType | null>;
 
   // Logout function
   logout: () => void;
+
+  // User details state
+  user: AdminType | null;
+
+  // User messages state
+  userMessages: MessageType[];
+  getUserMessages: (id: string) => Promise<void>;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
@@ -74,6 +82,15 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     username: "",
     role: "",
   });
+
+  // Modals with proper type set-up
+  const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
+  const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
+  const [modalEditOpen, setModalEditOpen] = useState<boolean>(false);
+  const [selectedMessage, setSelectedMessage] = useState<MessageType | null>(
+    null
+  );
+  const [selectedAdmin, setSelectedAdmin] = useState<AdminType | null>(null);
 
   useEffect(() => {
     if (notification.status) {
@@ -93,6 +110,24 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       setMessages(data.messages);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const [userMessages, setUserMessages] = useState<MessageType[]>([]);
+  const getUserMessages = async (id: string): Promise<void> => {
+    if (!id) return;
+    try {
+      const { data } = await axios.get(`${EndPoints.messages}?to=${id}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setUserMessages(data.messages);
+    } catch (err: any) {
+      console.error(err);
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching user messages",
+        status: true,
+        theme: "danger",
+      });
     }
   };
 
@@ -191,6 +226,27 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const [user, setUser] = useState<AdminType | null>(null);
+  const getUser = async (id: string): Promise<AdminType | null> => {
+    try {
+      const { data } = await axios.get(`${EndPoints.admin}/${id}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      // Adjust response parsing if needed (e.g., data.user or data.admin)
+      const fetchedUser = data.admin;
+      setUser(fetchedUser); // Save fetched details in state
+      return fetchedUser;
+    } catch (err: any) {
+      console.error(err);
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching user details",
+        status: true,
+        theme: "danger",
+      });
+      return null;
+    }
+  };
+
   const createAdmin = async (adminData: Partial<AdminType>): Promise<void> => {
     try {
       const { data } = await axios.post(
@@ -267,15 +323,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // Modals with proper type set-up
-  const [modalDelOpen, setModalDelOpen] = useState<boolean>(false);
-  const [modalCrtOpen, setModalCrtOpen] = useState<boolean>(false);
-  const [modalEditOpen, setModalEditOpen] = useState<boolean>(false);
-  const [selectedMessage, setSelectedMessage] = useState<MessageType | null>(
-    null
-  );
-  const [selectedAdmin, setSelectedAdmin] = useState<AdminType | null>(null);
-
   useEffect(() => {
     getMessages();
     fetchAdminUsers();
@@ -317,6 +364,12 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setSelectedAdmin,
         // Logout function
         logout,
+        //
+        getUser,
+        user,
+        // User messages state and function
+        userMessages,
+        getUserMessages,
       }}
     >
       {children}

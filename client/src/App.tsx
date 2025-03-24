@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Send from "./pages/Send.tsx";
 import Messages from "./pages/Messages.tsx";
 import About from "./pages/About.tsx";
+import UserMessages from "./pages/UserMessages.tsx";
 
 const App: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const App: React.FC = () => {
           }
         />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/messages/:user" element={<UserMessages />} />
         <Route path="/send" element={<Send />} />
         <Route path="/about" element={<About />} />
         <Route path="/admin/not-authorized" element={<NotAuthorized />} />

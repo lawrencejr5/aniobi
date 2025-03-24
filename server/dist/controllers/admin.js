@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAdmins = exports.deleteAdmin = exports.updateAdminCredentials = exports.checkAdmin = exports.createAdmin = void 0;
+exports.getAdmin = exports.getAdmins = exports.deleteAdmin = exports.updateAdminCredentials = exports.checkAdmin = exports.createAdmin = void 0;
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -140,3 +140,22 @@ const getAdmins = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAdmins = getAdmins;
+const getAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id) {
+        res.status(400).json({ msg: "Admin id is required" });
+        return;
+    }
+    try {
+        const admin = yield admin_1.default.findById(id);
+        if (!admin) {
+            res.status(404).json({ msg: "Admin not found" });
+            return;
+        }
+        res.status(200).json({ msg: "Admin fetched successfully", admin });
+    }
+    catch (error) {
+        res.status(500).json({ msg: "An error occurred", error });
+    }
+});
+exports.getAdmin = getAdmin;
