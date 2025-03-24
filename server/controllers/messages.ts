@@ -12,14 +12,14 @@ const getMessages = async (req: Request, res: Response) => {
 
 const addMessage = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { msg, show } = req.body;
+    const { msg, from, to } = req.body;
 
-    if (!msg && !show) {
+    if (!msg) {
       res.status(400).json({ msg: "Input cannot be empty" });
       return;
     }
 
-    const message = await Message.create({ message: msg });
+    const message = await Message.create({ message: msg, from, to });
     res.status(200).json({ msg: "success", message });
   } catch (err) {
     res.status(500).json({ msg: "an error occurred", err });

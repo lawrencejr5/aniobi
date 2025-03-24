@@ -10,6 +10,16 @@ const MessageSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    from: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+      default: null,
+    },
+    to: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+      default: null,
+    },
   },
   { timestamps: true }
 );

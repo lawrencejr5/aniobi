@@ -16,7 +16,11 @@ import { EndPoints, LocalStorage } from "./enums.tsx";
 export interface ContextAppType {
   messages: MessageType[] | null;
   getMessages: () => Promise<void>;
-  writeMessage: (input: string) => Promise<void>;
+  writeMessage: (
+    input: string,
+    from: string | null,
+    to: string | null
+  ) => Promise<void>;
   updateMessage: (id: string, msg: string) => Promise<void>;
   updateShowMessage: (id: string, show: string) => Promise<void>;
   deleteMessage: (id: string) => Promise<void>;
@@ -92,11 +96,15 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const writeMessage = async (input: string) => {
+  const writeMessage = async (
+    input: string,
+    from: string | null,
+    to: string | null
+  ) => {
     try {
       await axios.post(
         EndPoints.messages,
-        { msg: input },
+        { msg: input, from, to },
         { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
       );
       setNotification({

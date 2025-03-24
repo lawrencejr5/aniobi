@@ -7,6 +7,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { useGlobalContext, ContextAppType } from "../../Global.tsx";
+import { NULL } from "sass";
 
 interface ModalCrtProps {
   page: string;
@@ -17,6 +18,8 @@ const ModalCrt: React.FC<ModalCrtProps> = ({ page, open }) => {
   const { writeMessage, setModalCrtOpen, setNotification, createAdmin } =
     useGlobalContext() as ContextAppType;
   const [message, setMessage] = useState<string>("");
+  const [from, setFrom] = useState<string | null>(null);
+  const [to, setTo] = useState<string | null>(null);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -32,7 +35,7 @@ const ModalCrt: React.FC<ModalCrtProps> = ({ page, open }) => {
       return;
     }
     try {
-      await writeMessage(message);
+      await writeMessage(message, from, to);
       setNotification({
         text: "Message created successfully",
         status: true,

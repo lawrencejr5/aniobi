@@ -244,7 +244,7 @@ button {
           margin: 0;
         }
         .char-count {
-          color: $primaryColor;
+          color: $secondaryColor;
           margin-left: 1rem;
           font-size: 14px;
         }
@@ -254,8 +254,9 @@ button {
         width: 90%;
         margin: 1rem 0.5rem;
         p {
-          background-color: $primaryColor;
-          color: $light;
+          background-color: transparent;
+          color: $secondaryColor;
+          border: 2px solid $secondaryColor;
           font-size: large;
           display: table;
           width: 100%;
@@ -298,6 +299,7 @@ button {
             input {
               width: 100%;
               font-size: large;
+              color: $secondaryColor;
               border: 0;
               outline: 0;
               margin: 1rem;
