@@ -8,7 +8,8 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ from, to }) => {
-  const { writeMessage, setNotification }: any = useGlobalContext();
+  const { writeMessage, setNotification } =
+    useGlobalContext() as ContextAppType;
 
   const [focused, setFocused] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");

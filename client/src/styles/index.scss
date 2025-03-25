@@ -6,6 +6,23 @@
   box-sizing: border-box;
   font-family: $primaryFont;
   transition: 0.5s;
+
+  // For Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $secondaryColor $primaryColor;
+
+  // For Chrome, Edge, and Safari
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $secondaryColor;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $secondaryColor;
+    border-radius: 10px;
+  }
 }
 
 body {
@@ -504,22 +521,6 @@ button {
             object-fit: cover;
           }
         }
-        // For Firefox
-        scrollbar-width: thin;
-        scrollbar-color: $secondaryColor $primaryColor;
-
-        // For Chrome, Edge, and Safari
-        &::-webkit-scrollbar {
-          width: 3px;
-        }
-        &::-webkit-scrollbar-track {
-          background: $secondaryColor;
-          border-radius: 10px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: $secondaryColor;
-          border-radius: 10px;
-        }
       }
     }
   }
@@ -901,15 +902,15 @@ button {
           transition: 0s;
         }
       }
-      // tr:hover {
-      //   background-color: whitesmoke;
-      //   td {
-      //     color: $dark;
-      //     button {
-      //       color: $dark;
-      //     }
-      //   }
-      // }
+      tr:hover {
+        background-color: whitesmoke;
+        td {
+          color: $dark;
+          button {
+            color: $dark;
+          }
+        }
+      }
     }
   }
   footer {
@@ -1027,6 +1028,127 @@ button {
         }
         &#false {
           background-color: grey;
+        }
+      }
+    }
+  }
+
+  // comment modal
+  &.comment {
+    background-color: $primaryColorTransparent;
+    color: $secondaryColor;
+
+    .modal {
+      width: 60%;
+      height: 80vh;
+      border: 2px solid $secondaryColor;
+      border-radius: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .msg-sec,
+      .comment-sec {
+        padding: 1rem;
+      }
+
+      .msg-sec {
+        border-right: 2px solid $secondaryColor;
+
+        .header {
+          display: flex;
+          justify-content: space-between;
+
+          small {
+            font-size: 12px;
+            font-weight: 600;
+          }
+        }
+
+        p {
+          font-size: 20px;
+          margin-top: 2rem;
+        }
+      }
+
+      .comment-sec {
+        position: relative;
+
+        .header {
+          justify-content: space-between;
+          display: flex;
+          align-items: center;
+        }
+
+        .comments {
+          margin-top: 0rem;
+          height: 80%;
+          overflow-y: auto;
+          .comment {
+            display: flex;
+            align-items: flex-start;
+            margin: 1rem 0;
+
+            img {
+              width: 20px;
+              height: 20px;
+              object-fit: cover;
+              border-radius: 50%;
+              margin-right: 1rem;
+              margin-top: 0.3rem;
+              border: 2px solid $secondaryColor;
+            }
+
+            .content {
+              padding: 0;
+
+              .head {
+                display: flex;
+                align-items: center;
+                span {
+                  display: table;
+                  font-size: 10px;
+                  font-weight: 600;
+                }
+                small {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+
+        .inp-holder {
+          position: absolute;
+          bottom: 1rem;
+          display: flex;
+          align-items: center;
+          width: 90%;
+
+          img {
+            height: 20px;
+            width: 20px;
+            border: 2px solid $secondaryColor;
+            border-radius: 50%;
+            margin-right: 1rem;
+          }
+          input {
+            background-color: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid $secondaryColor;
+            width: 80%;
+            color: $secondaryColor;
+          }
+          button {
+            background-color: transparent;
+            border: 0;
+            outline: 0;
+            color: $secondaryColor;
+            margin-left: 1rem;
+            font-size: 20px;
+            padding: 0;
+            height: 20px;
+          }
         }
       }
     }

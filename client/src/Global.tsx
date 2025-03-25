@@ -18,8 +18,8 @@ export interface ContextAppType {
   getMessages: () => Promise<void>;
   writeMessage: (
     input: string,
-    from: string | null,
-    to: string | null
+    from: string | null | undefined,
+    to: string | null | undefined
   ) => Promise<void>;
   updateMessage: (id: string, msg: string) => Promise<void>;
   updateShowMessage: (id: string, show: string) => Promise<void>;
@@ -38,6 +38,10 @@ export interface ContextAppType {
   setModalCrtOpen: Dispatch<SetStateAction<boolean>>;
   setModalDelOpen: Dispatch<SetStateAction<boolean>>;
   setModalEditOpen: Dispatch<SetStateAction<boolean>>;
+
+  // Comment Modal
+  commentModalOpen: boolean;
+  setCommentModalOpen: Dispatch<SetStateAction<boolean>>;
 
   // Selected message for edit/delete
   selectedMessage: MessageType | null;
@@ -92,6 +96,9 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   );
   const [selectedAdmin, setSelectedAdmin] = useState<AdminType | null>(null);
 
+  // Comment modal
+  const [commentModalOpen, setCommentModalOpen] = useState<boolean>(false);
+
   useEffect(() => {
     if (notification.status) {
       const notiTimeout = setTimeout(() => {
@@ -133,8 +140,8 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   const writeMessage = async (
     input: string,
-    from: string | null,
-    to: string | null
+    from: string | null | undefined,
+    to: string | null | undefined
   ) => {
     try {
       await axios.post(
@@ -345,12 +352,17 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         notification,
         signedIn,
         setSignedIn,
+        //
         modalDelOpen,
         modalCrtOpen,
         modalEditOpen,
         setModalCrtOpen,
         setModalDelOpen,
         setModalEditOpen,
+        //
+        commentModalOpen,
+        setCommentModalOpen,
+        //
         selectedMessage,
         setSelectedMessage,
         // Admin data functions and state

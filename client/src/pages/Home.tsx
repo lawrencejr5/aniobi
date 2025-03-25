@@ -27,7 +27,9 @@ const Home = () => {
       <Nav page={"home"} />
       <section className="container">
         <div className="banner">
-          <Typewriter text={`~${txts[index]}`} speed={20} />
+          <div className="float">
+            <Typewriter text={`~${txts[index]}`} speed={20} />
+          </div>
           <div className="follow">
             <span>
               <a href="https://www.instagram.com/_aniobi_/" target="_blank">

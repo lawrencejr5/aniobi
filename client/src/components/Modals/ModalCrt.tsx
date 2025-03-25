@@ -7,7 +7,6 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { useGlobalContext, ContextAppType } from "../../Global.tsx";
-import { NULL } from "sass";
 
 interface ModalCrtProps {
   page: string;

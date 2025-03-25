@@ -22,7 +22,7 @@ const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 100 }) => {
     return () => clearInterval(interval);
   }, [text, speed]);
 
-  return <p className="float">{displayedText}</p>;
+  return <p className="">{displayedText}</p>;
 };
 
 export default Typewriter;

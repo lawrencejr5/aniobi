@@ -7,9 +7,11 @@ import Nav from "../components/Nav";
 
 import { useGlobalContext, ContextAppType } from "../Global";
 import Footer2 from "../components/Footer2";
+import ModalComment from "../components/Modals/ModalComment";
 
 const Messages = () => {
-  const { messages, signedIn } = useGlobalContext() as ContextAppType;
+  const { messages, signedIn, commentModalOpen, setCommentModalOpen } =
+    useGlobalContext() as ContextAppType;
 
   return (
     <main className="messages-container">
@@ -44,7 +46,9 @@ const Messages = () => {
                   <small>@anonymous</small>
                   <p>{msg.message}</p>
                   <div className="actions">
-                    <small>0 comment(s)</small>
+                    <small onClick={() => setCommentModalOpen(true)}>
+                      0 comment(s)
+                    </small>
                     &nbsp; &nbsp;
                     <div>
                       <BsHeart className="heart-icon" />
@@ -56,6 +60,7 @@ const Messages = () => {
           </div>
         </div>
       </div>
+      <ModalComment open={commentModalOpen} msg={null} />
       <Footer2 />
     </main>
   );
