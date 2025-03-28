@@ -10,8 +10,13 @@ import Footer2 from "../components/Footer2";
 import ModalComment from "../components/Modals/ModalComment";
 
 const Messages = () => {
-  const { messages, signedIn, commentModalOpen, setCommentModalOpen } =
-    useGlobalContext() as ContextAppType;
+  const {
+    messages,
+    signedIn,
+    commentModalOpen,
+    setCommentModalOpen,
+    setSelectedMessage,
+  } = useGlobalContext() as ContextAppType;
 
   return (
     <main className="messages-container">
@@ -46,7 +51,12 @@ const Messages = () => {
                   <small>@anonymous</small>
                   <p>{msg.message}</p>
                   <div className="actions">
-                    <small onClick={() => setCommentModalOpen(true)}>
+                    <small
+                      onClick={() => {
+                        setCommentModalOpen(true);
+                        setSelectedMessage(msg);
+                      }}
+                    >
                       0 comment(s)
                     </small>
                     &nbsp; &nbsp;

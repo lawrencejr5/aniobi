@@ -1241,16 +1241,3 @@ button {
 .float {
   animation: float 3s ease-in-out infinite;
 }
-
-// .msg-card-container {
-//   overflow-y: scroll; /* Ensure content is still scrollable */
-
-//   /* Firefox */
-//   scrollbar-width: none;
-//   -ms-overflow-style: none; /* IE and Edge */
-
-//   /* Chrome, Safari, Opera */
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-// }

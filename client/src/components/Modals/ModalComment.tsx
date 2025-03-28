@@ -15,7 +15,7 @@ interface ModelCommentProps {
 }
 
 const ModalComment: React.FC<ModelCommentProps> = ({ open, msg }) => {
-  const { commentModalOpen, setCommentModalOpen } =
+  const { setCommentModalOpen, selectedMessage } =
     useGlobalContext() as ContextAppType;
 
   return (
@@ -27,7 +27,10 @@ const ModalComment: React.FC<ModelCommentProps> = ({ open, msg }) => {
             <small>1hr ago</small>
           </div>
           <p>
-            <Typewriter text="I love aniobi" speed={40} />{" "}
+            <Typewriter
+              text={selectedMessage ? selectedMessage?.message : "----"}
+              speed={10}
+            />{" "}
           </p>
         </div>
         <div className="comment-sec">
