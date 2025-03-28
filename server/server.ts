@@ -12,12 +12,14 @@ const cors = require("cors");
 // Routes
 import MessageRouter from "./routes/messages";
 import AdminRouter from "./routes/admin";
+import CommentRouter from "./routes/comment";
 
 app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/messages", MessageRouter);
 app.use("/api/v1/admin", AdminRouter);
+app.use("/api/v1/comment", CommentRouter);
 
 app.use(notFound);
 
