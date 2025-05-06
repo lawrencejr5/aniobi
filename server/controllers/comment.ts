@@ -7,8 +7,8 @@ export const createComment = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { content, author } = req.body;
-    const newComment = await Comment.create({ content, author });
+    const { comment, author, message } = req.body;
+    const newComment = await Comment.create({ comment, author, message });
     res
       .status(201)
       .json({ msg: "Comment created successfully", comment: newComment });
@@ -23,7 +23,17 @@ export const getComments = async (
   res: Response
 ): Promise<void> => {
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find()
+    .populate({
+      path: "author",
+      select: "username -_id",
+    })
+    .populate({
+      path: "message",
+      select: "message -_id",
+    })
+    .sort({ createdAt: -1 });
+      
     res.status(200).json({ msg: "Comments fetched successfully", comments });
   } catch (error) {
     res.status(500).json({ msg: "Error fetching comments", error });
@@ -37,10 +47,10 @@ export const updateComment = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { content } = req.body;
+    const { comment } = req.body;
     const updatedComment = await Comment.findByIdAndUpdate(
       id,
-      { content },
+      { comment },
       { new: true }
     );
     if (!updatedComment) {
