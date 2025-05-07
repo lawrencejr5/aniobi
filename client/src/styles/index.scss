@@ -677,7 +677,8 @@ button {
 
         .inp-holder {
           width: 400px;
-          background-color: $light;
+          background-color: transparent;
+          border: 2px solid $secondaryColor;
           margin: 0.8rem 0;
           padding: 0.8rem;
           border-radius: 10px;
@@ -686,7 +687,7 @@ button {
 
           .icon {
             font-size: 20px;
-            color: $primaryColor;
+            color: $secondaryColor;
           }
 
           input {
@@ -696,6 +697,11 @@ button {
             outline: none;
             margin-left: 0.5rem;
             font-size: 16px;
+            color: $secondaryColor;
+
+            &::placeholder {
+              color: $secondaryColor3;
+            }
           }
         }
         button {
@@ -711,7 +717,7 @@ button {
         .dont-have-account {
           margin-top: 3rem;
           span {
-            color: $light;
+            color: $secondaryColor2;
             font-size: 16px;
           }
           .sign-link {
