@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsChatText } from "react-icons/bs";
 
 import Nav from "../components/Nav";
 
@@ -9,14 +9,22 @@ import { useGlobalContext, ContextAppType } from "../Global";
 import Footer2 from "../components/Footer2";
 import ModalComment from "../components/Modals/ModalComment";
 
+import CommentCount from "../components/CommentCount";
+
 const Messages = () => {
   const {
     messages,
+    getMessages,
     signedIn,
     commentModalOpen,
     setCommentModalOpen,
     setSelectedMessage,
+    messageLoading,
   } = useGlobalContext() as ContextAppType;
+
+  useEffect(() => {
+    getMessages();
+  }, []);
 
   return (
     <main className="messages-container">
@@ -45,28 +53,38 @@ const Messages = () => {
           )}
 
           <div className="msg-card-container">
-            {messages?.map((msg) => {
-              return (
-                <div key={msg._id} className="msg-card">
-                  <small>@anonymous</small>
-                  <p>{msg.message}</p>
-                  <div className="actions">
-                    <small
-                      onClick={() => {
-                        setCommentModalOpen(true);
-                        setSelectedMessage(msg);
-                      }}
-                    >
-                      0 comment(s)
-                    </small>
-                    &nbsp; &nbsp;
-                    <div>
-                      <BsHeart className="heart-icon" />
+            {messageLoading ? (
+              <p className="msg-loading-text">
+                Fetching messages, please wait...
+              </p>
+            ) : (
+              messages?.map((msg) => {
+                return (
+                  <div key={msg._id} className="msg-card">
+                    <small>@anonymous</small>
+                    <p>{msg.message}</p>
+                    <div className="actions">
+                      <small
+                        onClick={() => {
+                          setCommentModalOpen(true);
+                          setSelectedMessage(msg);
+                        }}
+                      >
+                        {msg?._id ? (
+                          <CommentCount messageId={msg._id} />
+                        ) : (
+                          <BsChatText className="comment-icon" />
+                        )}
+                      </small>
+                      &nbsp; &nbsp;
+                      <div>
+                        <BsHeart className="heart-icon" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </div>

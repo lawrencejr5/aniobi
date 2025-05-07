@@ -19,3 +19,12 @@ export interface AdminType {
   password?: string;
   role?: string;
 }
+
+export interface CommentType {
+  _id?: string;
+  author?: { _id: string; username: string };
+  message?: { _id: string; message: string };
+  comment?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}

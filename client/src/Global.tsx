@@ -10,7 +10,12 @@ import React, {
 
 import axios from "axios";
 
-import { MessageType, NotificationType, AdminType } from "./types.tsx";
+import {
+  MessageType,
+  NotificationType,
+  AdminType,
+  CommentType,
+} from "./types.tsx";
 import { EndPoints, LocalStorage } from "./enums.tsx";
 
 export interface ContextAppType {
@@ -24,6 +29,19 @@ export interface ContextAppType {
   updateMessage: (id: string, msg: string) => Promise<void>;
   updateShowMessage: (id: string, show: string) => Promise<void>;
   deleteMessage: (id: string) => Promise<void>;
+
+  // Comments
+  messageComments: CommentType[] | null;
+  setMessageComments: Dispatch<SetStateAction<CommentType[] | null>>;
+  getMessageComments: (messageId: string) => void;
+  makeComment: (
+    messageId: string | null | undefined,
+    comment: string,
+    authorId: string | null | undefined
+  ) => Promise<void>;
+  getCommentCount: (messageId: string) => Promise<number>;
+
+  // Notifications
   notification: NotificationType | null;
   setNotification: Dispatch<SetStateAction<NotificationType>>;
 
@@ -38,6 +56,12 @@ export interface ContextAppType {
   setModalCrtOpen: Dispatch<SetStateAction<boolean>>;
   setModalDelOpen: Dispatch<SetStateAction<boolean>>;
   setModalEditOpen: Dispatch<SetStateAction<boolean>>;
+
+  // Loading states
+  messageLoading: boolean;
+  commentLoading: boolean;
+  setMessageLoading: Dispatch<SetStateAction<boolean>>;
+  setCommentLoading: Dispatch<SetStateAction<boolean>>;
 
   // Comment Modal
   commentModalOpen: boolean;
@@ -62,6 +86,9 @@ export interface ContextAppType {
 
   // Logout function
   logout: () => void;
+
+  // Format time function
+  formatTime: (createdAt?: string) => string;
 
   // User details state
   user: AdminType | null;
@@ -99,6 +126,10 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   // Comment modal
   const [commentModalOpen, setCommentModalOpen] = useState<boolean>(false);
 
+  // Loading states
+  const [messageLoading, setMessageLoading] = useState<boolean>(false);
+  const [commentLoading, setCommentLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (notification.status) {
       const notiTimeout = setTimeout(() => {
@@ -110,12 +141,15 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
 
   const [messages, setMessages] = useState<MessageType[]>([]);
   const getMessages = async () => {
+    setMessageLoading(true);
     try {
       const { data } = await axios.get(EndPoints.messages, {
         headers: { Authorization: `Bearer ${LocalStorage.token}` },
       });
+      setMessageLoading(false);
       setMessages(data.messages);
     } catch (err) {
+      setMessageLoading(false);
       console.log(err);
     }
   };
@@ -123,13 +157,16 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [userMessages, setUserMessages] = useState<MessageType[]>([]);
   const getUserMessages = async (id: string): Promise<void> => {
     if (!id) return;
+    setMessageLoading(true);
     try {
       const { data } = await axios.get(`${EndPoints.messages}?to=${id}`, {
         headers: { Authorization: `Bearer ${LocalStorage.token}` },
       });
       setUserMessages(data.messages);
+      setMessageLoading(false);
     } catch (err: any) {
       console.error(err);
+      setMessageLoading(false);
       setNotification({
         text: err?.response?.data?.msg || "Error fetching user messages",
         status: true,
@@ -209,6 +246,68 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     } catch (err: any) {
       setNotification({
         text: err?.response?.data?.msg || "Error deleting message",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const [messageComments, setMessageComments] = useState<CommentType[] | null>(
+    []
+  );
+  // Fetch all comments for a message
+  const getMessageComments = async (messageId: string): Promise<void> => {
+    setCommentLoading(true);
+    try {
+      const { data } = await axios.get(
+        `${EndPoints.comment}?message=${messageId}`
+      );
+      setCommentLoading(false);
+      setMessageComments(data.comments);
+    } catch (err: any) {
+      setCommentLoading(false);
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching comments",
+        status: true,
+        theme: "danger",
+      });
+      console.log(err);
+    }
+  };
+
+  // Get comment count for a message
+  const getCommentCount = async (messageId: string): Promise<number> => {
+    try {
+      const { data } = await axios.get(
+        `${EndPoints.comment}?message=${messageId}`
+      );
+      return data.comments?.length ?? 0;
+    } catch (error) {
+      console.error("Error fetching comment count:", error);
+      return 0;
+    }
+  };
+
+  //Make comment
+  const makeComment = async (
+    messageId: string | null | undefined,
+    comment: string,
+    authorId: string | null | undefined
+  ): Promise<void> => {
+    try {
+      await axios.post(
+        EndPoints.comment,
+        { message: messageId, comment, author: authorId },
+        { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
+      );
+      setNotification({
+        text: "Comment added successfully",
+        status: true,
+        theme: "success",
+      });
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error adding comment",
         status: true,
         theme: "danger",
       });
@@ -330,8 +429,41 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  // Helper function to format createdAt timestamp
+  const formatTime = (createdAt?: string): string => {
+    if (!createdAt) return "just now";
+
+    const commentDate = new Date(createdAt);
+    const now = new Date();
+    const diffMs = now.getTime() - commentDate.getTime();
+    const diffMinutes = Math.floor(diffMs / 60000);
+
+    if (diffMinutes < 1) {
+      return "just now";
+    } else if (diffMinutes < 60) {
+      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+    if (diffHours < 24) {
+      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 7) {
+      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+    }
+
+    const diffWeeks = Math.floor(diffDays / 7);
+    if (diffWeeks < 52) {
+      return `${diffWeeks} week${diffWeeks !== 1 ? "s" : ""} ago`;
+    }
+
+    const diffYears = Math.floor(diffWeeks / 52);
+    return `${diffYears} year${diffYears !== 1 ? "s" : ""} ago`;
+  };
+
   useEffect(() => {
-    getMessages();
     fetchAdminUsers();
     const adminData = LocalStorage?.admin;
     if (adminData) {
@@ -363,6 +495,17 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         commentModalOpen,
         setCommentModalOpen,
         //
+        messageComments,
+        getMessageComments,
+        setMessageComments,
+        makeComment,
+        getCommentCount,
+        //
+        messageLoading,
+        setMessageLoading,
+        commentLoading,
+        setCommentLoading,
+        //
         selectedMessage,
         setSelectedMessage,
         // Admin data functions and state
@@ -382,6 +525,8 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         // User messages state and function
         userMessages,
         getUserMessages,
+        //
+        formatTime,
       }}
     >
       {children}

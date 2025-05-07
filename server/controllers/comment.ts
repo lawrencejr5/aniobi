@@ -23,17 +23,28 @@ export const getComments = async (
   res: Response
 ): Promise<void> => {
   try {
-    const comments = await Comment.find()
-    .populate({
-      path: "author",
-      select: "username -_id",
-    })
-    .populate({
-      path: "message",
-      select: "message -_id",
-    })
-    .sort({ createdAt: -1 });
-      
+    const { author, message } = req.query;
+
+    const queryObj: { [key: string]: string | null } = {};
+
+    if (author && typeof author === "string") {
+      queryObj.author = author === "null" ? null : author;
+    }
+
+    if (message && typeof message === "string") {
+      queryObj.message = message === "null" ? null : message;
+    }
+    const comments = await Comment.find(queryObj)
+      .populate({
+        path: "author",
+        select: "username",
+      })
+      .populate({
+        path: "message",
+        select: "message",
+      })
+      .sort({ createdAt: -1 });
+
     res.status(200).json({ msg: "Comments fetched successfully", comments });
   } catch (error) {
     res.status(500).json({ msg: "Error fetching comments", error });
