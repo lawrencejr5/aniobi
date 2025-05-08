@@ -104,6 +104,38 @@ button {
       top: 1.5rem;
     }
   }
+
+  .nav-box {
+    position: absolute;
+    top: 3.5rem;
+    right: 0.5rem;
+    height: auto;
+    width: 180px;
+    border-radius: 3px;
+    background-color: $secondaryColor;
+    padding: 0.5rem;
+    display: none;
+
+    .link {
+      font-weight: 600;
+      font-size: 12px;
+      display: block;
+      text-align: right;
+      color: $primaryColor;
+      margin-bottom: 0.5rem;
+
+      &.active {
+        background-color: $primaryColor;
+        color: $secondaryColor;
+        border-radius: 5px;
+        padding: 0.5rem;
+      }
+    }
+
+    &.open {
+      display: block;
+    }
+  }
 }
 
 .notification-container {

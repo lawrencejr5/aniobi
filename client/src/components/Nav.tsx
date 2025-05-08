@@ -14,7 +14,8 @@ const Nav: React.FC<NavProps> = ({ page }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { signedIn } = useGlobalContext() as ContextAppType;
+  const { signedIn, navBoxOpen, setNavBoxOpen } =
+    useGlobalContext() as ContextAppType;
   return (
     <nav className={`${page === "home" && "fixed"} main-nav`}>
       <Link to={"/"}>
@@ -42,9 +43,38 @@ const Nav: React.FC<NavProps> = ({ page }) => {
             Signin
           </span>
         )}
-        <button className="bar-btn">
+        <button className="bar-btn" onClick={() => setNavBoxOpen(!navBoxOpen)}>
           <HiMiniBars3 />
         </button>
+      </div>
+      <div className={`nav-box ${navBoxOpen ? "open" : ""}`}>
+        <span
+          className={`link ${pathname === "/" && "active"}`}
+          onClick={() => {
+            navigate("/");
+            setNavBoxOpen(false);
+          }}
+        >
+          Home
+        </span>
+        <span
+          className={`link ${pathname === "/about" && "active"}`}
+          onClick={() => {
+            navigate("/about");
+            setNavBoxOpen(false);
+          }}
+        >
+          About
+        </span>
+        <span
+          className={`link ${pathname === "/messages" && "active"}`}
+          onClick={() => {
+            navigate("/messages");
+            setNavBoxOpen(false);
+          }}
+        >
+          Messages
+        </span>
       </div>
     </nav>
   );

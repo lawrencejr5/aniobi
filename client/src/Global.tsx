@@ -57,6 +57,10 @@ export interface ContextAppType {
   setModalDelOpen: Dispatch<SetStateAction<boolean>>;
   setModalEditOpen: Dispatch<SetStateAction<boolean>>;
 
+  // Nav box state
+  navBoxOpen: boolean;
+  setNavBoxOpen: Dispatch<SetStateAction<boolean>>;
+
   // Loading states
   messageLoading: boolean;
   commentLoading: boolean;
@@ -121,6 +125,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [selectedMessage, setSelectedMessage] = useState<MessageType | null>(
     null
   );
+  const [navBoxOpen, setNavBoxOpen] = useState<boolean>(false);
   const [selectedAdmin, setSelectedAdmin] = useState<AdminType | null>(null);
 
   // Comment modal
@@ -491,6 +496,9 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setModalCrtOpen,
         setModalDelOpen,
         setModalEditOpen,
+        //
+        navBoxOpen,
+        setNavBoxOpen,
         //
         commentModalOpen,
         setCommentModalOpen,
