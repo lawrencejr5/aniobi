@@ -13,6 +13,7 @@ const cors = require("cors");
 import MessageRouter from "./routes/messages";
 import AdminRouter from "./routes/admin";
 import CommentRouter from "./routes/comment";
+import LikeRouter from "./routes/like";
 
 app.use(express.json());
 app.use(cors());
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/v1/messages", MessageRouter);
 app.use("/api/v1/admin", AdminRouter);
 app.use("/api/v1/comment", CommentRouter);
+app.use("/api/v1/like", LikeRouter);
 
 app.use(notFound);
 
