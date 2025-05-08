@@ -116,6 +116,16 @@
       }
     }
   }
+  .about-container {
+    .container {
+      .item-container {
+        img {
+          width: 250px;
+          height: 250px;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 770px) {
@@ -197,6 +207,9 @@
         &.link {
           display: none;
         }
+      }
+      .bar-btn {
+        display: block;
       }
     }
   }
@@ -408,6 +421,31 @@
     &.delete {
       p {
         font-size: 16px;
+      }
+    }
+  }
+
+  .about-container {
+    .container {
+      padding: 1rem;
+      padding-bottom: 5rem;
+      .item-container {
+        flex-flow: column wrap-reverse;
+
+        .text {
+          width: 100%;
+          order: 1;
+        }
+
+        img {
+          order: 2;
+          width: 250px;
+          height: auto;
+
+          &.bus {
+            width: 300px;
+          }
+        }
       }
     }
   }

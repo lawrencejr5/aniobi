@@ -22,7 +22,7 @@ const About = () => {
         </div>
         <div className="item-container">
           <img
-            className="float"
+            className="float bus"
             src="/illustrations/06-Ambulance-Driver.svg"
             alt=""
           />

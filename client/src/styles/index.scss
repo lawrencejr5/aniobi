@@ -72,6 +72,7 @@ button {
       border: 0;
       outline: 0;
       color: $secondaryColor;
+      display: none;
     }
 
     span {
@@ -433,6 +434,7 @@ button {
         height: 300px;
         width: 300px;
         object-fit: cover;
+        margin: 0 1rem;
       }
     }
   }
