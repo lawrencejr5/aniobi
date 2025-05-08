@@ -9,21 +9,14 @@ const Footer2 = () => {
 
   return (
     <footer className="footer-component">
-      © Aniobi 2025 &nbsp;.&nbsp;
+      <span>© Aniobi 2025 &nbsp;.&nbsp;</span>
       <Link to={"/"} className="link">
         Terms and Conditions
       </Link>
       {signedIn?._id && (
-        <>
-          &nbsp;.&nbsp;
-          <div
-            className="logout"
-            style={{ cursor: "pointer" }}
-            onClick={logout}
-          >
-            Logout
-          </div>
-        </>
+        <div className="logout" style={{ cursor: "pointer" }} onClick={logout}>
+          &nbsp;.&nbsp; Logout
+        </div>
       )}
     </footer>
   );

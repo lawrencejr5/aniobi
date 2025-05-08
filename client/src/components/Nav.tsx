@@ -2,17 +2,9 @@ import React from "react";
 import Logo from "./Logo.tsx";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import {
-  FaChevronRight,
-  FaPencilAlt,
-  FaPlusCircle,
-  FaUsers,
-  FaSignInAlt,
-  FaBars,
-} from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
-
 import { useGlobalContext, ContextAppType } from "../Global.tsx";
+
+import { HiMiniBars3 } from "react-icons/hi2";
 
 interface NavProps {
   page: String;
@@ -29,15 +21,15 @@ const Nav: React.FC<NavProps> = ({ page }) => {
         <Logo />
       </Link>
       <div className="nav-links">
-        <span className="" onClick={() => navigate("/")}>
+        <span className="link" onClick={() => navigate("/")}>
           Home
           {pathname === "/" && <div className="dot"></div>}
         </span>
-        <span className="" onClick={() => navigate("/about")}>
+        <span className="link" onClick={() => navigate("/about")}>
           About
           {pathname === "/about" && <div className="dot"></div>}
         </span>
-        <span className="" onClick={() => navigate("/messages")}>
+        <span className="link" onClick={() => navigate("/messages")}>
           Messages
           {pathname === "/messages" && <div className="dot"></div>}
         </span>
@@ -50,6 +42,9 @@ const Nav: React.FC<NavProps> = ({ page }) => {
             Signin
           </span>
         )}
+        <button className="bar-btn">
+          <HiMiniBars3 />
+        </button>
       </div>
     </nav>
   );

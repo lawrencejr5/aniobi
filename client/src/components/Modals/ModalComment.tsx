@@ -15,6 +15,7 @@ const ModalComment: React.FC<ModelCommentProps> = ({ open, msg }) => {
     formatTime,
     commentModalOpen,
     setCommentModalOpen,
+    getMessages,
     selectedMessage,
     setSelectedMessage,
     setMessageComments,

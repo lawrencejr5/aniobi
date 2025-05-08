@@ -4,7 +4,8 @@ import { BsHeart, BsHeartFill, BsChatText } from "react-icons/bs";
 import { useGlobalContext, ContextAppType } from "../Global";
 
 const CommentCount: React.FC<{ messageId: string }> = ({ messageId }) => {
-  const { getCommentCount } = useGlobalContext() as ContextAppType;
+  const { getCommentCount, messageComments } =
+    useGlobalContext() as ContextAppType;
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ const CommentCount: React.FC<{ messageId: string }> = ({ messageId }) => {
       setCount(cnt);
     };
     fetchCount();
-  }, []);
+  }, [messageComments]);
 
   return (
     <div>
