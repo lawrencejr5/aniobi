@@ -106,6 +106,8 @@ export interface ContextAppType {
   // User messages state
   userMessages: MessageType[];
   getUserMessages: (id: string) => Promise<void>;
+  userSentMessages: MessageType[];
+  getUserSentMessages: (id: string) => Promise<void>;
 }
 
 const ContextApp = createContext<ContextAppType | null>(null);
@@ -154,9 +156,12 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const getMessages = async () => {
     setMessageLoading(true);
     try {
-      const { data } = await axios.get(EndPoints.messages, {
-        headers: { Authorization: `Bearer ${LocalStorage.token}` },
-      });
+      const { data } = await axios.get(
+        `${EndPoints.messages}?to=${null}&show=${true}`,
+        {
+          headers: { Authorization: `Bearer ${LocalStorage.token}` },
+        }
+      );
       setMessageLoading(false);
       setMessages(data.messages);
     } catch (err) {
@@ -174,6 +179,27 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         headers: { Authorization: `Bearer ${LocalStorage.token}` },
       });
       setUserMessages(data.messages);
+      setMessageLoading(false);
+    } catch (err: any) {
+      console.error(err);
+      setMessageLoading(false);
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching user messages",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const [userSentMessages, setUserSentMessages] = useState<MessageType[]>([]);
+  const getUserSentMessages = async (id: string): Promise<void> => {
+    if (!id) return;
+    setMessageLoading(true);
+    try {
+      const { data } = await axios.get(`${EndPoints.messages}?from=${id}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setUserSentMessages(data.messages);
       setMessageLoading(false);
     } catch (err: any) {
       console.error(err);
@@ -607,6 +633,8 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         // User messages state and function
         userMessages,
         getUserMessages,
+        userSentMessages,
+        getUserSentMessages,
         //
         formatTime,
       }}

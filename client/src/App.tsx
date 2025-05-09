@@ -15,6 +15,8 @@ import Send from "./pages/Send.tsx";
 import Messages from "./pages/Messages.tsx";
 import About from "./pages/About.tsx";
 import UserMessages from "./pages/UserMessages.tsx";
+import LikedMessages from "./pages/LikedMessages.tsx";
+import SentMessages from "./pages/SentMessages.tsx";
 
 const App: React.FC = () => {
   return (
@@ -49,7 +51,9 @@ const App: React.FC = () => {
           }
         />
         <Route path="/messages" element={<Messages />} />
-        <Route path="/messages/:user" element={<UserMessages />} />
+        <Route path="/messages/received/:user" element={<UserMessages />} />
+        <Route path="/messages/liked/:user" element={<LikedMessages />} />
+        <Route path="/messages/sent/:user" element={<SentMessages />} />
         <Route path="/send" element={<Send />} />
         <Route path="/about" element={<About />} />
         <Route path="/admin/not-authorized" element={<NotAuthorized />} />

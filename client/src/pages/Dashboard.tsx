@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const { messages, signedIn, logout } = useGlobalContext() as ContextAppType;
   const [copySuccess, setCopySuccess] = useState("");
 
-  const aniobiLink = `http://localhost:3000/send/?user=${
+  const aniobiLink = `https://test-aniobi.web.app/send/?user=${
     signedIn ? signedIn._id || "your-anon-profile" : "your-anon-profile"
   }`;
 
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
       <Nav page="dashboard" />
       <section className="share-link-section">
         <nav>
-          <Link className="link" to={`/messages/${signedIn?._id}`}>
+          <Link className="link" to={`/messages/personal/${signedIn?._id}`}>
             My Messages
             {/* <div className="line"></div> */}
           </Link>
@@ -39,7 +39,6 @@ const Dashboard: React.FC = () => {
           <div onClick={logout} className="link">
             Logout &nbsp;
             <FaPowerOff />
-            {/* <div className="line"></div> */}
           </div>
         </nav>
         <div className="container">

@@ -1,31 +1,34 @@
-import React, { useEffect } from "react";
-
-import { BsChatText } from "react-icons/bs";
+import React from "react";
+import { Link } from "react-router-dom";
+import { BsHeart, BsHeartFill, BsChatText } from "react-icons/bs";
 
 import Nav from "../components/Nav";
 
 import { useGlobalContext, ContextAppType } from "../Global";
+
 import Footer2 from "../components/Footer2";
+import CommentCount from "../components/CommentCount";
 import ModalComment from "../components/Modals/ModalComment";
 import MsgNav from "../components/MsgNav";
-
-import CommentCount from "../components/CommentCount";
 import LikeComponent from "../components/LikeComponent";
 
-const Messages = () => {
+const LikedMessages = () => {
   const {
-    messages,
-    getMessages,
     signedIn,
+    userLikedMessages,
+    messages,
+    getUserLikedMessages,
+    messageLoading,
     commentModalOpen,
     setCommentModalOpen,
     setSelectedMessage,
-    messageLoading,
   } = useGlobalContext() as ContextAppType;
 
-  useEffect(() => {
-    getMessages();
-  }, []);
+  React.useEffect(() => {
+    if (signedIn?._id) {
+      getUserLikedMessages(signedIn._id);
+    }
+  }, [signedIn, messages]);
 
   return (
     <main className="messages-container">
@@ -39,16 +42,16 @@ const Messages = () => {
         />
 
         <div className="all-message-container">
-          <h1>Messages...</h1>
+          <h1>Liked Messages...</h1>
           {signedIn?._id && <MsgNav />}
 
           <div className="msg-card-container">
             {messageLoading ? (
               <p className="msg-loading-text">
-                Fetching messages, please wait...
+                Fetching ur messages, please wait...
               </p>
-            ) : (
-              messages?.map((msg) => {
+            ) : userLikedMessages.length > 0 ? (
+              userLikedMessages?.map((msg) => {
                 return (
                   <div key={msg._id} className="msg-card">
                     <small>@anonymous</small>
@@ -72,14 +75,26 @@ const Messages = () => {
                   </div>
                 );
               })
+            ) : (
+              <div className="empty">
+                <img src="/illustrations/148-No-Result-Found.svg" alt="" />
+                <p>
+                  Your liked messages will appear here, go to your{" "}
+                  <Link className="link" to={"/messages"}>
+                    feed
+                  </Link>{" "}
+                  to like messages...
+                </p>
+              </div>
             )}
           </div>
         </div>
       </div>
       <ModalComment open={commentModalOpen} msg={null} />
+
       <Footer2 />
     </main>
   );
 };
 
-export default Messages;
+export default LikedMessages;

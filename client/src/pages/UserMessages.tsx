@@ -9,6 +9,8 @@ import { useGlobalContext, ContextAppType } from "../Global";
 import Footer2 from "../components/Footer2";
 import CommentCount from "../components/CommentCount";
 import ModalComment from "../components/Modals/ModalComment";
+import MsgNav from "../components/MsgNav";
+import LikeComponent from "../components/LikeComponent";
 
 const UserMessages = () => {
   const {
@@ -41,14 +43,7 @@ const UserMessages = () => {
 
         <div className="all-message-container">
           <h1>My Messages...</h1>
-          <div className="msg-nav">
-            <Link className="link" to={"/messages"}>
-              For you
-            </Link>
-            <Link className="link active" to={`/messages/${signedIn?._id}`}>
-              Personal
-            </Link>
-          </div>
+          {signedIn?._id && <MsgNav />}
 
           <div className="msg-card-container">
             {messageLoading ? (
@@ -75,9 +70,7 @@ const UserMessages = () => {
                         )}
                       </small>
                       &nbsp; &nbsp;
-                      <div>
-                        <BsHeart className="heart-icon" />
-                      </div>
+                      <LikeComponent msgId={msg._id} />
                     </div>
                   </div>
                 );
@@ -86,7 +79,7 @@ const UserMessages = () => {
               <div className="empty">
                 <img src="/illustrations/148-No-Result-Found.svg" alt="" />
                 <p>
-                  You don't have any messages yet,{" "}
+                  You haven't received any messages yet,{" "}
                   <Link className="link" to={"/dashboard"}>
                     copy link
                   </Link>{" "}

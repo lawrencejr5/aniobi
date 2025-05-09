@@ -485,30 +485,47 @@ button {
 
       .msg-nav {
         margin-top: 1rem;
-        padding: 0 1rem;
+        padding: 0 0rem;
+        max-width: 100%;
+        overflow-x: auto;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
-        .link {
-          margin-right: 1rem;
-          color: $secondaryColor;
-          font-weight: 600;
-          position: relative;
-          text-decoration: none;
-          border: 1px solid $secondaryColor;
-          padding: 0.3rem 0.5rem;
-          border-radius: 5px;
-          font-size: 12px;
+        .nav-links {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-wrap: none;
 
-          &.active {
-            background-color: $secondaryColor;
-            color: $primaryColor;
-          }
+          .link {
+            margin-right: 1rem;
+            color: $secondaryColor;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid $secondaryColor;
+            padding: 0.3rem 0.5rem;
+            border-radius: 5px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem; // Space between the text and icon
+            white-space: nowrap;
 
-          .line {
-            height: 2px;
-            width: 30px;
-            background-color: $secondaryColor;
-            position: absolute;
-            left: 0;
+            &.active {
+              background-color: $secondaryColor;
+              color: $primaryColor;
+            }
+
+            .line {
+              height: 2px;
+              width: 30px;
+              background-color: $secondaryColor;
+              position: absolute;
+              left: 0;
+            }
           }
         }
       }
