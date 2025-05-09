@@ -4,6 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import Nav from "../components/Nav.tsx";
 import Notification from "../components/Notification.tsx";
 import ChatBox from "../components/ChatBox.tsx";
+import Footer2 from "../components/Footer2.tsx";
+
 import { useGlobalContext, ContextAppType } from "../Global.tsx";
 
 const Send = () => {
@@ -32,7 +34,7 @@ const Send = () => {
           <ChatBox from={signedIn?._id} to={user?._id} />
         </div>
       </section>
-
+      <Footer2 />
       <Notification notification={notification} />
     </div>
   );

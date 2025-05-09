@@ -16,13 +16,16 @@ exports.deleteMessage = exports.updateMessage = exports.addMessage = exports.get
 const messages_1 = __importDefault(require("../models/messages"));
 const getMessages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { from, to } = req.query;
+        const { from, to, show } = req.query;
         const queryObj = {};
         if (from && typeof from === "string") {
             queryObj.from = from === "null" ? null : from;
         }
         if (to && typeof to === "string") {
             queryObj.to = to === "null" ? null : to;
+        }
+        if (show && typeof show === "string") {
+            queryObj.show = show === "null" ? null : show;
         }
         const messages = yield messages_1.default.find(queryObj).sort("-createdAt");
         res.status(200).json({ msg: "success", messages });
@@ -80,7 +83,9 @@ const deleteMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.status(404).json({ msg: "Message not found" });
         }
         else {
-            res.status(200).json({ msg: `Message with id: ${id} has been deleted successfully` });
+            res
+                .status(200)
+                .json({ msg: `Message with id: ${id} has been deleted successfully` });
         }
     }
     catch (err) {

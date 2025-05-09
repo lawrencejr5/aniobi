@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { BsChatText } from "react-icons/bs";
+import { BsChatText, BsHeart } from "react-icons/bs";
 
 import Nav from "../components/Nav";
 
@@ -12,6 +12,8 @@ import MsgNav from "../components/MsgNav";
 import CommentCount from "../components/CommentCount";
 import LikeComponent from "../components/LikeComponent";
 
+import Notification from "../components/Notification";
+
 const Messages = () => {
   const {
     messages,
@@ -21,6 +23,8 @@ const Messages = () => {
     setCommentModalOpen,
     setSelectedMessage,
     messageLoading,
+    setNotification,
+    notification,
   } = useGlobalContext() as ContextAppType;
 
   useEffect(() => {
@@ -67,7 +71,19 @@ const Messages = () => {
                         )}
                       </small>
                       &nbsp; &nbsp;
-                      <LikeComponent msgId={msg._id} />
+                      {signedIn?._id ? (
+                        <LikeComponent msgId={msg._id} />
+                      ) : (
+                        <BsHeart
+                          onClick={() => {
+                            setNotification({
+                              theme: "success",
+                              text: "Signin to like this message",
+                              status: true,
+                            });
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 );
@@ -77,6 +93,7 @@ const Messages = () => {
         </div>
       </div>
       <ModalComment open={commentModalOpen} msg={null} />
+      <Notification notification={notification} />
       <Footer2 />
     </main>
   );

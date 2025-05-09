@@ -21,6 +21,8 @@ import { EndPoints, LocalStorage } from "./enums.tsx";
 export interface ContextAppType {
   messages: MessageType[] | null;
   getMessages: () => Promise<void>;
+  allMessages: MessageType[] | null;
+  getAllMessages: () => Promise<void>;
   writeMessage: (
     input: string,
     from: string | null | undefined,
@@ -164,6 +166,21 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       );
       setMessageLoading(false);
       setMessages(data.messages);
+    } catch (err) {
+      setMessageLoading(false);
+      console.log(err);
+    }
+  };
+
+  const [allMessages, setAllMessages] = useState<MessageType[]>([]);
+  const getAllMessages = async () => {
+    setMessageLoading(true);
+    try {
+      const { data } = await axios.get(`${EndPoints.messages}?to=${null}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setMessageLoading(false);
+      setAllMessages(data.messages);
     } catch (err) {
       setMessageLoading(false);
       console.log(err);
@@ -554,11 +571,16 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const diffWeeks = Math.floor(diffDays / 7);
-    if (diffWeeks < 52) {
+    if (diffWeeks < 4) {
       return `${diffWeeks} week${diffWeeks !== 1 ? "s" : ""} ago`;
     }
 
-    const diffYears = Math.floor(diffWeeks / 52);
+    const diffMonths = Math.floor(diffWeeks / 4);
+    if (diffMonths < 12) {
+      return `${diffMonths} month${diffMonths !== 1 ? "s" : ""} ago`;
+    }
+
+    const diffYears = Math.floor(diffMonths / 12);
     return `${diffYears} year${diffYears !== 1 ? "s" : ""} ago`;
   };
 
@@ -575,6 +597,8 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       value={{
         messages,
         getMessages,
+        allMessages,
+        getAllMessages,
         writeMessage,
         updateMessage,
         updateShowMessage,

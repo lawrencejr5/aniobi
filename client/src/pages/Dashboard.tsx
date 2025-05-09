@@ -12,9 +12,12 @@ const Dashboard: React.FC = () => {
   const { messages, signedIn, logout } = useGlobalContext() as ContextAppType;
   const [copySuccess, setCopySuccess] = useState("");
 
-  const aniobiLink = `https://test-aniobi.web.app/send/?user=${
+  const aniobiLink = `http://localhost:3000/send/?user=${
     signedIn ? signedIn._id || "your-anon-profile" : "your-anon-profile"
   }`;
+  // const aniobiLink = `https://test-aniobi.web.app/send/?user=${
+  //   signedIn ? signedIn._id || "your-anon-profile" : "your-anon-profile"
+  // }`;
 
   const copyToClipboard = async () => {
     try {
@@ -31,11 +34,9 @@ const Dashboard: React.FC = () => {
       <Nav page="dashboard" />
       <section className="share-link-section">
         <nav>
-          <Link className="link" to={`/messages/personal/${signedIn?._id}`}>
+          <Link className="link" to={`/messages/received/${signedIn?._id}`}>
             My Messages
-            {/* <div className="line"></div> */}
           </Link>
-          <div className="vl"></div>
           <div onClick={logout} className="link">
             Logout &nbsp;
             <FaPowerOff />

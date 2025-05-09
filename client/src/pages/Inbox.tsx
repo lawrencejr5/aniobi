@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { FaRegTrashAlt, FaPlus, FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdOutlineFileUpload } from "react-icons/md";
@@ -20,8 +21,8 @@ import { MessageType, AdminType } from "../types.tsx";
 
 const Inbox = () => {
   const {
-    messages,
-    getMessages,
+    allMessages,
+    getAllMessages,
     updateShowMessage,
     notification,
     setModalDelOpen,
@@ -34,6 +35,7 @@ const Inbox = () => {
     setNotification,
     signedIn,
     logout,
+    formatTime,
   } = useGlobalContext() as ContextAppType;
 
   const admin: AdminType = LocalStorage?.admin
@@ -42,8 +44,8 @@ const Inbox = () => {
   const user = signedIn?.username;
 
   useEffect(() => {
-    getMessages();
-  }, [messages]);
+    getAllMessages();
+  }, [allMessages]);
 
   // Function to copy text to clipboard and show notification.
   const handleCopy = (text: string) => {
@@ -86,25 +88,32 @@ const Inbox = () => {
   return (
     <main className="admin-main">
       <Nav page={"inbox"} />
-      <h2>Welcome Admin {user}😎</h2>
+      <h2>
+        Welcome Admin {user}😎{" "}
+        <Link className="link" to={"/admin/users"}>
+          Users
+        </Link>
+      </h2>
       <div className="table-container">
-        <h1>Messages</h1>
+        <h1>Messages sent to Aniobi</h1>
         <table>
           <thead>
             <tr>
               <th>S/N</th>
-              <th>Msg-id</th>
+              <th>User</th>
               <th>Message</th>
+              <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {messages?.map((msg: MessageType, i: number) => {
+            {allMessages?.map((msg: MessageType, i: number) => {
               return (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <td id="id">msg{(msg?._id).slice(0, 16)}</td>
+                  <td id="id">usr{(msg?._id).slice(0, 16)}</td>
                   <td id="msg">{msg?.message}</td>
+                  <td id="msg">{formatTime(msg?.createdAt)}</td>
                   <td
                     id="actns"
                     style={{

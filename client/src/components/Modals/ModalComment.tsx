@@ -115,18 +115,20 @@ const ModalComment: React.FC<ModelCommentProps> = ({ open, msg }) => {
               })
             )}
           </div>
-          <div className="inp-holder">
-            <img src="/avatars/avatar3.avif" alt="" />
-            <input
-              type="text"
-              placeholder="Add a comment"
-              value={commentInp}
-              onChange={(e) => setCommentInp(e.target.value)}
-            />
-            <button onClick={comment}>
-              <IoMdSend />
-            </button>
-          </div>
+          {signedIn?._id && (
+            <div className="inp-holder">
+              <img src="/avatars/avatar3.avif" alt="" />
+              <input
+                type="text"
+                placeholder="Add a comment"
+                value={commentInp}
+                onChange={(e) => setCommentInp(e.target.value)}
+              />
+              <button onClick={comment}>
+                <IoMdSend />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

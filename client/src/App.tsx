@@ -27,9 +27,9 @@ const App: React.FC = () => {
         <Route
           path="/admin/inbox"
           element={
-            <Protected>
+            <SuperProtected>
               <Inbox />
-            </Protected>
+            </SuperProtected>
           }
         />
         <Route
@@ -51,9 +51,30 @@ const App: React.FC = () => {
           }
         />
         <Route path="/messages" element={<Messages />} />
-        <Route path="/messages/received/:user" element={<UserMessages />} />
-        <Route path="/messages/liked/:user" element={<LikedMessages />} />
-        <Route path="/messages/sent/:user" element={<SentMessages />} />
+        <Route
+          path="/messages/received/:user"
+          element={
+            <Protected>
+              <UserMessages />
+            </Protected>
+          }
+        />
+        <Route
+          path="/messages/liked/:user"
+          element={
+            <Protected>
+              <LikedMessages />
+            </Protected>
+          }
+        />
+        <Route
+          path="/messages/sent/:user"
+          element={
+            <Protected>
+              <SentMessages />
+            </Protected>
+          }
+        />
         <Route path="/send" element={<Send />} />
         <Route path="/about" element={<About />} />
         <Route path="/admin/not-authorized" element={<NotAuthorized />} />

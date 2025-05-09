@@ -194,6 +194,7 @@ button {
         width: 100%;
         display: grid;
         place-items: center;
+        margin-bottom: 4rem;
 
         .chat-box {
           position: static;
@@ -615,7 +616,7 @@ button {
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    background-color: $secondaryColor2;
+    background-color: $secondaryColor;
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -818,20 +819,16 @@ button {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 220px;
-
-      .vl {
-        height: 15px;
-        width: 2px;
-        background-color: $secondaryColor;
-      }
+      width: 230px;
 
       .link {
         color: $secondaryColor;
+        border: 1px solid $secondaryColor;
         font-size: 16px;
-        text-decoration: none;
-        font-weight: 600;
+        padding: 0.2rem 0.4rem;
         // margin-right: 1rem;
+        border-radius: 5px;
+        text-decoration: none;
         position: relative;
         display: flex;
         align-items: center;
@@ -895,7 +892,7 @@ button {
 
 .admin-main {
   height: 100vh;
-  background: linear-gradient(180deg, $primaryColor, $secondaryColor);
+  background: $primaryColor;
 
   .create-btn {
     position: fixed;
@@ -907,7 +904,7 @@ button {
     display: table;
     border-radius: 50%;
     background-color: $light;
-    color: $secondaryColor;
+    color: $primaryColor;
     border: 0;
     outline: 0;
     display: flex;
@@ -920,6 +917,15 @@ button {
     color: $light;
     font-size: 28px;
     text-transform: capitalize;
+
+    .link {
+      text-decoration: none;
+      background-color: $light;
+      color: $primaryColor;
+      padding: 0.2rem 0.4rem;
+      font-size: 12px;
+      font-weight: 600;
+    }
   }
 
   .table-container {
@@ -1146,6 +1152,7 @@ button {
         p {
           font-size: 20px;
           margin-top: 2rem;
+          color: $secondaryColor2;
         }
       }
 
@@ -1217,6 +1224,10 @@ button {
             border-bottom: 2px solid $secondaryColor;
             width: 80%;
             color: $secondaryColor;
+
+            &::placeholder {
+              color: $secondaryColor3;
+            }
           }
           button {
             background-color: transparent;

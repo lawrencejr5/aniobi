@@ -2,6 +2,16 @@
 
 @media screen and (max-width: 1067px) {
   .home-container {
+    &.send-container {
+      .container {
+        .chat-container {
+          .chat-box {
+            width: 70%;
+          }
+        }
+      }
+    }
+
     .container {
       .banner {
         height: 400px;
@@ -93,6 +103,18 @@
 }
 
 @media screen and (max-width: 800px) {
+  .home-container {
+    &.send-container {
+      .container {
+        .chat-container {
+          .chat-box {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+
   .secret-room-container {
     .body {
       display: flex;
@@ -214,6 +236,16 @@
     }
   }
   .home-container {
+    &.send-container {
+      .container {
+        .chat-container {
+          .chat-box {
+            width: 95%;
+          }
+        }
+      }
+    }
+
     .container {
       display: block;
       height: 90vh;
@@ -353,7 +385,6 @@
 
   .admin-main {
     height: 100vh;
-    background: linear-gradient(180deg, $primaryColor, $secondaryColor);
 
     .create-btn {
       bottom: 2rem;

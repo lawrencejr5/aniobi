@@ -3,16 +3,20 @@ import Message from "../models/messages";
 
 const getMessages = async (req: Request, res: Response) => {
   try {
-    const { from, to } = req.query;
-    
+    const { from, to, show } = req.query;
+
     const queryObj: { [key: string]: string | null } = {};
-    
+
     if (from && typeof from === "string") {
-      queryObj.from = from === "null" ?null : from;
+      queryObj.from = from === "null" ? null : from;
     }
-    
+
     if (to && typeof to === "string") {
       queryObj.to = to === "null" ? null : to;
+    }
+
+    if (show && typeof show === "string") {
+      queryObj.show = show === "null" ? null : show;
     }
 
     const messages = await Message.find(queryObj).sort("-createdAt");
@@ -70,7 +74,9 @@ const deleteMessage = async (req: Request, res: Response) => {
     if (!deleted) {
       res.status(404).json({ msg: "Message not found" });
     } else {
-      res.status(200).json({ msg: `Message with id: ${id} has been deleted successfully` });
+      res
+        .status(200)
+        .json({ msg: `Message with id: ${id} has been deleted successfully` });
     }
   } catch (err) {
     res.status(500).json({ msg: "An error occurred", err });

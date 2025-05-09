@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaPlus, FaPlusCircle, FaRegTrashAlt } from "react-icons/fa";
 
 import Nav from "../components/Nav.tsx";
@@ -36,7 +37,12 @@ const Users = () => {
   return (
     <main className="admin-main">
       <Nav page={"users"} />
-      <h2>Welcome Admin {user}😎</h2>
+      <h2>
+        Welcome Admin {user}😎{" "}
+        <Link className="link" to={"/admin/inbox"}>
+          Messages
+        </Link>
+      </h2>
 
       <div className="table-container">
         <h1>Users</h1>

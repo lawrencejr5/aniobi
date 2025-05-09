@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext, ContextAppType } from "../Global.tsx";
 
 import { HiMiniBars3 } from "react-icons/hi2";
+import { HiX } from "react-icons/hi";
 
 interface NavProps {
   page: String;
@@ -44,7 +45,7 @@ const Nav: React.FC<NavProps> = ({ page }) => {
           </span>
         )}
         <button className="bar-btn" onClick={() => setNavBoxOpen(!navBoxOpen)}>
-          <HiMiniBars3 />
+          {!navBoxOpen ? <HiMiniBars3 /> : <HiX />}
         </button>
       </div>
       <div className={`nav-box ${navBoxOpen ? "open" : ""}`}>
@@ -75,6 +76,17 @@ const Nav: React.FC<NavProps> = ({ page }) => {
         >
           Messages
         </span>
+        {signedIn?.role === "super" && (
+          <span
+            className={`link ${pathname === "/admin/inbox" && "active"}`}
+            onClick={() => {
+              navigate("/admin/inbox");
+              setNavBoxOpen(false);
+            }}
+          >
+            Admin
+          </span>
+        )}
       </div>
     </nav>
   );

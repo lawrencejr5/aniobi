@@ -53,6 +53,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ from, to }) => {
           </form>
         </div>
       </div>
+      {/* <input type="checkbox" id="agree" />
+      <label htmlFor="agree">
+        By sending this message, I agree with Aniobi's terms and conditions{" "}
+      </label> */}
     </div>
   );
 };

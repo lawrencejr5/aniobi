@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { useJwt } from "react-jwt";
 import { Navigate } from "react-router-dom";
 
@@ -25,6 +25,10 @@ export const SuperProtected: React.FC<ProtectedProps> = ({ children }) => {
   const token: any = localStorage.getItem("token");
 
   const { isExpired }: any = useJwt(token);
+
+  if (!signedIn || !signedIn.role) {
+    return null;
+  }
 
   if (!token || isExpired || !signedIn || signedIn?.role !== "super")
     return <Navigate to={"/admin/not-authorized"} />;
