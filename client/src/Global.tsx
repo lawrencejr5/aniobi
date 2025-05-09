@@ -41,6 +41,12 @@ export interface ContextAppType {
   ) => Promise<void>;
   getCommentCount: (messageId: string) => Promise<number>;
 
+  // Likes
+  toggleLikeMessage: (userId: string, messageId: string) => Promise<void>;
+  checkLiked: (messageId: string) => Promise<boolean | undefined>;
+  getUserLikedMessages: (userId: string) => Promise<void>;
+  userLikedMessages: MessageType[];
+  setUserLikedMessages: Dispatch<SetStateAction<MessageType[]>>;
   // Notifications
   notification: NotificationType | null;
   setNotification: Dispatch<SetStateAction<NotificationType>>;
@@ -319,6 +325,68 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Liking messages
+  const toggleLikeMessage = async (
+    userId: string,
+    messageId: string
+  ): Promise<void> => {
+    try {
+      await axios.post(
+        `${EndPoints.like}/${messageId}`,
+        { userId },
+        { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
+      );
+      setNotification({
+        text: "Message liked successfully",
+        status: true,
+        theme: "success",
+      });
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error liking message",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  const checkLiked = async (
+    messageId: string
+  ): Promise<boolean | undefined> => {
+    try {
+      const { data } = await axios.get(
+        `${EndPoints.like}/check/${messageId}?userId=${signedIn?._id}`,
+        {
+          headers: { Authorization: `Bearer ${LocalStorage.token}` },
+        }
+      );
+      return data.liked;
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error checking like status",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
+  // Get messages liked by user
+  const [userLikedMessages, setUserLikedMessages] = useState<MessageType[]>([]);
+  const getUserLikedMessages = async (userId: string): Promise<void> => {
+    try {
+      const { data } = await axios.get(`${EndPoints.like}/user/${userId}`, {
+        headers: { Authorization: `Bearer ${LocalStorage.token}` },
+      });
+      setUserLikedMessages(data.likedMessages);
+    } catch (err: any) {
+      setNotification({
+        text: err?.response?.data?.msg || "Error fetching liked messages",
+        status: true,
+        theme: "danger",
+      });
+    }
+  };
+
   // Create state for admin users
   const [adminUsers, setAdminUsers] = useState<AdminType[]>([]);
   const fetchAdminUsers = async (): Promise<void> => {
@@ -502,6 +570,12 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         //
         commentModalOpen,
         setCommentModalOpen,
+        //
+        toggleLikeMessage,
+        checkLiked,
+        getUserLikedMessages,
+        userLikedMessages,
+        setUserLikedMessages,
         //
         messageComments,
         getMessageComments,

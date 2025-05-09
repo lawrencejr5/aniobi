@@ -11,6 +11,44 @@ import ModalComment from "../components/Modals/ModalComment";
 
 import CommentCount from "../components/CommentCount";
 
+const LikeComponent: React.FC<{ msgId: string }> = ({ msgId }) => {
+  const { toggleLikeMessage, checkLiked, signedIn } =
+    useGlobalContext() as ContextAppType;
+
+  const [liked, setLiked] = useState<boolean>(false);
+  const [animating, setAnimating] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkVal = async () => {
+      const val = await checkLiked(msgId);
+      setLiked(val as boolean);
+    };
+    checkVal();
+  }, [checkLiked, msgId]);
+
+  const likeMessage = async (): Promise<void> => {
+    try {
+      if (signedIn?._id) await toggleLikeMessage(signedIn._id, msgId);
+      setLiked((prev) => !prev);
+      setAnimating(true);
+      // Remove the animation class after 500ms (duration of animation)
+      setTimeout(() => setAnimating(false), 1000);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div onClick={likeMessage}>
+      {liked ? (
+        <BsHeartFill className={`heart-icon ${animating ? "pop" : ""}`} />
+      ) : (
+        <BsHeart className={`heart-icon ${animating ? "pop" : ""}`} />
+      )}
+    </div>
+  );
+};
+
 const Messages = () => {
   const {
     messages,
@@ -77,9 +115,7 @@ const Messages = () => {
                         )}
                       </small>
                       &nbsp; &nbsp;
-                      <div>
-                        <BsHeart className="heart-icon" />
-                      </div>
+                      <LikeComponent msgId={msg._id} />
                     </div>
                   </div>
                 );

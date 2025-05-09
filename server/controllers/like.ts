@@ -70,3 +70,23 @@ export const getLikedMessagesForUser = async (
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const checkIfUserLikedMessage = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { messageId } = req.params;
+    const { userId } = req.query;
+
+    const exists = await Like.findOne({ message: messageId, user: userId });
+
+    if (exists) {
+      res.status(200).json({ liked: true });
+      return;
+    }
+    res.status(200).json({ liked: false });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

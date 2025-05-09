@@ -23,11 +23,13 @@ const cors = require("cors");
 const messages_1 = __importDefault(require("./routes/messages"));
 const admin_1 = __importDefault(require("./routes/admin"));
 const comment_1 = __importDefault(require("./routes/comment"));
+const like_1 = __importDefault(require("./routes/like"));
 app.use(express_1.default.json());
 app.use(cors());
 app.use("/api/v1/messages", messages_1.default);
 app.use("/api/v1/admin", admin_1.default);
 app.use("/api/v1/comment", comment_1.default);
+app.use("/api/v1/like", like_1.default);
 app.use(notFound_1.default);
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     const port = process.env.PORT || "5001";

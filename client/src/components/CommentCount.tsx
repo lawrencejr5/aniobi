@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { BsHeart, BsHeartFill, BsChatText } from "react-icons/bs";
+import { BsChatText } from "react-icons/bs";
 import { useGlobalContext, ContextAppType } from "../Global";
 
 const CommentCount: React.FC<{ messageId: string }> = ({ messageId }) => {

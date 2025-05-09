@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const like_1 = require("../controllers/like");
+const auth_1 = require("../middlewares/auth");
+const LikeRouter = (0, express_1.Router)();
+LikeRouter.post("/:messageId", auth_1.auth, like_1.toggleLike);
+LikeRouter.get("/message/:messageId", like_1.getLikesForMessage);
+LikeRouter.get("/user/:userId", like_1.getLikedMessagesForUser);
+LikeRouter.get("/check/:messageId", like_1.checkIfUserLikedMessage);
+exports.default = LikeRouter;
