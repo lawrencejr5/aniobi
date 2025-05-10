@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import Nav from "../components/Nav";
 import { useGlobalContext, ContextAppType } from "../Global";
 import { Link } from "react-router-dom";
-import { FaMessage, FaUser } from "react-icons/fa6";
-import { FiSettings } from "react-icons/fi";
-import { LuMessageSquareMore } from "react-icons/lu";
 import { FaPowerOff } from "react-icons/fa";
 import Footer2 from "../components/Footer2";
 

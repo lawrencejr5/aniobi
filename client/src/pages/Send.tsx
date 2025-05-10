@@ -31,7 +31,7 @@ const Send = () => {
           </div>
         </div>
         <div className="chat-container">
-          <ChatBox from={signedIn?._id} to={user?._id} />
+          <ChatBox from={signedIn?._id ? signedIn?._id : null} to={user?._id} />
         </div>
       </section>
       <Footer2 />

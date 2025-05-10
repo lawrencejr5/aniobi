@@ -21,11 +21,11 @@ const LikeComponent: React.FC<{ msgId: string }> = ({ msgId }) => {
 
   const likeMessage = async (): Promise<void> => {
     try {
-      if (signedIn?._id) await toggleLikeMessage(signedIn._id, msgId);
       setLiked((prev) => !prev);
       // Like pop animation
       setAnimating(true);
       setTimeout(() => setAnimating(false), 1000);
+      if (signedIn?._id) await toggleLikeMessage(signedIn._id, msgId);
     } catch (err) {
       console.log(err);
     }

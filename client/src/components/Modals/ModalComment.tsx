@@ -34,11 +34,11 @@ const ModalComment: React.FC<ModelCommentProps> = ({ open, msg }) => {
 
   const comment = async () => {
     try {
+      setCommentInp("");
       const author = signedIn?._id;
       const message = selectedMessage?._id;
       if (author && message && commentInp.trim()) {
         await makeComment(message, commentInp, author);
-        setCommentInp("");
         getMessageComments(message);
       } else {
         console.error("Missing required data");

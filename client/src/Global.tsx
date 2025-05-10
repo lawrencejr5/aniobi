@@ -379,11 +379,6 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
         { userId },
         { headers: { Authorization: `Bearer ${LocalStorage.token}` } }
       );
-      setNotification({
-        text: "Message liked successfully",
-        status: true,
-        theme: "success",
-      });
     } catch (err: any) {
       setNotification({
         text: err?.response?.data?.msg || "Error liking message",
